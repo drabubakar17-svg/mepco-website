@@ -28,19 +28,6 @@ const clock = setInterval(() => {
 };
 }, []);
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(([q, a]) => ({
-    "@type": "Question",
-    "name": q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": a,
-    },
-  })),
-};
-
 const cleanRef = refNumber.replace(/\D/g, "");
   const estimatedBill = useMemo(() => {
     const u = Number(units || 0);
@@ -98,6 +85,18 @@ const cleanRef = refNumber.replace(/\D/g, "");
     ["Can I print duplicate bill?", "Yes, after opening your bill you can print or download it."],
     ["Is this official MEPCO website?", "This is an independent informational bill-checking website for user convenience."],
   ];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(([q, a]) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: a,
+    },
+  })),
+};
 if (siteLoading) {
   return (
 
