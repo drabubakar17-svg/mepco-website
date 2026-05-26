@@ -763,9 +763,11 @@ onKeyDown={(e) => {
       </p>
 
       <div className="flex gap-6 text-sm text-green-100">
-        <p>Privacy Policy</p>
-        <p>Disclaimer</p>
-        <p>Contact</p>
+        <a href="/privacy-policy">Privacy Policy</a>
+<a href="/disclaimer">Disclaimer</a>
+<a href="/contact-us">Contact Us</a>
+<a href="/about-us">About Us</a>
+<a href="/terms-and-conditions">Terms & Conditions</a>
       </div>
 
     </div>
