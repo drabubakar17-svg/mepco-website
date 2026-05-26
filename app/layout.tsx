@@ -3,7 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://your-domain.com"), // Remember to change this to your actual domain
-
+  verification: {
+    google: "w54Z2x0wPnrHvHcGRAZHo3RBNVjON-ZZlc0F_Kvc6Ic",
+  },
   title: {
     default: "MEPCO Online Bill Check 2026 - Duplicate Bill Portal",
     template: "%s | MEPCO Bill Portal",
@@ -101,6 +103,18 @@ export default function RootLayout({
   </head>
 
   <body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JHHCERN5SG"></script>
+
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JHHCERN5SG');
+    `,
+  }}
+/>
         {/* Render JSON-LD inside the body to prevent hydration mismatch/head parsing bugs in Next.js */}
         <script
           type="application/ld+json"
