@@ -32,7 +32,10 @@ export const metadata: Metadata = {
   authors: [{ name: "MEPCO Bill Portal" }],
   creator: "MEPCO Bill Portal",
   publisher: "MEPCO Bill Portal",
-
+icons: {
+  icon: "/mepco-logo.png",
+  apple: "/mepco-logo.png",
+},
   robots: {
     index: true,
     follow: true,
