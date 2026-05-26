@@ -26,8 +26,22 @@ const clock = setInterval(() => {
   clearTimeout(timer);
   clearInterval(clock);
 };
-}, []);  const cleanRef = refNumber.replace(/\D/g, "");
+}, []);
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(([q, a]) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": a,
+    },
+  })),
+};
+
+const cleanRef = refNumber.replace(/\D/g, "");
   const estimatedBill = useMemo(() => {
     const u = Number(units || 0);
    const energy =
@@ -114,6 +128,12 @@ if (siteLoading) {
 }
   return (
     <main className="min-h-screen scroll-smooth pb-24 bg-[#f4f8f5] text-[#111] animate-[fadeIn_0.8s_ease]">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(faqSchema),
+  }}
+/>
 <div className="bg-[#00311a] text-white border-b border-white/10">
 
   <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-xs md:text-sm">
