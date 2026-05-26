@@ -31,22 +31,23 @@ export const metadata: Metadata = {
 
   authors: [{ name: "MEPCO Bill Portal" }],
   creator: "MEPCO Bill Portal",
-  publisher: "MEPCO Bill Portal",
+ publisher: "MEPCO Bill Portal",
+
 icons: {
   icon: "/favicon-new.ico",
 },
-icons: {
-   robots: {
+
+robots: {
+  index: true,
+  follow: true,
+  googleBot: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    "max-video-preview": -1,
+    "max-image-preview": "large",
+    "max-snippet": -1,
   },
+},
 
   openGraph: {
     title: "MEPCO Online Bill Check 2026",
