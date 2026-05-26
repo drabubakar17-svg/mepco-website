@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   creator: "MEPCO Bill Portal",
   publisher: "MEPCO Bill Portal",
 icons: {
+  icon: "/favicon-new.ico",
+},
+icons: {
    robots: {
     index: true,
     follow: true,
