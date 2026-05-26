@@ -92,8 +92,15 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
-      <body>
+   <html lang="en">
+  <head>
+    <meta
+      name="google-site-verification"
+      content="w54Z2x0wPnrHvHcGRAZHo3RBNVjON-ZZlc0F_Kvc6Ic"
+    />
+  </head>
+
+  <body>
         {/* Render JSON-LD inside the body to prevent hydration mismatch/head parsing bugs in Next.js */}
         <script
           type="application/ld+json"
