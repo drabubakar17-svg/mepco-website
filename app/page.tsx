@@ -864,6 +864,12 @@ onKeyDown={(e) => {
   >
     Khanewal Bill Check
   </a>
+<a
+  href="/bahawalpur-bill-check"
+  className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
+>
+  Bahawalpur Bill Check
+</a>
 </div>
 </section>
     </main>
