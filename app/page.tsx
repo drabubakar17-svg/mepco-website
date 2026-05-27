@@ -88,6 +88,14 @@ const cities = [
     name: "Sahiwal",
     slug: "/sahiwal-bill-check",
   },
+  {
+    name: "Rahim Yar Khan",
+    slug: "/rahim-yar-khan-bill-check",
+  },
+  {
+    name: "Muzaffargarh",
+    slug: "/muzaffargarh-bill-check",
+  },
 ];
   const services = [
     ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
