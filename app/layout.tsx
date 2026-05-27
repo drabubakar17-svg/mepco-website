@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
-  metadataBase: new URL("https://your-domain.com"), // Remember to change this to your actual domain
+  metadataBase: new URL("https://mepco-website-jx8g.vercel.app"), // Remember to change this to your actual domain
   verification: {
     google: "w54Z2x0wPnrHvHcGRAZHo3RBNVjON-ZZlc0F_Kvc6Ic",
   },
@@ -125,6 +125,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+<Analytics />
       </body>
     </html>
   );
