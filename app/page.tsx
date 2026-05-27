@@ -100,8 +100,11 @@ const cities = [
     name: "Dera Ghazi Khan",
     slug: "/dera-ghazi-khan-bill-check",
   },
-];
-  const services = [
+  {
+    name: "Bahawalnagar",
+    slug: "/bahawalnagar-bill-check",
+  },
+];  const services = [
     ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
     ["Bill Calculator", "Estimate your monthly bill using consumed units."],
     ["Peak Hours", "Know high usage hours and reduce your electricity cost."],
