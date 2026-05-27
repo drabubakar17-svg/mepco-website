@@ -63,11 +63,28 @@ const cleanRef = refNumber.replace(/\D/g, "");
     setCheckingBill(false);
   }, 1500);
 };
-  const cities = [
-    "Multan", "Khanewal", "Bahawalpur", "Rahim Yar Khan",
-    "Dera Ghazi Khan", "Vehari", "Sahiwal", "Muzaffargarh",
-    "Lodhran", "Bahawalnagar", "Layyah", "Rajanpur",
-  ];
+ const cities = [
+  {
+    name: "Multan",
+    slug: "/multan-bill-check",
+  },
+  {
+    name: "Khanewal",
+    slug: "/khanewal-bill-check",
+  },
+  {
+    name: "Bahawalpur",
+    slug: "/bahawalpur-bill-check",
+  },
+  {
+    name: "Vehari",
+    slug: "/vehari-bill-check",
+  },
+  {
+    name: "Lodhran",
+    slug: "/lodhran-bill-check",
+  },
+];
 
   const services = [
     ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
@@ -490,10 +507,14 @@ onKeyDown={(e) => {
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {cities.map((city) => (
-              <div key={city} className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 text-center font-black text-gray-800 shadow-sm">
-                {city}
-              </div>
-            ))}
+  <a
+    key={city.name}
+    href={city.slug}
+    className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 text-center font-black text-gray-800 shadow-sm transition hover:bg-green-50 hover:text-[#005b2e]"
+  >
+    {city.name} Bill Check
+  </a>
+))}
           </div>
         </div>
       </section>
