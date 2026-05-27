@@ -844,17 +844,18 @@ onKeyDown={(e) => {
 >
   ↑
 </button>
-<section className="mt-14 rounded-2xl border border-green-100 bg-white p-6 shadow-sm">
+<section className="mt-6 rounded-2xl border border-green-100 bg-white p-6 shadow-sm">
   <h2 className="mb-4 text-2xl font-bold text-[#005b2e]">
-    MEPCO City Bill Guides
+    Urdu Bill Guide
   </h2>
 
   <div className="flex flex-wrap gap-3">
     <a
-      href="/multan-bill-check"
-      className="rounded-full bg-[#005b2e] px-4 py-2 text-sm font-semibold text-white hover:bg-[#004221]"
+      href="/mepco-bill-urdu"
+      className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
+      dir="rtl"
     >
-      Multan Bill Check
+      میپکو بل اردو گائیڈ
     </a>
   </div>
 </section>
