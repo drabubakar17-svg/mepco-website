@@ -849,7 +849,7 @@ onKeyDown={(e) => {
     Urdu Bill Guide
   </h2>
 
- <div className="flex flex-wrap gap-3">
+<div className="flex flex-wrap gap-3">
   <a
     href="/mepco-bill-urdu"
     className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
@@ -865,3 +865,7 @@ onKeyDown={(e) => {
     Khanewal Bill Check
   </a>
 </div>
+</section>
+    </main>
+  );
+}
