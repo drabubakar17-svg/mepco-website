@@ -63,7 +63,7 @@ const cleanRef = refNumber.replace(/\D/g, "");
     setCheckingBill(false);
   }, 1500);
 };
- const cities = [
+const cities = [
   {
     name: "Multan",
     slug: "/multan-bill-check",
@@ -84,8 +84,11 @@ const cleanRef = refNumber.replace(/\D/g, "");
     name: "Lodhran",
     slug: "/lodhran-bill-check",
   },
+  {
+    name: "Sahiwal",
+    slug: "/sahiwal-bill-check",
+  },
 ];
-
   const services = [
     ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
     ["Bill Calculator", "Estimate your monthly bill using consumed units."],
