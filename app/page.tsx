@@ -96,6 +96,10 @@ const cities = [
     name: "Muzaffargarh",
     slug: "/muzaffargarh-bill-check",
   },
+  {
+    name: "Dera Ghazi Khan",
+    slug: "/dera-ghazi-khan-bill-check",
+  },
 ];
   const services = [
     ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
