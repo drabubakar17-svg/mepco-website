@@ -448,11 +448,11 @@ onKeyDown={(e) => {
 
    <div className="rounded-3xl border border-green-100 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
       <h3 className="text-5xl font-black text-[#005b2e]">
-        12+
+        30+
       </h3>
 
       <p className="mt-3 text-gray-600 font-semibold">
-        Cities Covered
+        Regions Covered
       </p>
     </div>
 
