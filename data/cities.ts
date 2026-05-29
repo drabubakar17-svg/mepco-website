@@ -1,14 +1,14 @@
 export type CityData = {
-  name: string;
-  slug: string;
-  title: string;
-  description: string;
-  keywords: string[];
-  areas: string[];
-  related: string[];
+  readonly name: string;
+  readonly slug: string;
+  readonly title: string;
+  readonly description: string;
+  readonly keywords: readonly string[];
+  readonly areas: readonly string[];
+  readonly related: readonly string[];
 };
 
-export const cities: CityData[] = [
+export const cities: readonly CityData[] = [
   {
     name: "Multan",
     slug: "multan-bill-check",
@@ -126,8 +126,74 @@ export const cities: CityData[] = [
     areas: ["Taunsa Sharif", "Vehoa", "Retra"],
     related: ["dera-ghazi-khan-bill-check", "rajanpur-bill-check"],
   },
-];
+  {
+    name: "Kot Addu",
+    slug: "kot-addu-bill-check",
+    title: "MEPCO Kot Addu Bill Check Online",
+    description: "Check your MEPCO Kot Addu electricity bill online.",
+    keywords: ["MEPCO Kot Addu bill", "kot addu bill check online", "mepco online bill kot addu"],
+    areas: ["Kot Addu", "Sananwan", "Daira Din Panah"],
+    related: ["muzaffargarh-bill-check", "layyah-bill-check"],
+  },
+  {
+    name: "Sadiqabad",
+    slug: "sadiqabad-bill-check",
+    title: "MEPCO Sadiqabad Bill Check Online",
+    description: "Check your MEPCO Sadiqabad electricity bill online.",
+    keywords: ["MEPCO Sadiqabad bill", "sadiqabad bill check online", "mepco online bill sadiqabad"],
+    areas: ["Sadiqabad"],
+    related: ["rahim-yar-khan-bill-check", "khanpur-bill-check"],
+  },
+  {
+    name: "Khanpur",
+    slug: "khanpur-bill-check",
+    title: "MEPCO Khanpur Bill Check Online",
+    description: "Check your MEPCO Khanpur electricity bill online.",
+    keywords: ["MEPCO Khanpur bill", "khanpur bill check online", "mepco online bill khanpur"],
+    areas: ["Khanpur"],
+    related: ["rahim-yar-khan-bill-check", "sadiqabad-bill-check"],
+  },
+  {
+    name: "Chishtian",
+    slug: "chishtian-bill-check",
+    title: "MEPCO Chishtian Bill Check Online",
+    description: "Check your MEPCO Chishtian electricity bill online.",
+    keywords: ["MEPCO Chishtian bill", "chishtian bill check online", "mepco online bill chishtian"],
+    areas: ["Chishtian"],
+    related: ["bahawalnagar-bill-check", "haroonabad-bill-check"],
+  },
+  {
+    name: "Haroonabad",
+    slug: "haroonabad-bill-check",
+    title: "MEPCO Haroonabad Bill Check Online",
+    description: "Check your MEPCO Haroonabad electricity bill online.",
+    keywords: ["MEPCO Haroonabad bill", "haroonabad bill check online", "mepco online bill haroonabad"],
+    areas: ["Haroonabad"],
+    related: ["bahawalnagar-bill-check", "chishtian-bill-check"],
+  },
+] as const; // Freezes the array structure for maximum compilation efficiency
 
-export function getCityBySlug(slug: string) {
-  return cities.find((city) => city.slug === slug);
+// Map initialization executes only once on load, giving an instant O(1) hash lookup
+const cityLookupMap = new Map<string, CityData>(
+  cities.map((city) => [city.slug, city])
+);
+
+/**
+ * Highly optimized city lookups in O(1) time complexity.
+ */
+export function getCityBySlug(slug: string): CityData | undefined {
+  return cityLookupMap.get(slug);
+}
+
+/**
+ * Returns full CityData objects for a city's related slugs.
+ * Safely filters out missing links.
+ */
+export function getRelatedCities(relatedSlugs: readonly string[]): CityData[] {
+  const result: CityData[] = [];
+  for (let i = 0; i < relatedSlugs.length; i++) {
+    const match = cityLookupMap.get(relatedSlugs[i]);
+    if (match) result.push(match);
+  }
+  return result;
 }
