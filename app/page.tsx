@@ -29,23 +29,39 @@ const clock = setInterval(() => {
 }, []);
 
 const cleanRef = refNumber.replace(/\D/g, "");
-  const estimatedBill = useMemo(() => {
-    const u = Number(units || 0);
-   const energy =
-  u <= 100
-    ? u * 30
-    : u <= 200
-    ? u * 38
-    : u <= 300
-    ? u * 45
-    : u * 55;
-    const tax = energy * 0.18;
-    return {
-      energy: Math.round(energy),
-      tax: Math.round(tax),
-      total: Math.round(energy + tax),
-    };
-  }, [units]);
+ const estimatedBill = useMemo(() => {
+  const u = Number(units || 0);
+
+  const energy =
+    u <= 100
+      ? u * 30
+      : u <= 200
+      ? u * 38
+      : u <= 300
+      ? u * 45
+      : u * 55;
+
+  const fpa = u * 3.5;
+
+  const fixedCharges =
+    u > 0 ? 250 : 0;
+
+  const gst =
+    (energy + fpa + fixedCharges) * 0.18;
+
+  return {
+    energy: Math.round(energy),
+    fpa: Math.round(fpa),
+    fixedCharges: Math.round(fixedCharges),
+    tax: Math.round(gst),
+    total: Math.round(
+      energy +
+      fpa +
+      fixedCharges +
+      gst
+    ),
+  };
+}, [units]);
 
  const checkBill = () => {
   if (cleanRef.length !== 14) {
@@ -594,26 +610,39 @@ onKeyDown={(e) => {
   </div>
 
 </div>
-              <div className="mt-8 space-y-5">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Electricity Charges</span>
-                  <span className="text-xl font-black">Rs. {estimatedBill.energy}</span>
-                </div>
+             <div className="mt-8 space-y-5">
+  <div className="flex items-center justify-between">
+    <span className="text-gray-600">Electricity Charges</span>
+    <span className="text-xl font-black">Rs. {estimatedBill.energy}</span>
+  </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Approx Taxes</span>
-                  <span className="text-xl font-black">Rs. {estimatedBill.tax}</span>
-                </div>
+  <div className="flex items-center justify-between">
+    <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
+    <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
+  </div>
 
-                <div className="flex items-center justify-between border-t pt-5">
-                  <span className="text-2xl font-black text-[#005b2e]">Total</span>
-                  <span className="text-3xl font-black text-[#005b2e]">Rs. {estimatedBill.total}</span>
-                </div>
+  <div className="flex items-center justify-between">
+    <span className="text-gray-600">Fixed Charges</span>
+    <span className="text-xl font-black">Rs. {estimatedBill.fixedCharges}</span>
+  </div>
 
-                <p className="text-sm text-gray-500">
-                  This is only an estimate. Final bill may include official taxes, FPA, surcharges and adjustments.
-                </p>
-              </div>
+  <div className="flex items-center justify-between">
+    <span className="text-gray-600">Approx GST</span>
+    <span className="text-xl font-black">Rs. {estimatedBill.tax}</span>
+  </div>
+
+  <div className="flex items-center justify-between border-t pt-5">
+    <span className="text-2xl font-black text-[#005b2e]">Total</span>
+    <span className="text-3xl font-black text-[#005b2e]">
+      Rs. {estimatedBill.total}
+    </span>
+  </div>
+
+  <p className="text-sm text-gray-500">
+    This is only an estimate. Final bill may include QTA, PTV fee,
+    arrears, late payment surcharge and official adjustments.
+  </p>
+</div>
             </div>
           </div>
         </div>
