@@ -728,7 +728,7 @@ onKeyDown={(e) => {
       </p>
     </div>
 
-    <div className="mt-10 grid gap-5 md:grid-cols-5">
+    <div className="mt-10 grid gap-5 md:grid-cols-3 lg:grid-cols-6">
       <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
         <div className="text-4xl">🔢</div>
         <h3 className="mt-4 text-xl font-black text-[#005b2e]">Reference Number Guide</h3>
