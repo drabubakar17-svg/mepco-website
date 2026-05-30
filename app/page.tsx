@@ -544,10 +544,10 @@ onKeyDown={(e) => {
 ))}
 <a
   href="/mepco-bill-calculator"
+  className="rounded-2xl border-2 border-[#005b2e] bg-[#005b2e] p-5 text-center font-black text-white shadow-sm transition hover:scale-105 hover:bg-[#004221]"
 >
-  MEPCO Bill Calculator
-</a>
-          </div>
+  🧮 Advanced MEPCO Bill Calculator
+</a>          </div>
         </div>
       </section>
 
