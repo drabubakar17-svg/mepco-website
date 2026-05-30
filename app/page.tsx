@@ -757,6 +757,11 @@ onKeyDown={(e) => {
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Slabs Guide</h3>
   <p className="mt-3 text-sm leading-6 text-gray-600">Understand unit rates and electricity bill slabs.</p>
 </a>
+<a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🔌</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">New Connection Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Apply for a new MEPCO electricity connection and track application status.</p>
+</a>
     </div>
   </div>
 </section>
