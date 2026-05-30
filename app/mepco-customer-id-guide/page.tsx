@@ -214,6 +214,19 @@ export default function MepcoCustomerIdGuidePage() {
               >
                 MEPCO Bill Calculator
               </Link>
+             <Link
+  href="/mepco-bill-slabs-guide"
+  className="rounded-xl border border-slate-200 bg-white p-4 font-semibold text-slate-800 shadow-sm transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+>
+  MEPCO Bill Slabs Guide
+</Link>
+
+<Link
+  href="/mepco-taxes-explained"
+  className="rounded-xl border border-slate-200 bg-white p-4 font-semibold text-slate-800 shadow-sm transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+>
+  MEPCO Taxes Explained
+</Link>
             </div>
           </section>
         </article>
