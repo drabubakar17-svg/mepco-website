@@ -547,7 +547,14 @@ onKeyDown={(e) => {
       <section id="cities" className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-5">
           <h2 className="text-center text-4xl font-black text-[#005b2e]">Cities Covered by MEPCO</h2>
-
+       <div className="mt-4 text-center">
+  <a
+    href="/all-mepco-regions"
+    className="inline-flex rounded-full bg-[#005b2e] px-6 py-3 font-black text-white transition hover:bg-[#004221]"
+  >
+    View All {cities.length}+ Regions →
+  </a>
+</div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {cities.map((city) => (
   <a
