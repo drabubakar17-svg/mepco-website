@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 
-// Dynamically compute the current year for SEO and schema freshness
 const currentYear = new Date().getFullYear();
 
 const peakHours = [
@@ -31,7 +30,7 @@ const peakHours = [
 export const metadata: Metadata = {
   title: `MEPCO Peak Hours Guide ${currentYear} | Electricity Peak Timing`,
   description:
-    "Check MEPCO peak hours timing by season and learn how peak electricity usage affects your bill, TOU meter charges, and energy saving routine.",
+    "Check MEPCO peak hours timing, TOU meter charges, seasonal peak timing, Urdu guide, and bill saving tips for MEPCO consumers.",
   alternates: {
     canonical:
       "https://mepco-website-jx8g.vercel.app/mepco-peak-hours-guide",
@@ -65,7 +64,15 @@ export default function MepcoPeakHoursGuidePage() {
             name: "Do peak hours apply to all MEPCO consumers?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Peak hour billing mainly affects consumers with Time of Use or TOU meters. Regular domestic consumers should still reduce usage during peak hours to manage load and save energy.",
+              text: "Peak hour billing mainly affects consumers with Time of Use or TOU meters. Regular domestic consumers should still reduce heavy electricity usage during peak hours.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How can I reduce my bill during peak hours?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "You can reduce your electricity bill by avoiding heavy appliances such as iron, water motor, heater, washing machine and high-power AC during peak hours.",
             },
           },
         ],
@@ -101,8 +108,8 @@ export default function MepcoPeakHoursGuidePage() {
             </h1>
 
             <p className="mt-4 text-lg leading-relaxed text-slate-600">
-              MEPCO peak hours are the high-demand electricity usage periods
-              when consumers should avoid running heavy appliances. Peak and
+              MEPCO peak hours are high-demand electricity usage periods when
+              consumers should avoid running heavy appliances. Peak and
               off-peak timing matters especially for TOU meters because usage is
               recorded separately during expensive peak hours.
             </p>
@@ -115,9 +122,8 @@ export default function MepcoPeakHoursGuidePage() {
 
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
               Peak hours can vary by season and official notifications. The
-              common DISCO peak-hour pattern is shown below. A PITC peak/off-peak
-              timing page lists seasonal windows such as 5 PM–9 PM in Dec–Feb,
-              6 PM–10 PM in Mar–May and Sep–Nov, and 7 PM–11 PM in Jun–Aug.
+              common DISCO peak-hour pattern is shown below. Always compare it
+              with your latest electricity bill or official notice.
             </p>
 
             <div className="mt-5 overflow-hidden rounded-xl border border-slate-200">
@@ -145,8 +151,8 @@ export default function MepcoPeakHoursGuidePage() {
             </div>
 
             <p className="mt-4 text-xs leading-relaxed text-slate-500">
-              Always verify your latest bill or official DISCO notice because
-              timing and tariff policies can change.
+              Timings and tariff policies can change. Always verify your latest
+              bill or official DISCO notification.
             </p>
           </section>
 
@@ -156,12 +162,9 @@ export default function MepcoPeakHoursGuidePage() {
             </h2>
 
             <p>
-              During peak hours, the electricity network faces higher demand.
-              TOU meters record peak and off-peak usage separately, so consumers
-              using heavy appliances during peak timing may see higher charges.
-              The Ministry of Energy has also highlighted evening peak-demand
-              pressure on the power system, which is why reducing load during
-              these hours is important.
+              During peak hours, electricity demand is higher. TOU meters record
+              peak and off-peak usage separately, so consumers using heavy
+              appliances during peak timing may see higher charges.
             </p>
 
             <h2 className="text-2xl font-bold text-slate-950">
@@ -182,10 +185,14 @@ export default function MepcoPeakHoursGuidePage() {
             </h2>
 
             <ol className="list-decimal space-y-3 pl-5 font-medium text-slate-800">
-              <li>Shift washing, ironing, and water motor usage to off-peak hours.</li>
+              <li>
+                Shift washing, ironing, and water motor usage to off-peak hours.
+              </li>
               <li>Use LED lights and avoid unnecessary load in the evening.</li>
               <li>Run AC at moderate temperature and avoid extra cooling load.</li>
-              <li>Check your bill to confirm if you are charged under TOU rates.</li>
+              <li>
+                Check your bill to confirm if you are charged under TOU rates.
+              </li>
             </ol>
           </section>
 
@@ -201,8 +208,8 @@ export default function MepcoPeakHoursGuidePage() {
                 </h3>
                 <p className="mt-1 text-sm text-slate-600">
                   No. Peak timing may change by season. Common windows are
-                  shorter evening periods such as 5 PM to 9 PM, 6 PM to 10 PM,
-                  or 7 PM to 11 PM.
+                  evening periods such as 5 PM to 9 PM, 6 PM to 10 PM, or 7 PM
+                  to 11 PM.
                 </p>
               </div>
 
@@ -212,11 +219,47 @@ export default function MepcoPeakHoursGuidePage() {
                 </h3>
                 <p className="mt-1 text-sm text-slate-600">
                   Mostly TOU meter users are directly affected because their
-                  bill separates peak and off-peak usage. Other users can still
-                  reduce bills by avoiding heavy load during peak demand.
+                  bill separates peak and off-peak usage.
+                </p>
+              </div>
+
+              <div className="border-t pt-4">
+                <h3 className="font-bold text-slate-900">
+                  How can I save electricity during peak hours?
+                </h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  Avoid using heavy appliances during peak hours and shift
+                  ironing, washing, water motor and other high-load tasks to
+                  off-peak timing.
                 </p>
               </div>
             </div>
+          </section>
+
+          <section
+            className="mt-10 rounded-2xl border-2 border-green-600/20 bg-emerald-50/40 p-6 shadow-sm"
+            dir="rtl"
+          >
+            <h2 className="text-2xl font-black text-slate-900">
+              MEPCO Peak Hours Guide (اردو)
+            </h2>
+
+            <p className="mt-4 text-base font-medium leading-8 text-slate-700">
+              MEPCO کے پیک آورز وہ اوقات ہوتے ہیں جب بجلی کی طلب زیادہ ہوتی
+              ہے۔ ان اوقات میں استری، واٹر پمپ، ہیٹر، واشنگ مشین اور دیگر
+              بھاری برقی آلات کا استعمال کم کرنا بہتر ہوتا ہے۔
+            </p>
+
+            <p className="mt-4 text-base font-medium leading-8 text-slate-700">
+              اگر آپ کے پاس TOU میٹر ہے تو پیک آورز میں بجلی کے نرخ زیادہ ہو
+              سکتے ہیں۔ اس لیے کوشش کریں کہ زیادہ بجلی استعمال کرنے والے کام
+              آف پیک اوقات میں کیے جائیں۔
+            </p>
+
+            <p className="mt-4 text-base font-medium leading-8 text-slate-700">
+              اس طریقے سے بجلی کے بل میں کمی اور توانائی کے بہتر استعمال میں
+              مدد مل سکتی ہے۔
+            </p>
           </section>
 
           <section className="mt-10 rounded-2xl border bg-gradient-to-br from-slate-50 to-slate-100 p-6 shadow-sm">
@@ -244,6 +287,20 @@ export default function MepcoPeakHoursGuidePage() {
                 className="rounded-xl border border-slate-200 bg-white p-4 font-semibold text-slate-800 shadow-sm transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
               >
                 Customer ID Guide
+              </Link>
+
+              <Link
+                href="/mepco-bill-slabs-guide"
+                className="rounded-xl border border-slate-200 bg-white p-4 font-semibold text-slate-800 shadow-sm transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+              >
+                MEPCO Bill Slabs Guide
+              </Link>
+
+              <Link
+                href="/mepco-taxes-explained"
+                className="rounded-xl border border-slate-200 bg-white p-4 font-semibold text-slate-800 shadow-sm transition hover:border-green-300 hover:bg-green-50 hover:text-green-700"
+              >
+                MEPCO Taxes Explained
               </Link>
 
               <Link
