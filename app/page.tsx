@@ -704,6 +704,51 @@ onKeyDown={(e) => {
           </div>
         </div>
       </section>
+ <section className="mx-auto max-w-7xl px-5 py-16">
+  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl md:p-12">
+    <div className="text-center">
+      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
+        Consumer Help Center
+      </p>
+
+      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
+        MEPCO Bill Guides & Tools
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+        Learn how to find your reference number, customer ID, peak hours,
+        taxes, and bill charges with simple MEPCO consumer guides.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-5 md:grid-cols-4">
+      <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">🔢</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Reference Number Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Find your 14-digit MEPCO reference number on your bill.</p>
+      </a>
+
+      <a href="/mepco-customer-id-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">🆔</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Customer ID Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Understand Customer ID and how it differs from reference number.</p>
+      </a>
+
+      <a href="/mepco-peak-hours-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">⏰</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Peak Hours Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Check MEPCO peak hours and reduce electricity usage cost.</p>
+      </a>
+
+      <a href="/mepco-taxes-explained" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">🧾</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Taxes Explained</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Learn GST, FPA, QTA, fixed charges and other bill items.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section className="bg-white py-16">
 
   <div className="mx-auto max-w-7xl px-5">
