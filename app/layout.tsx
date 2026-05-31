@@ -99,14 +99,7 @@ export default function RootLayout({
 
   return (
    <html lang="en">
-  <head>
-    <meta
-      name="google-site-verification"
-      content="w54Z2x0wPnrHvHcGRAZHo3RBNVjON-ZZlc0F_Kvc6Ic"
-    />
-  </head>
-
-  <body>
+    <body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JHHCERN5SG"></script>
 
 <script
