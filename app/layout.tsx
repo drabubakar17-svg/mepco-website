@@ -53,7 +53,7 @@ robots: {
     title: "MEPCO Online Bill Check 2026",
     description:
       "Check duplicate MEPCO electricity bill online instantly using reference number.",
-    url: "https://your-domain.com",
+    url: "https://mepcoonlinebill.net",
     siteName: "MEPCO Bill Portal",
     locale: "en_PK",
     type: "website",
@@ -84,7 +84,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "MEPCO Online Bill Checker",
-    url: "https://your-domain.com",
+    url: "https://mepcoonlinebill.net",
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
     browserRequirements: "Requires HTML5",
