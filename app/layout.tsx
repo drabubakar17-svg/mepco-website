@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://mepcoonlinebill.net"), // Remember to change this to your actual domain
   verification: {
-    google: "w54Z2x0wPnrHvHcGRAZHo3RBNVjON-ZZlc0F_Kvc6Ic",
+    google: "CXhIteopDn1CSGzW_MW-HaVhhFoPV-gxq2fLoVxZjws",
   },
   title: {
     default: "MEPCO Online Bill Check 2026 - Duplicate Bill Portal",
