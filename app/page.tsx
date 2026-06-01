@@ -837,8 +837,59 @@ onKeyDown={(e) => {
   </div>
 
 </section>
-     <footer className="bg-[#00381d] text-white">
+<section className="mx-auto max-w-7xl px-5 py-16">
+  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl md:p-12">
+    <div className="text-center">
+      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
+        Popular Searches
+      </p>
 
+      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
+        Popular MEPCO Searches
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+        Quick access to commonly searched MEPCO bill topics, electricity bill
+        guides, duplicate bill services, and consumer help pages.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <a href="#bill" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Bill Check
+      </a>
+
+      <a href="#bill" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Duplicate Bill
+      </a>
+
+      <a href="/mepco-bill-calculator" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Bill Calculator
+      </a>
+
+      <a href="/mepco-customer-id-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Customer ID
+      </a>
+
+      <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Reference Number
+      </a>
+
+      <a href="/mepco-peak-hours-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Peak Hours
+      </a>
+
+      <a href="/mepco-taxes-explained" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO Taxes Explained
+      </a>
+
+      <a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
+        MEPCO New Connection
+      </a>
+    </div>
+  </div>
+</section>
+     <footer className="bg-[#00381d] text-white">
   <div className="mx-auto max-w-7xl px-5 py-14">
 
     <div className="grid gap-10 md:grid-cols-4">
