@@ -439,6 +439,31 @@ onKeyDown={(e) => {
 >
   Clear Saved Reference Number
 </button>
+<div className="mt-3 grid grid-cols-2 gap-3">
+
+  <button
+    onClick={() => {
+      window.open(
+        "https://wa.me/?text=Check%20your%20MEPCO%20bill%20online%20instantly%20https://mepcoonlinebill.net",
+        "_blank"
+      );
+    }}
+    className="h-12 rounded-xl bg-green-600 text-sm font-bold text-white hover:bg-green-700"
+  >
+    📲 WhatsApp Share
+  </button>
+
+  <button
+    onClick={() => {
+      navigator.clipboard.writeText("https://mepcoonlinebill.net");
+      alert("Website link copied");
+    }}
+    className="h-12 rounded-xl border border-green-200 bg-white text-sm font-bold text-[#005b2e] hover:bg-green-50"
+  >
+    🔗 Copy Link
+  </button>
+
+</div>
               <p className="mt-4 text-center text-sm text-gray-500">
   Reference number is available on your previous electricity bill.
 </p>
