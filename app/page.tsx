@@ -789,7 +789,15 @@ onKeyDown={(e) => {
         charges, and important billing information online without visiting
         physical offices.
       </p>
-
+     <p className="mt-5 leading-8 text-gray-700">
+  Consumers can also learn about MEPCO taxes, GST, FPA, QTA, tariff slabs,
+  customer ID, reference number and new electricity connection procedures.
+</p>
+<p className="mt-5 leading-8 text-gray-700">
+  میپکو صارفین آن لائن بجلی کا بل چیک کر سکتے ہیں، ڈپلیکیٹ بل ڈاؤن لوڈ کر سکتے ہیں،
+  ریفرنس نمبر اور کسٹمر آئی ڈی کی معلومات حاصل کر سکتے ہیں، اور بجلی کے بل میں شامل
+  ٹیکسز، ایف پی اے، کیو ٹی اے اور دیگر چارجز کو سمجھ سکتے ہیں۔
+</p>
       <div className="mt-10 grid gap-5 md:grid-cols-3">
 
         <div className="rounded-2xl bg-white p-6 border border-green-100">
@@ -865,37 +873,71 @@ onKeyDown={(e) => {
 
       </div>
 
-      {/* LINKS */}
-      <div>
+     {/* LINKS */}
+<div>
 
-        <h4 className="text-xl font-black">
-          Quick Links
-        </h4>
+  <h4 className="text-xl font-black">
+    Quick Links
+  </h4>
 
-        <div className="mt-5 space-y-3 text-green-100">
-          <p>Check Bill</p>
-          <p>Bill Calculator</p>
-          <p>Peak Hours</p>
-          <p>FAQs</p>
-        </div>
+  <div className="mt-5 space-y-3 text-green-100">
 
-      </div>
+    <a href="#bill" className="block hover:text-white">
+      Check Bill
+    </a>
 
-      {/* SERVICES */}
-      <div>
+    <a href="/mepco-bill-calculator" className="block hover:text-white">
+      MEPCO Bill Calculator
+    </a>
 
-        <h4 className="text-xl font-black">
-          Services
-        </h4>
+    <a href="/mepco-bill-urdu" className="block hover:text-white">
+      MEPCO Bill Urdu
+    </a>
 
-        <div className="mt-5 space-y-3 text-green-100">
-          <p>Duplicate Bill</p>
-          <p>Reference Guide</p>
-          <p>Load Shedding Info</p>
-          <p>Electricity Tips</p>
-        </div>
+    <a href="/all-mepco-regions" className="block hover:text-white">
+      All MEPCO Regions
+    </a>
 
-      </div>
+  </div>
+
+</div>
+
+{/* SERVICES */}
+<div>
+
+  <h4 className="text-xl font-black">
+    Guides
+  </h4>
+
+  <div className="mt-5 space-y-3 text-green-100">
+
+    <a href="/mepco-reference-number-guide" className="block hover:text-white">
+      Reference Number Guide
+    </a>
+
+    <a href="/mepco-customer-id-guide" className="block hover:text-white">
+      Customer ID Guide
+    </a>
+
+    <a href="/mepco-peak-hours-guide" className="block hover:text-white">
+      Peak Hours Guide
+    </a>
+
+    <a href="/mepco-taxes-explained" className="block hover:text-white">
+      Taxes Explained
+    </a>
+
+    <a href="/mepco-bill-slabs-guide" className="block hover:text-white">
+      Bill Slabs Guide
+    </a>
+
+    <a href="/mepco-new-connection-guide" className="block hover:text-white">
+      New Connection Guide
+    </a>
+
+  </div>
+
+</div>
 
       {/* CONTACT */}
       <div>
