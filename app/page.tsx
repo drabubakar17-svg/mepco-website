@@ -138,13 +138,56 @@ const cities = [
     ["Saving Tips", "Simple habits to reduce monthly electricity bill."],
   ];
 
-  const faqs = [
-    ["How can I check MEPCO bill online?", "Enter your 14-digit reference number and click Check Bill."],
-    ["Can I check MEPCO bill by CNIC?", "No, MEPCO bill normally requires reference number or customer ID."],
-    ["Where is reference number written?", "It is printed on your previous electricity bill."],
-    ["Can I print duplicate bill?", "Yes, after opening your bill you can print or download it."],
-    ["Is this official MEPCO website?", "This is an independent informational bill-checking website for user convenience."],
-  ];
+ const faqs = [
+  [
+    "How can I check MEPCO bill online?",
+    "Enter your 14-digit reference number in the MEPCO bill checker and click Check Bill. Your bill will open on the official PITC bill portal.",
+  ],
+  [
+    "Can I download a duplicate MEPCO bill?",
+    "Yes, after opening your bill on the official PITC portal, you can print or download your duplicate MEPCO electricity bill.",
+  ],
+  [
+    "Where can I find my 14-digit MEPCO reference number?",
+    "Your 14-digit reference number is printed on your previous MEPCO electricity bill, usually near the top section of the bill.",
+  ],
+  [
+    "Can I check MEPCO bill by customer ID?",
+    "Some bill portals support customer ID, but MEPCO duplicate bill checking commonly uses the 14-digit reference number.",
+  ],
+  [
+    "Why is my MEPCO bill high this month?",
+    "Your MEPCO bill may increase due to higher units, tariff slab changes, FPA, GST, QTA, fixed charges, arrears, or late payment surcharge.",
+  ],
+  [
+    "What is FPA in MEPCO bill?",
+    "FPA means Fuel Price Adjustment. It may change monthly based on fuel cost adjustments and can increase or decrease your electricity bill.",
+  ],
+  [
+    "What is QTA in electricity bill?",
+    "QTA means Quarterly Tariff Adjustment. It is an official tariff adjustment that may appear in electricity bills from time to time.",
+  ],
+  [
+    "What are MEPCO peak hours?",
+    "MEPCO peak hours are high-demand electricity usage hours. Avoiding heavy appliances during peak hours may help reduce electricity costs.",
+  ],
+  [
+    "Is this the official MEPCO website?",
+    "No. This is an independent informational website. Official bill data is provided through the PITC and MEPCO bill systems.",
+  ],
+  [
+    "Is MEPCO bill checking free?",
+    "Yes, checking your MEPCO duplicate bill online is free. You only need your valid reference number or customer information.",
+  ],
+  [
+    "Can I check MEPCO bill on mobile?",
+    "Yes, this website is mobile-friendly and allows users to access MEPCO bill guides, calculators, and bill checking links from mobile devices.",
+  ],
+  [
+    "What should I do if my MEPCO bill is not found?",
+    "Check that your reference number is exactly 14 digits and entered without spaces. If the issue continues, try again later on the official PITC portal.",
+  ],
+];
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -1081,40 +1124,6 @@ onKeyDown={(e) => {
 >
   ↑
 </button>
-<section className="mt-6 rounded-2xl border border-green-100 bg-white p-6 shadow-sm">
-  <h2 className="mb-4 text-2xl font-bold text-[#005b2e]">
-    Urdu Bill Guide
-  </h2>
-
-<div className="flex flex-wrap gap-3">
-  <a
-    href="/mepco-bill-urdu"
-    className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
-    dir="rtl"
-  >
-    میپکو بل اردو گائیڈ
-  </a>
-
-  <a
-    href="/khanewal-bill-check"
-    className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
-  >
-    Khanewal Bill Check
-  </a>
-<a
-  href="/bahawalpur-bill-check"
-  className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
->
-  Bahawalpur Bill Check
-</a>
-<a
-  href="/vehari-bill-check"
-  className="rounded-full bg-[#005b2e] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#004221]"
->
-  Vehari Bill Check
-</a>
-</div>
-</section>
     </main>
   );
 }
