@@ -9,13 +9,18 @@ const [menuOpen, setMenuOpen] = useState(false);
 const [siteLoading, setSiteLoading] = useState(true);
 const [checkingBill, setCheckingBill] = useState(false);
 const [currentTime, setCurrentTime] = useState("");
+const [recentSearches, setRecentSearches] = useState<string[]>([]);
 useEffect(() => {
   const savedRef = localStorage.getItem("mepco_reference_number");
 
   if (savedRef) {
     setRefNumber(savedRef);
   }
+const savedSearches = JSON.parse(
+  localStorage.getItem("mepco_recent_searches") || "[]"
+);
 
+setRecentSearches(savedSearches);
   const timer = setTimeout(() => {
     setSiteLoading(false);
   }, 1800);
@@ -72,6 +77,21 @@ const cleanRef = refNumber.replace(/\D/g, "");
   setCheckingBill(true);
 
   localStorage.setItem("mepco_reference_number", cleanRef);
+const existingSearches = JSON.parse(
+  localStorage.getItem("mepco_recent_searches") || "[]"
+);
+
+const updatedSearches = [
+  cleanRef,
+  ...existingSearches.filter((item: string) => item !== cleanRef),
+].slice(0, 5);
+
+localStorage.setItem(
+  "mepco_recent_searches",
+  JSON.stringify(updatedSearches)
+);
+
+setRecentSearches(updatedSearches);
 
   window.open(`https://bill.pitc.com.pk/mepcobill?refno=${cleanRef}`, "_blank");
 
@@ -424,6 +444,25 @@ onKeyDown={(e) => {
   <p className="mt-3 text-center text-sm font-bold text-green-700">
     ✅ Reference number ready and saved for next visit
   </p>
+)}
+{recentSearches.length > 0 && (
+  <div className="mt-4">
+    <p className="mb-2 text-sm font-bold text-[#005b2e]">
+      Recent Searches
+    </p>
+
+    <div className="flex flex-wrap gap-2">
+      {recentSearches.map((item) => (
+        <button
+          key={item}
+          onClick={() => setRefNumber(item)}
+          className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-bold text-[#005b2e]"
+        >
+          {item}
+        </button>
+      ))}
+    </div>
+  </div>
 )}
               <button onClick={checkBill} className="mt-6 h-16 w-full rounded-xl bg-[#007a3d] text-xl font-black text-white shadow-lg transition duration-300 hover:scale-[1.02] hover:bg-[#004d27] hover:shadow-2xl animate-pulse">
                {checkingBill ? "Checking..." : "Check Bill"}
