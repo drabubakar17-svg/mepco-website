@@ -996,6 +996,65 @@ onKeyDown={(e) => {
     </div>
   </div>
 </section>
+<section className="mx-auto max-w-7xl px-5 py-16">
+
+  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl">
+
+    <div className="text-center">
+
+      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
+        Regions Coverage
+      </p>
+
+      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
+        Top MEPCO Regions
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+        Explore electricity bill checking services across major MEPCO regions.
+      </p>
+
+    </div>
+
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+      <a href="/multan-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Multan Bill Check
+      </a>
+
+      <a href="/khanewal-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Khanewal Bill Check
+      </a>
+
+      <a href="/bahawalpur-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Bahawalpur Bill Check
+      </a>
+
+      <a href="/vehari-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Vehari Bill Check
+      </a>
+
+      <a href="/lodhran-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Lodhran Bill Check
+      </a>
+
+      <a href="/sahiwal-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Sahiwal Bill Check
+      </a>
+
+      <a href="/rahim-yar-khan-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Rahim Yar Khan Bill Check
+      </a>
+
+      <a href="/muzaffargarh-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
+        Muzaffargarh Bill Check
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
      <footer className="bg-[#00381d] text-white">
   <div className="mx-auto max-w-7xl px-5 py-14">
 
