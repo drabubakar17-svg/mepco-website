@@ -8,7 +8,7 @@ type Props = {
 };
 
 const currentYear = new Date().getFullYear();
-const BASE_URL = "https://mepco-website-jx8g.vercel.app";
+const BASE_URL = "https://mepcoonlinebill.net";
 
 // 1. High-Performance Search Intent Metadata Engine
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

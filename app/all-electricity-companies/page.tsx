@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Browse Pakistan electricity distribution companies including MEPCO, LESCO, FESCO, GEPCO, HESCO, PESCO, QESCO and IESCO. Start with MEPCO bill check and related tools.",
   alternates: {
     canonical:
-      "https://mepco-website-jx8g.vercel.app/all-electricity-companies",
+      "https://mepcoonlinebill.net/all-electricity-companies",
   },
   robots: {
     index: true,

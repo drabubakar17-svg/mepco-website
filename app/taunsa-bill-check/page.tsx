@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: `MEPCO Taunsa Bill Check Online ${currentYear} | Duplicate Bill`,
   description: `Check your MEPCO Taunsa electricity bill online for ${currentYear}. Download duplicate bills, print latest invoices, and view billing details using your 14-digit reference number.`,
   alternates: {
-    canonical: "https://mepco-website-jx8g.vercel.app/taunsa-bill-check",
+    canonical: "https://mepcoonlinebill.net/taunsa-bill-check",
   },
   keywords: [
     "MEPCO Taunsa bill",
@@ -28,7 +28,7 @@ export default function TaunsaBillCheckPage() {
     "@graph": [
       {
         "@type": "GovernmentService",
-        "@id": "https://mepco-website-jx8g.vercel.app/taunsa-bill-check#service",
+        "@id": "https://mepcoonlinebill.net/taunsa-bill-check#service",
         name: "MEPCO Taunsa Online Bill Checking",
         serviceType: "Electricity Bill Utilities",
         provider: {
@@ -44,7 +44,7 @@ export default function TaunsaBillCheckPage() {
       },
       {
         "@type": "HowTo",
-        "@id": "https://mepco-website-jx8g.vercel.app/taunsa-bill-check#howto",
+        "@id": "https://mepcoonlinebill.net/taunsa-bill-check#howto",
         name: "How to Check Your MEPCO Taunsa Bill Online",
         description: "Follow these steps to view and download your duplicate MEPCO electricity bill online.",
         step: [
@@ -76,7 +76,7 @@ export default function TaunsaBillCheckPage() {
       },
       {
         "@type": "FAQPage",
-        "@id": "https://mepco-website-jx8g.vercel.app/taunsa-bill-check#faq",
+        "@id": "https://mepcoonlinebill.net/taunsa-bill-check#faq",
         mainEntity: [
           {
             "@type": "Question",

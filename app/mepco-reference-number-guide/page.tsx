@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   title: "MEPCO Reference Number Guide | 14 Digit Bill Number",
   description: "Learn exactly where to find your 14-digit MEPCO reference number on your utility bill. Step-by-step guide to check, print, and download your duplicate MEPCO bill online.",
   alternates: {
-    canonical: "https://mepco-website-jx8g.vercel.app/mepco-reference-number-guide",
+    canonical: "https://mepcoonlinebill.net/mepco-reference-number-guide",
   },
   openGraph: {
     title: "MEPCO Reference Number Guide | 14 Digit Bill Number",
     description: "Find your 14-digit MEPCO reference number easily and check your duplicate electricity bill online.",
-    url: "https://mepco-website-jx8g.vercel.app/mepco-reference-number-guide",
+    url: "https://mepcoonlinebill.net/mepco-reference-number-guide",
     type: "article",
   },
 };
@@ -34,21 +34,21 @@ export default function MepcoReferenceNumberGuidePage() {
             "position": 1,
             "name": "Locate Bill Copy",
             "text": "Take an old or current MEPCO electricity bill copy.",
-            "url": "https://mepco-website-jx8g.vercel.app/mepco-reference-number-guide#locate"
+            "url": "https://mepcoonlinebill.net/mepco-reference-number-guide#locate"
           },
           {
             "@type": "HowToStep",
             "position": 2,
             "name": "Find 14-Digit Number",
             "text": "Look at the top section, usually below or next to the Consumer Name / Customer ID, to find the 14-digit reference number.",
-            "url": "https://mepco-website-jx8g.vercel.app/mepco-reference-number-guide#find"
+            "url": "https://mepcoonlinebill.net/mepco-reference-number-guide#find"
           },
           {
             "@type": "HowToStep",
             "position": 3,
             "name": "Enter on Bill Check Page",
             "text": "Go to the MEPCO online bill check portal and input the 14 digits without spaces or hyphens.",
-            "url": "https://mepco-website-jx8g.vercel.app/"
+            "url": "https://mepcoonlinebill.net/"
           }
         ]
       },

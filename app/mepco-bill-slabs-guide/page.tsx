@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Understand MEPCO bill slabs, electricity unit price variations, protected and unprotected consumer rules, FPA, GST and tariff updates.",
   alternates: {
-    canonical: "https://mepco-website-jx8g.vercel.app/mepco-bill-slabs-guide",
+    canonical: "https://mepcoonlinebill.net/mepco-bill-slabs-guide",
   },
   robots: {
     index: true,

@@ -54,13 +54,13 @@ export const metadata: Metadata = {
   description:
     "MEPCO bill taxes explained in simple English and Urdu. Learn GST, FPA, QTA, FC surcharge, PTV fee, electricity duty, fixed charges and why your MEPCO bill is high.",
   alternates: {
-    canonical: "https://mepco-website-jx8g.vercel.app/mepco-taxes-explained",
+    canonical: "https://mepcoonlinebill.net/mepco-taxes-explained",
   },
   openGraph: {
     title: `MEPCO Taxes Explained ${currentYear}`,
     description:
       "Understand MEPCO bill taxes, FPA, GST, QTA, fixed charges and Urdu explanation of why electricity bill increases.",
-    url: "https://mepco-website-jx8g.vercel.app/mepco-taxes-explained",
+    url: "https://mepcoonlinebill.net/mepco-taxes-explained",
     type: "article",
   },
   robots: {
