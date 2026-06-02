@@ -942,6 +942,41 @@ onKeyDown={(e) => {
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">Tariff Guide</h3>
   <p className="mt-3 text-sm leading-6 text-gray-600">Understand residential, commercial and industrial tariff categories.</p>
 </a>
+<a href="/mepco-security-deposit" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🏦</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Security Deposit Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Learn security deposit rules, refund process and new connection requirements.</p>
+</a>
+
+<a href="/mepco-bill-correction-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">✏️</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Correction Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Fix incorrect charges, billing errors and consumer billing issues.</p>
+</a>
+
+<a href="/mepco-bill-not-received-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📭</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Not Received Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">What to do when your monthly electricity bill is not delivered.</p>
+</a>
+
+<a href="/mepco-transformer-complaint-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🔌</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Transformer Complaint Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Report transformer faults, outages and electricity supply problems.</p>
+</a>
+
+<a href="/mepco-bill-calculator" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🧮</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Calculator</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Estimate electricity charges using MEPCO bill calculator tools.</p>
+</a>
+
+<a href="/mepco-bill-urdu" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🇵🇰</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Urdu Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Complete MEPCO bill guide in Urdu for Pakistani consumers.</p>
+</a>
     </div>
   </div>
 </section>
