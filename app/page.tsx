@@ -907,6 +907,41 @@ onKeyDown={(e) => {
         <h3 className="mt-4 text-xl font-black text-[#005b2e]">New Connection Guide</h3>
         <p className="mt-3 text-sm leading-6 text-gray-600">Apply for a new MEPCO electricity connection and track application status.</p>
       </a>
+<a href="/mepco-bill-payment-methods-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">💳</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Payment Methods Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Learn online bill payment through banks, apps and wallets.</p>
+</a>
+
+<a href="/mepco-name-change-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📝</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Name Change Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Transfer electricity connection ownership and update bill records.</p>
+</a>
+
+<a href="/mepco-demand-notice-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📨</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Demand Notice Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Understand demand notice fees, validity and payment process.</p>
+</a>
+
+<a href="/mepco-load-extension-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">⚙️</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Load Extension Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Increase sanctioned load for home, shop or commercial use.</p>
+</a>
+
+<a href="/mepco-net-metering-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">☀️</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Net Metering Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Sell solar energy and understand net metering requirements.</p>
+</a>
+
+<a href="/mepco-tariff-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📈</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Tariff Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Understand residential, commercial and industrial tariff categories.</p>
+</a>
     </div>
   </div>
 </section>
