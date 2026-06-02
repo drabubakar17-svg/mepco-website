@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical:
-      "https://mepco-website-jx8g.vercel.app/mepco-disconnection-reconnection-guide",
+      "https://mepcoonlinebill.net/mepco-disconnection-reconnection-guide",
   },
 };
 
