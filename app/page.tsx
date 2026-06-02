@@ -835,7 +835,43 @@ onKeyDown={(e) => {
       </p>
     </div>
 
-    <div className="mt-10 grid gap-5 md:grid-cols-3 lg:grid-cols-6">
+       <div className="mt-10 grid gap-5 md:grid-cols-3 lg:grid-cols-4">
+      <a href="/mepco-duplicate-bill-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">📄</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Duplicate Bill Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Download, print and save your MEPCO duplicate bill online.</p>
+      </a>
+
+      <a href="/mepco-bill-due-date-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">📅</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Due Date Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Check bill due date, late fee and amount after due date.</p>
+      </a>
+
+      <a href="/mepco-bill-installment-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">💰</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Installment Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Learn how to request installment relief for a high MEPCO bill.</p>
+      </a>
+
+      <a href="/mepco-meter-reading-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">⚡</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Meter Reading Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Read your electricity meter and calculate monthly units.</p>
+      </a>
+
+      <a href="/mepco-meter-complaint-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">🔧</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Meter Complaint Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Report wrong reading, fast meter, damaged meter or display issue.</p>
+      </a>
+
+      <a href="/mepco-wrong-bill-solution" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">❌</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Wrong Bill Solution</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Fix overbilling, wrong reading, arrears or unexpected charges.</p>
+      </a>
+
       <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
         <div className="text-4xl">🔢</div>
         <h3 className="mt-4 text-xl font-black text-[#005b2e]">Reference Number Guide</h3>
@@ -859,16 +895,18 @@ onKeyDown={(e) => {
         <h3 className="mt-4 text-xl font-black text-[#005b2e]">Taxes Explained</h3>
         <p className="mt-3 text-sm leading-6 text-gray-600">Learn GST, FPA, QTA, fixed charges and other bill items.</p>
       </a>
-<a href="/mepco-bill-slabs-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">⚡</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Slabs Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Understand unit rates and electricity bill slabs.</p>
-</a>
-<a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🔌</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">New Connection Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Apply for a new MEPCO electricity connection and track application status.</p>
-</a>
+
+      <a href="/mepco-bill-slabs-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">📊</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Slabs Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Understand unit rates and electricity bill slabs.</p>
+      </a>
+
+      <a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+        <div className="text-4xl">🔌</div>
+        <h3 className="mt-4 text-xl font-black text-[#005b2e]">New Connection Guide</h3>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Apply for a new MEPCO electricity connection and track application status.</p>
+      </a>
     </div>
   </div>
 </section>
