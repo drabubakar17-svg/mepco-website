@@ -786,6 +786,36 @@ onKeyDown={(e) => {
   </div>
 
 </div>
+</div>
+
+<div className="mt-4 rounded-2xl border border-orange-200 bg-orange-50 p-4">
+  <h4 className="font-black text-orange-800">
+    ⚡ 200 Unit Danger Meter
+  </h4>
+
+  <p className="mt-2 text-sm font-semibold text-orange-700">
+    English:{" "}
+    {200 - consumedUnits > 0
+      ? `${200 - consumedUnits} units left before 200-unit threshold`
+      : "200-unit threshold crossed"}
+  </p>
+
+  <p className="mt-1 text-sm font-semibold text-orange-700">
+    اردو:{" "}
+    {200 - consumedUnits > 0
+      ? `200 یونٹ کی حد تک ${200 - consumedUnits} یونٹ باقی ہیں`
+      : "آپ 200 یونٹ کی حد عبور کر چکے ہیں"}
+  </p>
+
+  <p className="mt-1 text-sm font-semibold text-orange-700">
+    Roman Urdu:{" "}
+    {200 - consumedUnits > 0
+      ? `Sirf ${200 - consumedUnits} units baqi hain`
+      : "Aap 200 units cross kar chukay hain"}
+  </p>
+</div>
+
+<div className="mt-8 space-y-5">
              <div className="mt-8 space-y-5">
   <div className="flex items-center justify-between">
     <span className="text-gray-600">Electricity Charges</span>
