@@ -34,8 +34,55 @@ const clock = setInterval(() => {
 }, []);
 
 const cleanRef = refNumber.replace(/\D/g, "");
- const estimatedBill = useMemo(() => {
-  const u = Number(units || 0);
+
+const consumedUnits = Number(units || 0);
+
+const slabStatus = useMemo(() => {
+  if (consumedUnits <= 0) {
+    return {
+      title: "Enter Units",
+      urdu: "یونٹ درج کریں",
+      roman: "Units enter karein",
+      message: "Enter consumed units to check estimated bill and slab status.",
+      alert: false,
+      color: "bg-gray-50 text-gray-700 border-gray-200",
+    };
+  }
+
+  if (consumedUnits <= 200) {
+    return {
+      title: "Protected Range",
+      urdu: "محفوظ حد",
+      roman: "Protected range mein hain",
+      message: `Only ${200 - consumedUnits} units left before 200 units limit.`,
+      alert: consumedUnits >= 180,
+      color: "bg-green-50 text-green-800 border-green-200",
+    };
+  }
+
+  if (consumedUnits <= 300) {
+    return {
+      title: "Unprotected Slab Alert",
+      urdu: "غیر محفوظ سلیب الرٹ",
+      roman: "200 units cross ho gaye hain",
+      message: "You crossed 200 units. Your bill may increase due to slab change.",
+      alert: true,
+      color: "bg-yellow-50 text-yellow-800 border-yellow-200",
+    };
+  }
+
+  return {
+    title: "High Usage Alert",
+    urdu: "زیادہ استعمال الرٹ",
+    roman: "Bijli ka istemal zyada ho raha hai",
+    message: "High summer usage detected. AC and peak-hour usage may increase your bill.",
+    alert: true,
+    color: "bg-red-50 text-red-800 border-red-200",
+  };
+}, [consumedUnits]);
+
+const estimatedBill = useMemo(() => {
+  const u = consumedUnits;
 
   const energy =
     u <= 100
@@ -48,11 +95,9 @@ const cleanRef = refNumber.replace(/\D/g, "");
 
   const fpa = u * 3.5;
 
-  const fixedCharges =
-    u > 0 ? 250 : 0;
+  const fixedCharges = u > 0 ? 250 : 0;
 
-  const gst =
-    (energy + fpa + fixedCharges) * 0.18;
+  const gst = (energy + fpa + fixedCharges) * 0.18;
 
   return {
     energy: Math.round(energy),
@@ -66,8 +111,7 @@ const cleanRef = refNumber.replace(/\D/g, "");
       gst
     ),
   };
-}, [units]);
-
+}, [consumedUnits]);
  const checkBill = () => {
   if (cleanRef.length !== 14) {
     alert("Please enter a valid 14-digit reference number");
@@ -729,7 +773,44 @@ onKeyDown={(e) => {
     <span className="text-gray-600">Electricity Charges</span>
     <span className="text-xl font-black">Rs. {estimatedBill.energy}</span>
   </div>
+<div className={`mb-5 rounded-2xl border p-4 ${slabStatus.color}`}>
+  <h4 className="text-lg font-black">{slabStatus.title}</h4>
 
+  <p className="mt-1 text-sm font-bold">
+    {slabStatus.urdu}
+  </p>
+
+  <p className="mt-1 text-sm font-semibold">
+    {slabStatus.roman}
+  </p>
+
+  <p className="mt-2 text-sm leading-6">
+    {slabStatus.message}
+  </p>
+</div>
+
+{slabStatus.alert && (
+  <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800">
+    <h4 className="text-lg font-black">⚠️ Slab Warning</h4>
+
+    <p className="mt-1 text-sm font-bold">
+      اردو: 200 یونٹ سے اوپر جانے پر بل زیادہ آ سکتا ہے۔
+    </p>
+
+    <p className="mt-1 text-sm font-semibold">
+      Roman Urdu: 200 units cross honay par bill zyada aa sakta hai.
+    </p>
+
+    <p className="mt-2 text-sm leading-6">
+      English: Reduce AC usage during peak hours (7 PM - 11 PM).
+    </p>
+  </div>
+)}
+
+<div className="flex items-center justify-between">
+  <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
+  <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
+</div>
   <div className="flex items-center justify-between">
     <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
     <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
