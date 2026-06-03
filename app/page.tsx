@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 export default function Home() {
   const [refNumber, setRefNumber] = useState("");
   const [units, setUnits] = useState("");
+const [acHours, setAcHours] = useState("8");
+const [acType, setAcType] = useState("inverter");
 const [menuOpen, setMenuOpen] = useState(false);
 const [siteLoading, setSiteLoading] = useState(true);
 const [checkingBill, setCheckingBill] = useState(false);
@@ -112,6 +114,20 @@ const estimatedBill = useMemo(() => {
     ),
   };
 }, [consumedUnits]);
+const acEstimate = useMemo(() => {
+  const hours = Number(acHours || 0);
+
+  const unitsPerHour = acType === "inverter" ? 1.2 : 2.2;
+
+  const monthlyUnits = hours * unitsPerHour * 30;
+
+  const estimatedCost = monthlyUnits * 55;
+
+  return {
+    monthlyUnits: Math.round(monthlyUnits),
+    estimatedCost: Math.round(estimatedCost),
+  };
+}, [acHours, acType]);
  const checkBill = () => {
   if (cleanRef.length !== 14) {
     alert("Please enter a valid 14-digit reference number");
@@ -880,6 +896,52 @@ onKeyDown={(e) => {
       Rs. {estimatedBill.total}
     </span>
   </div>
+<div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-5">
+  <h4 className="text-xl font-black text-blue-900">
+    ❄️ AC Cost Calculator
+  </h4>
+
+  <p className="mt-2 text-sm font-bold text-blue-800">
+    English: Estimated monthly AC electricity usage
+  </p>
+
+  <p className="mt-1 text-sm font-bold text-blue-800">
+    اردو: اے سی کا متوقع ماہانہ بجلی خرچ
+  </p>
+
+  <p className="mt-1 text-sm font-semibold text-blue-700">
+    Roman Urdu: AC ka andaza shuda mahana bill
+  </p>
+
+  <div className="mt-4 grid gap-3 md:grid-cols-2">
+    <input
+      type="number"
+      value={acHours}
+      onChange={(e) => setAcHours(e.target.value)}
+      placeholder="Daily AC Hours"
+      className="rounded-xl border border-blue-200 p-3"
+    />
+
+    <select
+      value={acType}
+      onChange={(e) => setAcType(e.target.value)}
+      className="rounded-xl border border-blue-200 p-3"
+    >
+      <option value="inverter">Inverter AC</option>
+      <option value="non-inverter">Non Inverter AC</option>
+    </select>
+  </div>
+
+  <div className="mt-4 space-y-2">
+    <p className="font-bold text-blue-900">
+      Monthly Units: {acEstimate.monthlyUnits}
+    </p>
+
+    <p className="text-xl font-black text-blue-900">
+      Estimated Cost: Rs. {acEstimate.estimatedCost}
+    </p>
+  </div>
+</div>
 
   <p className="text-sm text-gray-500">
     This is only an estimate. Final bill may include QTA, PTV fee,
