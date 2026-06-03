@@ -82,7 +82,35 @@ const slabStatus = useMemo(() => {
     color: "bg-red-50 text-red-800 border-red-200",
   };
 }, [consumedUnits]);
+const consumerStatus = useMemo(() => {
+  if (consumedUnits <= 0) {
+    return {
+      title: "Consumer Status",
+      urdu: "صارف کی حیثیت",
+      roman: "Consumer status",
+      status: "Enter Units",
+      color: "bg-gray-50 border-gray-200 text-gray-700",
+    };
+  }
 
+  if (consumedUnits <= 200) {
+    return {
+      title: "Protected Consumer",
+      urdu: "محفوظ صارف",
+      roman: "Mahfooz Sarif",
+      status: "Protected",
+      color: "bg-green-50 border-green-200 text-green-800",
+    };
+  }
+
+  return {
+    title: "Unprotected Consumer",
+    urdu: "غیر محفوظ صارف",
+    roman: "Ghair Mahfooz Sarif",
+    status: "Unprotected",
+    color: "bg-red-50 border-red-200 text-red-800",
+  };
+}, [consumedUnits]);
 const estimatedBill = useMemo(() => {
   const u = consumedUnits;
 
@@ -830,7 +858,23 @@ onKeyDown={(e) => {
       : "Aap 200 units cross kar chukay hain"}
   </p>
 </div>
+<div className={`mt-4 rounded-2xl border p-4 ${consumerStatus.color}`}>
+  <h4 className="font-black">
+    🛡️ {consumerStatus.title}
+  </h4>
 
+  <p className="mt-2 text-sm font-bold">
+    اردو: {consumerStatus.urdu}
+  </p>
+
+  <p className="mt-1 text-sm font-semibold">
+    Roman Urdu: {consumerStatus.roman}
+  </p>
+
+  <p className="mt-2 text-sm leading-6">
+    Status: {consumerStatus.status}
+  </p>
+</div>
 <div className="mt-8 space-y-5">
              <div className="mt-8 space-y-5">
   <div className="flex items-center justify-between">
