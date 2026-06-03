@@ -142,6 +142,29 @@ const estimatedBill = useMemo(() => {
     ),
   };
 }, [consumedUnits]);
+const billShock = useMemo(() => {
+  const futureUnits = consumedUnits + 20;
+
+  const futureEnergy =
+    futureUnits <= 100
+      ? futureUnits * 30
+      : futureUnits <= 200
+      ? futureUnits * 38
+      : futureUnits <= 300
+      ? futureUnits * 45
+      : futureUnits * 55;
+
+  const futureFpa = futureUnits * 3.5;
+  const futureFixed = futureUnits > 0 ? 250 : 0;
+  const futureTax = (futureEnergy + futureFpa + futureFixed) * 0.18;
+
+  const futureTotal = futureEnergy + futureFpa + futureFixed + futureTax;
+
+  return {
+    futureUnits,
+    increase: Math.max(0, Math.round(futureTotal - estimatedBill.total)),
+  };
+}, [consumedUnits, estimatedBill.total]);
 const acEstimate = useMemo(() => {
   const hours = Number(acHours || 0);
 
@@ -827,9 +850,8 @@ onKeyDown={(e) => {
       }}
     ></div>
 
-  </div>
+    </div>
 
-</div>
 </div>
 
 <div className="mt-4 rounded-2xl border border-orange-200 bg-orange-50 p-4">
@@ -875,9 +897,29 @@ onKeyDown={(e) => {
     Status: {consumerStatus.status}
   </p>
 </div>
-<div className="mt-8 space-y-5">
-             <div className="mt-8 space-y-5">
-  <div className="flex items-center justify-between">
+<div className="mt-4 rounded-2xl border border-purple-200 bg-purple-50 p-4">
+  <h4 className="font-black text-purple-900">
+    📈 Bill Shock Predictor
+  </h4>
+
+  <p className="mt-2 text-sm font-bold text-purple-800">
+    English: If you use 20 more units, your bill may increase by approximately Rs. {billShock.increase}
+  </p>
+
+  <p className="mt-1 text-sm font-bold text-purple-800">
+    اردو: اگر آپ مزید 20 یونٹ استعمال کریں تو بل تقریباً Rs. {billShock.increase} بڑھ سکتا ہے۔
+  </p>
+
+  <p className="mt-1 text-sm font-semibold text-purple-700">
+    Roman Urdu: Agar aap 20 units aur use karein to bill taqreeban Rs. {billShock.increase} barh sakta hai.
+  </p>
+
+  <p className="mt-2 text-sm text-purple-700">
+    Future Units: {billShock.futureUnits}
+  </p>
+</div>
+
+<div className="mt-8 space-y-5">  <div className="flex items-center justify-between">
     <span className="text-gray-600">Electricity Charges</span>
     <span className="text-xl font-black">Rs. {estimatedBill.energy}</span>
   </div>
@@ -919,10 +961,6 @@ onKeyDown={(e) => {
   <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
   <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
 </div>
-  <div className="flex items-center justify-between">
-    <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
-    <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
-  </div>
 
   <div className="flex items-center justify-between">
     <span className="text-gray-600">Fixed Charges</span>
@@ -995,9 +1033,7 @@ onKeyDown={(e) => {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-16">
+      </section>      <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="relative overflow-hidden rounded-[35px] bg-gradient-to-br from-[#005b2e] via-[#007a3d] to-[#00994d] p-10 text-white shadow-2xl">
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
