@@ -977,6 +977,29 @@ onKeyDown={(e) => {
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">Urdu Guide</h3>
   <p className="mt-3 text-sm leading-6 text-gray-600">Complete MEPCO bill guide in Urdu for Pakistani consumers.</p>
 </a>
+<a href="/mepco-complaint-tracking-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📋</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Complaint Tracking Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Track complaint status and understand MEPCO complaint resolution process.</p>
+</a>
+
+<a href="/mepco-disconnection-reconnection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">🔄</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Disconnection & Reconnection</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Learn disconnection reasons, restoration process and reconnection rules.</p>
+</a>
+
+<a href="/mepco-load-shedding-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">⚡</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Load Shedding Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Understand outages, feeder shutdowns and electricity interruption issues.</p>
+</a>
+
+<a href="/mepco-change-of-tariff-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
+  <div className="text-4xl">📈</div>
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Change of Tariff Guide</h3>
+  <p className="mt-3 text-sm leading-6 text-gray-600">Convert domestic, commercial and other tariff categories correctly.</p>
+</a>
     </div>
   </div>
 </section>
