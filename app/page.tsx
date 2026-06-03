@@ -300,6 +300,25 @@ if (siteLoading) {
     __html: JSON.stringify(faqSchema),
   }}
 />
+<style jsx global>{`
+  @keyframes floatingCalculator {
+    0% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .floating-calculator-card {
+    animation: floatingCalculator 4s ease-in-out infinite;
+  }
+`}</style>
 <div className="bg-[#00311a] text-white border-b border-white/10">
 
   <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-xs md:text-sm">
@@ -746,8 +765,7 @@ onKeyDown={(e) => {
               />
             </div>
 
-           <div className="rounded-3xl border border-white/40 bg-white/70 backdrop-blur-xl p-8 shadow-2xl transition duration-300 hover:scale-[1.01] hover:shadow-[0_20px_60px_rgba(0,91,46,0.18)]">
-              <h3 className="text-2xl font-black text-[#005b2e]">Estimated Charges</h3>
+          <div className="floating-calculator-card rounded-3xl border border-green-100 bg-white/85 backdrop-blur-xl p-8 shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-[0_25px_70px_rgba(0,91,46,0.25)]">
 
 <div className="mt-6">
 
