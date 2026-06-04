@@ -749,16 +749,35 @@ onKeyDown={(e) => {
 
   </div>
 </section>
-<section className="mx-auto max-w-7xl px-5 py-6">
-  <div className="rounded-3xl border-2 border-dashed border-green-200 bg-white p-8 text-center shadow-sm">
-    <p className="text-sm font-bold uppercase tracking-widest text-gray-400">
-      Advertisement
-    </p>
-    <p className="mt-2 text-gray-500">
-      Google AdSense banner space
-    </p>
+<section className="mx-auto max-w-7xl px-5 py-6" aria-label="Advertisement">
+  <div className="overflow-hidden rounded-3xl border border-green-100 bg-white shadow-lg">
+
+    <div className="border-b border-green-100 bg-[#f4f8f5] px-5 py-3">
+      <p className="text-center text-xs font-black uppercase tracking-widest text-gray-400">
+        Advertisement
+      </p>
+    </div>
+
+    <div className="flex min-h-[120px] items-center justify-center p-8">
+      <div className="w-full rounded-2xl border-2 border-dashed border-green-200 bg-[#f8fcf9] p-6 text-center">
+
+        <div className="mb-3 text-4xl">
+          📢
+        </div>
+
+        <h3 className="text-lg font-black text-[#005b2e]">
+          Google AdSense Space
+        </h3>
+
+        <p className="mt-2 text-sm leading-7 text-gray-600">
+          Responsive advertisement will appear here after AdSense approval.
+        </p>
+
+      </div>
+    </div>
+
   </div>
-</section>   <section id="services" className="mx-auto max-w-7xl px-5 py-16">
+</section>  <section id="services" className="mx-auto max-w-7xl px-5 py-16">
         <h2 className="text-center text-4xl font-black text-[#8B0000]">Online MEPCO Services</h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-gray-600">
           Useful electricity bill tools and information for MEPCO consumers.
