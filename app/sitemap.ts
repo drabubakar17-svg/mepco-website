@@ -7,6 +7,18 @@ const pages = [
 
   // Core Tools
   "/mepco-bill-calculator",
+  "/mepco-solar-savings-calculator",
+
+  // Authority Pages
+  "/mepco-bill-check-by-cnic",
+  "/mepco-200-units-rule",
+  "/mepco-fpa-charges-guide",
+  "/mepco-qta-charges-guide",
+  "/mepco-protected-consumer-guide",
+  "/mepco-unprotected-consumer-guide",
+  "/mepco-bill-increased-guide",
+  "/mepco-application-forms-guide",
+  "/mepco-change-of-tariff-guide",
 
   // Main Guides
   "/mepco-bill-urdu",
