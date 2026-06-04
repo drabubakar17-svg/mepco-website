@@ -441,14 +441,13 @@ if (siteLoading) {
 
           <div className="hidden gap-7 text-sm font-bold md:flex">
   </div>
-
 <button
   onClick={() => setMenuOpen(!menuOpen)}
+  aria-label="Open mobile menu"
   className="md:hidden text-3xl"
 >
   ☰
-</button>
-            <nav className="hidden gap-7 text-sm font-bold md:flex">
+</button>            <nav className="hidden gap-7 text-sm font-bold md:flex">
   <a href="#bill" className="hover:text-green-200">Check Bill</a>
   <a href="#services" className="hover:text-green-200">Services</a>
   <a href="#calculator" className="hover:text-green-200">Calculator</a>
@@ -460,37 +459,29 @@ if (siteLoading) {
 
 {menuOpen && (
   <div className="md:hidden border-t border-white/10 bg-[#005b2e] px-5 py-5 text-white">
-
     <div className="flex flex-col gap-5 font-bold">
 
-      <a href="#bill">Check Bill</a>
+      <a href="#bill" onClick={() => setMenuOpen(false)}>
+        Check Bill
+      </a>
 
-      <a href="#services">Services</a>
+      <a href="#services" onClick={() => setMenuOpen(false)}>
+        Services
+      </a>
 
-      <a href="#calculator">Calculator</a>
+      <a href="#calculator" onClick={() => setMenuOpen(false)}>
+        Calculator
+      </a>
 
-      <a href="#faq">FAQs</a>
+      <a href="#faq" onClick={() => setMenuOpen(false)}>
+        FAQs
+      </a>
 
     </div>
-
   </div>
 )}
-      </header>
-<div className="border-y border-yellow-200 bg-yellow-50">
 
-  <div className="mx-auto flex max-w-7xl items-center gap-3 px-5 py-3 text-sm font-semibold text-[#7a5a00]">
-
-    <span className="text-lg">⚠️</span>
-
-   <div className="overflow-hidden whitespace-nowrap">
-  <div className="animate-pulse">
-    Important Notice: Consumers are advised to pay electricity bills before due date to avoid surcharge. Use only official reference number while checking duplicate bills online.
-  </div>
-</div>
-
-  </div>
-
-</div>
+</header>
 
       <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#eef8f1] to-[#dcefe5]">
 {/* BACKGROUND WATERMARK LOGO */}
