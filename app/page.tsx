@@ -1353,6 +1353,21 @@ onKeyDown={(e) => {
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">Change of Tariff Guide</h3>
   <p className="mt-3 text-sm leading-6 text-gray-600">Convert domestic, commercial and other tariff categories correctly.</p>
 </a>
+<a
+  href="/mepco-bill-check-by-cnic"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">🆔</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    Bill Check By CNIC Guide
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn whether MEPCO bill can be checked by CNIC, alternative methods,
+    reference number requirements and consumer safety tips.
+  </p>
+</a>
 <a href="/mepco-application-forms-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
   <div className="text-4xl">📄</div>
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">
