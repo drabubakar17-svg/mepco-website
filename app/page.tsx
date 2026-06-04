@@ -7,6 +7,8 @@ export default function Home() {
   const [units, setUnits] = useState("");
 const [acHours, setAcHours] = useState("8");
 const [acType, setAcType] = useState("inverter");
+const [applianceHours, setApplianceHours] = useState("5");
+const [applianceType, setApplianceType] = useState("fan");
 const [menuOpen, setMenuOpen] = useState(false);
 const [siteLoading, setSiteLoading] = useState(true);
 const [checkingBill, setCheckingBill] = useState(false);
@@ -179,6 +181,31 @@ const acEstimate = useMemo(() => {
     estimatedCost: Math.round(estimatedCost),
   };
 }, [acHours, acType]);
+const applianceEstimate = useMemo(() => {
+  const hours = Number(applianceHours || 0);
+
+  const wattsMap: Record<string, number> = {
+    fan: 80,
+    fridge: 180,
+    iron: 1000,
+    waterMotor: 750,
+    airCooler: 250,
+    tv: 120,
+    washingMachine: 500,
+  };
+
+  const watts = wattsMap[applianceType] || 80;
+
+  const dailyUnits = (watts * hours) / 1000;
+  const monthlyUnits = dailyUnits * 30;
+  const estimatedCost = monthlyUnits * 55;
+
+  return {
+    watts,
+    monthlyUnits: Math.round(monthlyUnits),
+    estimatedCost: Math.round(estimatedCost),
+  };
+}, [applianceHours, applianceType]);
  const checkBill = () => {
   if (cleanRef.length !== 14) {
     alert("Please enter a valid 14-digit reference number");
@@ -1021,6 +1048,61 @@ onKeyDown={(e) => {
 
     <p className="text-xl font-black text-blue-900">
       Estimated Cost: Rs. {acEstimate.estimatedCost}
+    </p>
+  </div>
+</div>
+<div className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-5">
+  <h4 className="text-xl font-black text-green-900">
+    ⚡ Appliance Electricity Cost Calculator
+  </h4>
+
+  <p className="mt-2 text-sm font-bold text-green-800">
+    English: Calculate monthly electricity cost of home appliances
+  </p>
+
+  <p className="mt-1 text-sm font-bold text-green-800">
+    اردو: گھریلو آلات کی ماہانہ بجلی لاگت معلوم کریں
+  </p>
+
+  <p className="mt-1 text-sm font-semibold text-green-700">
+    Roman Urdu: Ghar ke appliances ka mahana bijli kharcha check karein
+  </p>
+
+  <div className="mt-4 grid gap-3 md:grid-cols-2">
+    <input
+      type="number"
+      value={applianceHours}
+      onChange={(e) => setApplianceHours(e.target.value)}
+      placeholder="Daily Usage Hours"
+      className="rounded-xl border border-green-200 p-3"
+    />
+
+    <select
+      value={applianceType}
+      onChange={(e) => setApplianceType(e.target.value)}
+      className="rounded-xl border border-green-200 p-3"
+    >
+      <option value="fan">Ceiling Fan</option>
+      <option value="fridge">Refrigerator</option>
+      <option value="iron">Electric Iron</option>
+      <option value="waterMotor">Water Motor</option>
+      <option value="airCooler">Air Cooler</option>
+      <option value="tv">Television</option>
+      <option value="washingMachine">Washing Machine</option>
+    </select>
+  </div>
+
+  <div className="mt-4 space-y-2">
+    <p className="font-bold text-green-900">
+      Appliance Power: {applianceEstimate.watts} Watts
+    </p>
+
+    <p className="font-bold text-green-900">
+      Monthly Units: {applianceEstimate.monthlyUnits}
+    </p>
+
+    <p className="text-xl font-black text-green-900">
+      Estimated Cost: Rs. {applianceEstimate.estimatedCost}
     </p>
   </div>
 </div>
