@@ -748,7 +748,6 @@ onKeyDown={(e) => {
     </div>
 
   </div>
-
 </section>
 <section className="mx-auto max-w-7xl px-5 py-6">
   <div className="rounded-3xl border-2 border-dashed border-green-200 bg-white p-8 text-center shadow-sm">
@@ -759,8 +758,7 @@ onKeyDown={(e) => {
       Google AdSense banner space
     </p>
   </div>
-</section>
-      <section id="services" className="mx-auto max-w-7xl px-5 py-16">
+</section>   <section id="services" className="mx-auto max-w-7xl px-5 py-16">
         <h2 className="text-center text-4xl font-black text-[#8B0000]">Online MEPCO Services</h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-gray-600">
           Useful electricity bill tools and information for MEPCO consumers.
