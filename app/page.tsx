@@ -1408,6 +1408,51 @@ onKeyDown={(e) => {
   </p>
 </a>
 <a
+  href="/mepco-protected-consumer-guide"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">🛡️</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    Protected Consumer Guide
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn protected consumer meaning, 200 units connection, bill impact,
+    and protected vs unprotected consumer categories.
+  </p>
+</a>
+<a
+  href="/mepco-unprotected-consumer-guide"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">⚠️</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    Unprotected Consumer Guide
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn what unprotected consumer means, why bills increase after crossing
+    usage limits, and how consumer status affects electricity charges.
+  </p>
+</a>
+<a
+  href="/mepco-bill-increased-guide"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">📈</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    Why My Bill Increased?
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn why your MEPCO bill suddenly increased, including units, slabs,
+    FPA, QTA, taxes, arrears and 200 units rule impact.
+  </p>
+</a>
+<a
   href="/mepco-fpa-charges-guide"
   className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
 >
