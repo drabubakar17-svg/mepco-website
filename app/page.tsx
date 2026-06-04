@@ -1368,6 +1368,21 @@ onKeyDown={(e) => {
     reference number requirements and consumer safety tips.
   </p>
 </a>
+<a
+  href="/mepco-200-units-rule"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">⚡</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    200 Units Rule Guide
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn protected consumer status, 200 unit limit, slab impact,
+    bill increase reasons and electricity saving tips.
+  </p>
+</a>
 <a href="/mepco-application-forms-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
   <div className="text-4xl">📄</div>
   <h3 className="mt-4 text-xl font-black text-[#005b2e]">
