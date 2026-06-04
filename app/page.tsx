@@ -1392,6 +1392,21 @@ onKeyDown={(e) => {
     New connection, name change, load extension, tariff change and complaint forms.
   </p>
 </a>
+<a
+  href="/mepco-fpa-charges-guide"
+  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
+>
+  <div className="text-4xl">🧾</div>
+
+  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
+    FPA Charges Guide
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-600">
+    Learn what Fuel Price Adjustment means, why it appears on bills,
+    and how FPA can affect your monthly electricity charges.
+  </p>
+</a>
     </div>
   </div>
 </section>
