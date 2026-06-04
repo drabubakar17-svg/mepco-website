@@ -1489,6 +1489,52 @@ onKeyDown={(e) => {
     </div>
   </div>
 </section>
+<section className="bg-gradient-to-r from-yellow-50 to-green-50 py-16">
+  <div className="mx-auto max-w-7xl px-5">
+
+    <div className="rounded-3xl border border-yellow-200 bg-white p-8 shadow-xl">
+
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+
+        <div>
+          <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-black text-yellow-800">
+            ☀️ NEW SOLAR TOOL
+          </span>
+
+          <h2 className="mt-4 text-4xl font-black text-[#005b2e]">
+            Solar Savings Calculator
+          </h2>
+
+          <p className="mt-4 text-lg font-semibold text-gray-700">
+            English: Calculate solar savings, yearly return, net metering credits and payback period.
+          </p>
+
+          <p className="mt-3 text-lg font-semibold text-gray-700">
+            اردو: سولر بچت، سالانہ منافع، نیٹ میٹرنگ کریڈٹ اور پے بیک پیریڈ معلوم کریں۔
+          </p>
+
+          <p className="mt-3 text-lg font-semibold text-gray-700">
+            Roman Urdu: Solar saving, yearly munafa aur payback period check karein.
+          </p>
+
+        </div>
+
+        <div>
+          <a
+            href="/mepco-solar-savings-calculator"
+            className="inline-flex items-center rounded-2xl bg-[#005b2e] px-8 py-4 text-lg font-black text-white transition hover:bg-green-800"
+          >
+            Open Solar Calculator →
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 <section className="mx-auto max-w-7xl px-5 py-16">
 
   <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl">
