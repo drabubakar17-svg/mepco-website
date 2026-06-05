@@ -1,1904 +1,1352 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback, useRef } from "react";
+import Image from "next/image";
 
-export default function Home() {
-  const [refNumber, setRefNumber] = useState("");
-  const [units, setUnits] = useState("");
-const [acHours, setAcHours] = useState("8");
-const [acType, setAcType] = useState("inverter");
-const [applianceHours, setApplianceHours] = useState("5");
-const [applianceType, setApplianceType] = useState("fan");
-const [menuOpen, setMenuOpen] = useState(false);
-const [siteLoading, setSiteLoading] = useState(true);
-const [checkingBill, setCheckingBill] = useState(false);
-const [currentTime, setCurrentTime] = useState("");
-const [recentSearches, setRecentSearches] = useState<string[]>([]);
-useEffect(() => {
-  const savedRef = localStorage.getItem("mepco_reference_number");
+// ==================== TYPES ====================
+interface SlabInfo {
+  title: string;
+  urdu: string;
+  roman: string;
+  message: string;
+  alert: boolean;
+  color: string;
+  icon: string;
+}
 
-  if (savedRef) {
-    setRefNumber(savedRef);
-  }
-const savedSearches = JSON.parse(
-  localStorage.getItem("mepco_recent_searches") || "[]"
-);
+interface ConsumerInfo {
+  title: string;
+  urdu: string;
+  roman: string;
+  status: string;
+  color: string;
+}
 
-setRecentSearches(savedSearches);
-  const timer = setTimeout(() => {
-    setSiteLoading(false);
-  }, 1800);
-const clock = setInterval(() => {
-  setCurrentTime(new Date().toLocaleTimeString());
-}, 1000);
- return () => {
-  clearTimeout(timer);
-  clearInterval(clock);
-};
-}, []);
+interface BillBreakdown {
+  energy: number;
+  fpa: number;
+  fixedCharges: number;
+  tax: number;
+  total: number;
+}
 
-const cleanRef = refNumber.replace(/\D/g, "");
+interface CityItem {
+  name: string;
+  slug: string;
+  anchor: string;
+  title: string;
+  consumers: string;
+}
 
-const consumedUnits = Number(units || 0);
+interface GuideLink {
+  href: string;
+  icon: string;
+  title: string;
+  desc: string;
+  category: string;
+}
 
-const slabStatus = useMemo(() => {
-  if (consumedUnits <= 0) {
-    return {
-      title: "Enter Units",
-      urdu: "یونٹ درج کریں",
-      roman: "Units enter karein",
-      message: "Enter consumed units to check estimated bill and slab status.",
-      alert: false,
-      color: "bg-gray-50 text-gray-700 border-gray-200",
-    };
-  }
+// ==================== CONSTANTS ====================
+const SITE_NAME = "MEPCO Online Bill Check 2026";
+const SITE_URL  = "https://mepcoonlinebill.net";
+const HELPLINE  = "0800-63726";
+const FPA_RATE  = 3.5;
 
-  if (consumedUnits <= 200) {
-    return {
-      title: "Protected Range",
-      urdu: "محفوظ حد",
-      roman: "Protected range mein hain",
-      message: `Only ${200 - consumedUnits} units left before 200 units limit.`,
-      alert: consumedUnits >= 180,
-      color: "bg-green-50 text-green-800 border-green-200",
-    };
-  }
-
-  if (consumedUnits <= 300) {
-    return {
-      title: "Unprotected Slab Alert",
-      urdu: "غیر محفوظ سلیب الرٹ",
-      roman: "200 units cross ho gaye hain",
-      message: "You crossed 200 units. Your bill may increase due to slab change.",
-      alert: true,
-      color: "bg-yellow-50 text-yellow-800 border-yellow-200",
-    };
-  }
-
-  return {
-    title: "High Usage Alert",
-    urdu: "زیادہ استعمال الرٹ",
-    roman: "Bijli ka istemal zyada ho raha hai",
-    message: "High summer usage detected. AC and peak-hour usage may increase your bill.",
-    alert: true,
-    color: "bg-red-50 text-red-800 border-red-200",
-  };
-}, [consumedUnits]);
-const consumerStatus = useMemo(() => {
-  if (consumedUnits <= 0) {
-    return {
-      title: "Consumer Status",
-      urdu: "صارف کی حیثیت",
-      roman: "Consumer status",
-      status: "Enter Units",
-      color: "bg-gray-50 border-gray-200 text-gray-700",
-    };
-  }
-
-  if (consumedUnits <= 200) {
-    return {
-      title: "Protected Consumer",
-      urdu: "محفوظ صارف",
-      roman: "Mahfooz Sarif",
-      status: "Protected",
-      color: "bg-green-50 border-green-200 text-green-800",
-    };
-  }
-
-  return {
-    title: "Unprotected Consumer",
-    urdu: "غیر محفوظ صارف",
-    roman: "Ghair Mahfooz Sarif",
-    status: "Unprotected",
-    color: "bg-red-50 border-red-200 text-red-800",
-  };
-}, [consumedUnits]);
-const estimatedBill = useMemo(() => {
-  const u = consumedUnits;
-
-  const energy =
-    u <= 100
-      ? u * 30
-      : u <= 200
-      ? u * 38
-      : u <= 300
-      ? u * 45
-      : u * 55;
-
-  const fpa = u * 3.5;
-
-  const fixedCharges = u > 0 ? 250 : 0;
-
-  const gst = (energy + fpa + fixedCharges) * 0.18;
-
-  return {
-    energy: Math.round(energy),
-    fpa: Math.round(fpa),
-    fixedCharges: Math.round(fixedCharges),
-    tax: Math.round(gst),
-    total: Math.round(
-      energy +
-      fpa +
-      fixedCharges +
-      gst
-    ),
-  };
-}, [consumedUnits]);
-const billShock = useMemo(() => {
-  const futureUnits = consumedUnits + 20;
-
-  const futureEnergy =
-    futureUnits <= 100
-      ? futureUnits * 30
-      : futureUnits <= 200
-      ? futureUnits * 38
-      : futureUnits <= 300
-      ? futureUnits * 45
-      : futureUnits * 55;
-
-  const futureFpa = futureUnits * 3.5;
-  const futureFixed = futureUnits > 0 ? 250 : 0;
-  const futureTax = (futureEnergy + futureFpa + futureFixed) * 0.18;
-
-  const futureTotal = futureEnergy + futureFpa + futureFixed + futureTax;
-
-  return {
-    futureUnits,
-    increase: Math.max(0, Math.round(futureTotal - estimatedBill.total)),
-  };
-}, [consumedUnits, estimatedBill.total]);
-const acEstimate = useMemo(() => {
-  const hours = Number(acHours || 0);
-
-  const unitsPerHour = acType === "inverter" ? 1.2 : 2.2;
-
-  const monthlyUnits = hours * unitsPerHour * 30;
-
-  const estimatedCost = monthlyUnits * 55;
-
-  return {
-    monthlyUnits: Math.round(monthlyUnits),
-    estimatedCost: Math.round(estimatedCost),
-  };
-}, [acHours, acType]);
-const applianceEstimate = useMemo(() => {
-  const hours = Number(applianceHours || 0);
-
-  const wattsMap: Record<string, number> = {
-    fan: 80,
-    fridge: 180,
-    iron: 1000,
-    waterMotor: 750,
-    airCooler: 250,
-    tv: 120,
-    washingMachine: 500,
-  };
-
-  const watts = wattsMap[applianceType] || 80;
-
-  const dailyUnits = (watts * hours) / 1000;
-  const monthlyUnits = dailyUnits * 30;
-  const estimatedCost = monthlyUnits * 55;
-
-  return {
-    watts,
-    monthlyUnits: Math.round(monthlyUnits),
-    estimatedCost: Math.round(estimatedCost),
-  };
-}, [applianceHours, applianceType]);
- const checkBill = () => {
-  if (cleanRef.length !== 14) {
-    alert("Please enter a valid 14-digit reference number");
-    return;
-  }
-
-  setCheckingBill(true);
-
-  localStorage.setItem("mepco_reference_number", cleanRef);
-const existingSearches = JSON.parse(
-  localStorage.getItem("mepco_recent_searches") || "[]"
-);
-
-const updatedSearches = [
-  cleanRef,
-  ...existingSearches.filter((item: string) => item !== cleanRef),
-].slice(0, 5);
-
-localStorage.setItem(
-  "mepco_recent_searches",
-  JSON.stringify(updatedSearches)
-);
-
-setRecentSearches(updatedSearches);
-
-  window.open(`https://bill.pitc.com.pk/mepcobill?refno=${cleanRef}`, "_blank");
-
-  setTimeout(() => {
-    setCheckingBill(false);
-  }, 1500);
-};
-const cities = [
-  {
-    name: "Multan",
-    slug: "/multan-bill-check",
-  },
-  {
-    name: "Khanewal",
-    slug: "/khanewal-bill-check",
-  },
-  {
-    name: "Bahawalpur",
-    slug: "/bahawalpur-bill-check",
-  },
-  {
-    name: "Vehari",
-    slug: "/vehari-bill-check",
-  },
-  {
-    name: "Lodhran",
-    slug: "/lodhran-bill-check",
-  },
-  {
-    name: "Sahiwal",
-    slug: "/sahiwal-bill-check",
-  },
-  {
-    name: "Rahim Yar Khan",
-    slug: "/rahim-yar-khan-bill-check",
-  },
-  {
-    name: "Muzaffargarh",
-    slug: "/muzaffargarh-bill-check",
-  },
-  {
-    name: "Dera Ghazi Khan",
-    slug: "/dera-ghazi-khan-bill-check",
-  },
-  {
-    name: "Bahawalnagar",
-    slug: "/bahawalnagar-bill-check",
-  },
-  {
-    name: "Layyah",
-    slug: "/layyah-bill-check",
-  },
-  {
-    name: "Taunsa",
-    slug: "/taunsa-bill-check",
-  },
+// Only confirmed routes — 4 doubtful removed
+const CITIES: CityItem[] = [
+  { name: "Multan",         slug: "/multan-bill-check",         anchor: "MEPCO Bill Check Multan",         title: "Check MEPCO Bill Online - Multan",         consumers: "2.8M+" },
+  { name: "Khanewal",       slug: "/khanewal-bill-check",       anchor: "MEPCO Bill Check Khanewal",       title: "Check MEPCO Bill Online - Khanewal",       consumers: "1.2M+" },
+  { name: "Bahawalpur",     slug: "/bahawalpur-bill-check",     anchor: "MEPCO Bill Check Bahawalpur",     title: "Check MEPCO Bill Online - Bahawalpur",     consumers: "1.5M+" },
+  { name: "Vehari",         slug: "/vehari-bill-check",         anchor: "MEPCO Bill Check Vehari",         title: "Check MEPCO Bill Online - Vehari",         consumers: "900K+" },
+  { name: "Lodhran",        slug: "/lodhran-bill-check",        anchor: "MEPCO Bill Check Lodhran",        title: "Check MEPCO Bill Online - Lodhran",        consumers: "600K+" },
+  { name: "Sahiwal",        slug: "/sahiwal-bill-check",        anchor: "MEPCO Bill Check Sahiwal",        title: "Check MEPCO Bill Online - Sahiwal",        consumers: "1.1M+" },
+  { name: "Rahim Yar Khan", slug: "/rahim-yar-khan-bill-check", anchor: "MEPCO Bill Check Rahim Yar Khan", title: "Check MEPCO Bill Online - Rahim Yar Khan", consumers: "1.8M+" },
+  { name: "Muzaffargarh",   slug: "/muzaffargarh-bill-check",   anchor: "MEPCO Bill Check Muzaffargarh",   title: "Check MEPCO Bill Online - Muzaffargarh",   consumers: "1.0M+" },
+  { name: "Dera Ghazi Khan",slug: "/dera-ghazi-khan-bill-check",anchor: "MEPCO Bill Check DG Khan",        title: "Check MEPCO Bill Online - DG Khan",        consumers: "1.3M+" },
+  { name: "Bahawalnagar",   slug: "/bahawalnagar-bill-check",   anchor: "MEPCO Bill Check Bahawalnagar",   title: "Check MEPCO Bill Online - Bahawalnagar",   consumers: "800K+" },
+  { name: "Layyah",         slug: "/layyah-bill-check",         anchor: "MEPCO Bill Check Layyah",         title: "Check MEPCO Bill Online - Layyah",         consumers: "500K+" },
+  { name: "Taunsa",         slug: "/taunsa-bill-check",         anchor: "MEPCO Bill Check Taunsa",         title: "Check MEPCO Bill Online - Taunsa",         consumers: "300K+" },
+  { name: "Rajanpur",       slug: "/rajanpur-bill-check",       anchor: "MEPCO Bill Check Rajanpur",       title: "Check MEPCO Bill Online - Rajanpur",       consumers: "400K+" },
 ];
- const services = [
-    ["Duplicate Bill", "View, print, or download your latest MEPCO bill."],
-    ["Bill Calculator", "Estimate your monthly bill using consumed units."],
-    ["Peak Hours", "Know high usage hours and reduce your electricity cost."],
-    ["Reference Guide", "Learn where your 14-digit reference number is written."],
-    ["Cities Coverage", "MEPCO service areas across South Punjab."],
-    ["Saving Tips", "Simple habits to reduce monthly electricity bill."],
+
+const SERVICES: { icon: string; title: string; desc: string; href: string; color: string }[] = [
+  { icon: "📄", title: "Duplicate Bill",   desc: "View, print, or download your latest MEPCO electricity bill online.", href: "#bill",                          color: "from-blue-500 to-blue-600"   },
+  { icon: "🧮", title: "Bill Calculator",  desc: "Estimate your monthly bill amount using consumed units.",             href: "#calculator",                    color: "from-green-500 to-green-600"  },
+  { icon: "⏰", title: "Peak Hours",       desc: "Know high usage hours and reduce your electricity cost.",             href: "#peak-hours",                    color: "from-orange-500 to-orange-600"},
+  { icon: "🔢", title: "Reference Guide",  desc: "Learn where your 14-digit reference number is written.",             href: "#reference-guide",               color: "from-purple-500 to-purple-600"},
+  { icon: "🏙️", title: "Cities Coverage", desc: "MEPCO service areas across South Punjab regions.",                   href: "#cities",                        color: "from-teal-500 to-teal-600"   },
+  { icon: "💡", title: "Saving Tips",      desc: "Simple habits to reduce monthly electricity bill.",                  href: "#peak-hours",                    color: "from-yellow-500 to-yellow-600"},
+  { icon: "☀️", title: "Solar Calculator", desc: "Calculate solar savings and net metering credits.",                  href: "/mepco-solar-savings-calculator", color: "from-amber-500 to-amber-600" },
+  { icon: "🛡️", title: "Consumer Status", desc: "Check protected vs unprotected consumer status.",                    href: "#calculator",                    color: "from-red-500 to-red-600"     },
+];
+
+const APPLIANCE_WATTS: Record<string, number> = {
+  fan: 80, fridge: 180, iron: 1000, waterMotor: 750,
+  airCooler: 250, tv: 120, washingMachine: 500,
+};
+
+const FAQS: [string, string][] = [
+  ["How can I check MEPCO bill online?",                    "Enter your 14-digit reference number in the MEPCO bill checker and click Check Bill. Your bill will open on the official PITC bill portal."],
+  ["Can I download a duplicate MEPCO bill?",                "Yes, after opening your bill on the official PITC portal, you can print or download your duplicate MEPCO electricity bill."],
+  ["Where can I find my 14-digit MEPCO reference number?",  "Your 14-digit reference number is printed on your previous MEPCO electricity bill, usually near the top section of the bill."],
+  ["Can I check MEPCO bill by customer ID?",                "Some bill portals support customer ID, but MEPCO duplicate bill checking commonly uses the 14-digit reference number."],
+  ["Why is my MEPCO bill high this month?",                 "Your MEPCO bill may increase due to higher units, tariff slab changes, FPA, GST, QTA, fixed charges, arrears, or late payment surcharge."],
+  ["What is FPA in MEPCO bill?",                            "FPA means Fuel Price Adjustment. It may change monthly based on fuel cost adjustments and can increase or decrease your electricity bill."],
+  ["What is QTA in electricity bill?",                      "QTA means Quarterly Tariff Adjustment. It is an official tariff adjustment that may appear in electricity bills from time to time."],
+  ["What are MEPCO peak hours?",                            "MEPCO peak hours are high-demand electricity usage hours. Avoiding heavy appliances during peak hours may help reduce electricity costs."],
+  ["Is this the official MEPCO website?",                   "No. This is an independent informational website. Official bill data is provided through the PITC and MEPCO bill systems."],
+  ["Is MEPCO bill checking free?",                          "Yes, checking your MEPCO duplicate bill online is free. You only need your valid reference number or consumer information."],
+  ["Can I check MEPCO bill on mobile?",                     "Yes, this website is mobile-friendly and allows users to access MEPCO bill guides, calculators, and bill checking links from mobile devices."],
+  ["What should I do if my MEPCO bill is not found?",       "Check that your reference number is exactly 14 digits and entered without spaces. If the issue continues, try again later on the official PITC portal."],
+];
+
+const GUIDE_LINKS: GuideLink[] = [
+  { href: "/mepco-duplicate-bill-guide",            icon: "📄", title: "Duplicate Bill Guide",         desc: "Download, print and save your MEPCO duplicate bill online.",                                 category: "Bill"       },
+  { href: "/mepco-bill-due-date-guide",             icon: "📅", title: "Due Date Guide",               desc: "Check bill due date, late fee and amount after due date.",                                   category: "Bill"       },
+  { href: "/mepco-bill-installment-guide",          icon: "💰", title: "Bill Installment Guide",       desc: "Learn how to request installment relief for a high MEPCO bill.",                             category: "Bill"       },
+  { href: "/mepco-meter-reading-guide",             icon: "⚡", title: "Meter Reading Guide",          desc: "Read your electricity meter and calculate monthly units.",                                    category: "Meter"      },
+  { href: "/mepco-meter-complaint-guide",           icon: "🔧", title: "Meter Complaint Guide",        desc: "Report wrong reading, fast meter, damaged meter or display issue.",                          category: "Meter"      },
+  { href: "/mepco-wrong-bill-solution",             icon: "❌", title: "Wrong Bill Solution",          desc: "Fix overbilling, wrong reading, arrears or unexpected charges.",                             category: "Bill"       },
+  { href: "/mepco-reference-number-guide",          icon: "🔢", title: "Reference Number Guide",       desc: "Find your 14-digit MEPCO reference number on your bill.",                                   category: "Guide"      },
+  { href: "/mepco-customer-id-guide",               icon: "🆔", title: "Customer ID Guide",            desc: "Understand Customer ID and how it differs from reference number.",                           category: "Guide"      },
+  { href: "/mepco-peak-hours-guide",                icon: "⏰", title: "Peak Hours Guide",             desc: "Check MEPCO peak hours and reduce electricity usage cost.",                                  category: "Guide"      },
+  { href: "/mepco-taxes-explained",                 icon: "🧾", title: "Taxes Explained",              desc: "Learn GST, FPA, QTA, fixed charges and other bill items.",                                  category: "Taxes"      },
+  { href: "/mepco-bill-slabs-guide",                icon: "📊", title: "Bill Slabs Guide",             desc: "Understand unit rates and electricity bill slabs.",                                          category: "Taxes"      },
+  { href: "/mepco-new-connection-guide",            icon: "🔌", title: "New Connection Guide",         desc: "Apply for a new MEPCO electricity connection and track application status.",                 category: "Connection" },
+  { href: "/mepco-bill-payment-methods-guide",      icon: "💳", title: "Payment Methods Guide",        desc: "Learn online bill payment through banks, apps and wallets.",                                 category: "Bill"       },
+  { href: "/mepco-name-change-guide",               icon: "📝", title: "Name Change Guide",            desc: "Transfer electricity connection ownership and update bill records.",                         category: "Connection" },
+  { href: "/mepco-demand-notice-guide",             icon: "📨", title: "Demand Notice Guide",          desc: "Understand demand notice fees, validity and payment process.",                               category: "Bill"       },
+  { href: "/mepco-load-extension-guide",            icon: "⚙️", title: "Load Extension Guide",        desc: "Increase sanctioned load for home, shop or commercial use.",                                category: "Connection" },
+  { href: "/mepco-net-metering-guide",              icon: "☀️", title: "Net Metering Guide",           desc: "Sell solar energy and understand net metering requirements.",                                category: "Solar"      },
+  { href: "/mepco-tariff-guide",                    icon: "📈", title: "Tariff Guide",                 desc: "Understand residential, commercial and industrial tariff categories.",                       category: "Taxes"      },
+  { href: "/mepco-security-deposit",                icon: "🏦", title: "Security Deposit Guide",       desc: "Learn security deposit rules, refund process and new connection requirements.",              category: "Connection" },
+  { href: "/mepco-bill-correction-guide",           icon: "✏️", title: "Bill Correction Guide",       desc: "Fix incorrect charges, billing errors and consumer billing issues.",                        category: "Bill"       },
+  { href: "/mepco-bill-not-received-guide",         icon: "📭", title: "Bill Not Received Guide",      desc: "What to do when your monthly electricity bill is not delivered.",                           category: "Bill"       },
+  { href: "/mepco-transformer-complaint-guide",     icon: "🔌", title: "Transformer Complaint",        desc: "Report transformer faults, outages and electricity supply problems.",                       category: "Complaint"  },
+  { href: "/mepco-bill-calculator",                 icon: "🧮", title: "Bill Calculator",              desc: "Estimate electricity charges using MEPCO bill calculator tools.",                           category: "Calculator" },
+  { href: "/mepco-bill-urdu",                       icon: "🇵🇰", title: "Urdu Guide",                 desc: "Complete MEPCO bill guide in Urdu for Pakistani consumers.",                                category: "Guide"      },
+  { href: "/mepco-complaint-tracking-guide",        icon: "📋", title: "Complaint Tracking",           desc: "Track complaint status and understand MEPCO complaint resolution process.",                 category: "Complaint"  },
+  { href: "/mepco-disconnection-reconnection-guide",icon: "🔄", title: "Disconnection & Reconnection", desc: "Learn disconnection reasons, restoration process and reconnection rules.",                  category: "Connection" },
+  { href: "/mepco-load-shedding-guide",             icon: "⚡", title: "Load Shedding Guide",          desc: "Understand outages, feeder shutdowns and electricity interruption issues.",                 category: "Guide"      },
+  { href: "/mepco-change-of-tariff-guide",          icon: "📈", title: "Change of Tariff",             desc: "Convert domestic, commercial and other tariff categories correctly.",                       category: "Connection" },
+  { href: "/mepco-bill-check-by-cnic",              icon: "🆔", title: "Bill Check By CNIC",           desc: "Learn whether MEPCO bill can be checked by CNIC and alternative methods.",                 category: "Guide"      },
+  { href: "/mepco-200-units-rule",                  icon: "⚡", title: "200 Units Rule",               desc: "Learn protected consumer status, 200 unit limit and slab impact.",                         category: "Guide"      },
+  { href: "/mepco-application-forms-guide",         icon: "📄", title: "Application Forms",            desc: "New connection, name change, load extension and complaint forms.",                          category: "Connection" },
+  { href: "/mepco-qta-charges-guide",               icon: "📊", title: "QTA Charges Guide",            desc: "Learn what Quarterly Tariff Adjustment means and how it affects bills.",                   category: "Taxes"      },
+  { href: "/mepco-protected-consumer-guide",        icon: "🛡️", title: "Protected Consumer",          desc: "Learn protected consumer meaning and 200 units bill impact.",                              category: "Guide"      },
+  { href: "/mepco-unprotected-consumer-guide",      icon: "⚠️", title: "Unprotected Consumer",        desc: "Why bills increase after crossing usage limits.",                                           category: "Guide"      },
+  { href: "/mepco-bill-increased-guide",            icon: "📈", title: "Why Bill Increased?",          desc: "Why MEPCO bill suddenly increased including slabs, FPA and taxes.",                        category: "Bill"       },
+  { href: "/mepco-fpa-charges-guide",               icon: "🧾", title: "FPA Charges Guide",            desc: "What Fuel Price Adjustment means and how it affects charges.",                             category: "Taxes"      },
+];
+
+const ANNOUNCEMENTS = [
+  "📢 MEPCO consumers can now check duplicate bills online 24/7",
+  "⚡ Peak hours for summer: 6:30 PM to 10:30 PM — avoid heavy appliances",
+  "🧾 New FPA charges may apply from this month — check your bill details",
+  "☀️ Solar net metering applications now open for MEPCO consumers",
+  "🛡️ Stay within 200 units to remain in protected consumer category",
+];
+
+const QUICK_ACCESS = [
+  { icon: "📄", label: "Check Bill", href: "#bill",                          desc: "Duplicate bill online"            },
+  { icon: "🧮", label: "Calculator", href: "#calculator",                    desc: "Estimate your bill"               },
+  { icon: "🏙️", label: "Cities",    href: "#cities",                        desc: "All MEPCO regions"                },
+  { icon: "📚", label: "Guides",    href: "#guides",                        desc: `${GUIDE_LINKS.length}+ help guides`},
+  { icon: "❓", label: "FAQs",      href: "#faq",                           desc: "Common questions"                 },
+  { icon: "☀️", label: "Solar",     href: "/mepco-solar-savings-calculator", desc: "Solar savings"                   },
+];
+
+const POPULAR_SEARCHES = [
+  { label: "MEPCO Bill Check",          href: "#bill"                           },
+  { label: "MEPCO Duplicate Bill",       href: "#bill"                           },
+  { label: "MEPCO Bill Calculator",      href: "/mepco-bill-calculator"          },
+  { label: "MEPCO Customer ID",          href: "/mepco-customer-id-guide"        },
+  { label: "MEPCO Reference Number",     href: "/mepco-reference-number-guide"   },
+  { label: "MEPCO Peak Hours",           href: "/mepco-peak-hours-guide"         },
+  { label: "MEPCO Taxes Explained",      href: "/mepco-taxes-explained"          },
+  { label: "MEPCO New Connection",       href: "/mepco-new-connection-guide"     },
+  { label: "MEPCO 200 Units Rule",       href: "/mepco-200-units-rule"           },
+  { label: "MEPCO FPA Charges",          href: "/mepco-fpa-charges-guide"        },
+  { label: "MEPCO Protected Consumer",   href: "/mepco-protected-consumer-guide" },
+  { label: "MEPCO Unprotected Consumer", href: "/mepco-unprotected-consumer-guide"},
+  { label: "MEPCO Bill By CNIC",         href: "/mepco-bill-check-by-cnic"       },
+  { label: "MEPCO Solar Calculator",     href: "/mepco-solar-savings-calculator" },
+  { label: "MEPCO Bill Urdu",            href: "/mepco-bill-urdu"                },
+  { label: "MEPCO Meter Reading",        href: "/mepco-meter-reading-guide"      },
+  { label: "MEPCO Bill Slabs",           href: "/mepco-bill-slabs-guide"         },
+  { label: "MEPCO QTA Charges",          href: "/mepco-qta-charges-guide"        },
+  { label: "MEPCO Bill Multan",          href: "/multan-bill-check"              },
+  { label: "MEPCO Bill Bahawalpur",      href: "/bahawalpur-bill-check"          },
+  { label: "MEPCO Bill Rahim Yar Khan",  href: "/rahim-yar-khan-bill-check"      },
+  { label: "MEPCO Bill Sahiwal",         href: "/sahiwal-bill-check"             },
+  { label: "MEPCO Bill DG Khan",         href: "/dera-ghazi-khan-bill-check"     },
+  { label: "MEPCO Why Bill Increased",   href: "/mepco-bill-increased-guide"     },
+];
+
+const FOOTER_QUICK = [
+  { label: "Check Bill",            href: "#bill"                           },
+  { label: "MEPCO Bill Calculator", href: "/mepco-bill-calculator"          },
+  { label: "MEPCO Bill Urdu",       href: "/mepco-bill-urdu"                },
+  { label: "All MEPCO Regions",     href: "/all-mepco-regions"              },
+  { label: "Solar Calculator",      href: "/mepco-solar-savings-calculator" },
+];
+
+const FOOTER_GUIDES = [
+  { label: "Reference Number Guide",   href: "/mepco-reference-number-guide"   },
+  { label: "Customer ID Guide",        href: "/mepco-customer-id-guide"        },
+  { label: "Peak Hours Guide",         href: "/mepco-peak-hours-guide"         },
+  { label: "Taxes Explained",          href: "/mepco-taxes-explained"          },
+  { label: "Bill Slabs Guide",         href: "/mepco-bill-slabs-guide"         },
+  { label: "New Connection Guide",     href: "/mepco-new-connection-guide"     },
+  { label: "Bill Check By CNIC",       href: "/mepco-bill-check-by-cnic"       },
+  { label: "200 Units Rule",           href: "/mepco-200-units-rule"           },
+  { label: "FPA Charges Guide",        href: "/mepco-fpa-charges-guide"        },
+  { label: "Protected Consumer Guide", href: "/mepco-protected-consumer-guide" },
+];
+
+const FOOTER_LEGAL = [
+  { label: "Privacy Policy",     href: "/privacy-policy"      },
+  { label: "Disclaimer",         href: "/disclaimer"          },
+  { label: "Contact Us",         href: "/contact-us"          },
+  { label: "About Us",           href: "/about-us"            },
+  { label: "Terms & Conditions", href: "/terms-and-conditions"},
+];
+
+// ==================== UTILITY FUNCTIONS ====================
+function safeGetItem(key: string, fallback = ""): string {
+  if (typeof window === "undefined") return fallback;
+  try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
+}
+
+function safeSetItem(key: string, value: string): void {
+  if (typeof window === "undefined") return;
+  try { localStorage.setItem(key, value); } catch { /* ignore */ }
+}
+
+function safeGetJSON<T>(key: string, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const item = localStorage.getItem(key);
+    return (item ? JSON.parse(item) : fallback) as T;
+  } catch { return fallback; }
+}
+
+// 2026 MEPCO domestic tariff slab rates
+function calculateSlabEnergy(units: number): number {
+  if (units <= 0) return 0;
+  let cost = 0;
+  let remaining = units;
+  if (remaining > 700) { cost += (remaining - 700) * 45.99; remaining = 700; }
+  if (remaining > 500) { cost += (remaining - 500) * 39.49; remaining = 500; }
+  if (remaining > 300) { cost += (remaining - 300) * 35.01; remaining = 300; }
+  if (remaining > 200) { cost += (remaining - 200) * 30.01; remaining = 200; }
+  if (remaining > 100) { cost += (remaining - 100) * 25.08; remaining = 100; }
+  cost += remaining * 16.45;
+  return cost;
+}
+
+function calculateBill(units: number): BillBreakdown {
+  const energy       = calculateSlabEnergy(units);
+  const fpa          = units * FPA_RATE;
+  const fixedCharges = units > 0 ? 250 : 0;
+  const gst          = (energy + fpa + fixedCharges) * 0.18;
+  return {
+    energy:       Math.round(energy),
+    fpa:          Math.round(fpa),
+    fixedCharges: Math.round(fixedCharges),
+    tax:          Math.round(gst),
+    total:        Math.round(energy + fpa + fixedCharges + gst),
+  };
+}
+
+function getSlabStatus(units: number): SlabInfo {
+  if (units <= 0)   return { title: "Enter Units",            urdu: "یونٹ درج کریں",        roman: "Units enter karein",              message: "Enter consumed units to check estimated bill and slab status.",              alert: false,        color: "bg-gray-50 text-gray-700 border-gray-300",         icon: "📊" };
+  if (units <= 200) return { title: "Protected Range",        urdu: "محفوظ حد",              roman: "Protected range mein hain",       message: `Only ${200 - units} units left before 200 units limit.`,                    alert: units >= 180, color: "bg-emerald-50 text-emerald-800 border-emerald-300", icon: "✅" };
+  if (units <= 300) return { title: "Unprotected Slab Alert", urdu: "غیر محفوظ سلیب الرٹ",  roman: "200 units cross ho gaye hain",    message: "You crossed 200 units. Your bill may increase due to slab change.",          alert: true,         color: "bg-amber-50 text-amber-800 border-amber-300",       icon: "⚠️" };
+  return              { title: "High Usage Alert",            urdu: "زیادہ استعمال الرٹ",    roman: "Bijli ka istemal zyada ho raha hai", message: "High summer usage detected. AC and peak-hour usage may increase your bill.", alert: true,         color: "bg-red-50 text-red-800 border-red-300",             icon: "🔴" };
+}
+
+function getConsumerStatus(units: number): ConsumerInfo {
+  if (units <= 0)   return { title: "Consumer Status",      urdu: "صارف کی حیثیت",  roman: "Consumer status",     status: "Enter Units",  color: "bg-gray-50 border-gray-300 text-gray-700"          };
+  if (units <= 200) return { title: "Protected Consumer",   urdu: "محفوظ صارف",     roman: "Mahfooz Sarif",       status: "Protected",    color: "bg-emerald-50 border-emerald-300 text-emerald-800"  };
+  return              { title: "Unprotected Consumer", urdu: "غیر محفوظ صارف", roman: "Ghair Mahfooz Sarif", status: "Unprotected",  color: "bg-red-50 border-red-300 text-red-800"              };
+}
+
+// ==================== TILT HOOK ====================
+function useTilt(ref: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 14;
+      const y = ((e.clientY - rect.top)  / rect.height - 0.5) * -14;
+      el.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) translateZ(8px)`;
+    };
+    const onLeave = () => {
+      el.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0px)";
+    };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    };
+  }, [ref]);
+}
+
+// ==================== SCROLL REVEAL HOOK ====================
+function useScrollReveal() {
+  useEffect(() => {
+    const els      = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
+// ==================== MAIN COMPONENT ====================
+export default function Home() {
+  const [refNumber,         setRefNumber]         = useState("");
+  const [units,             setUnits]             = useState("");
+  const [acHours,           setAcHours]           = useState("8");
+  const [acType,            setAcType]            = useState("inverter");
+  const [applianceHours,    setApplianceHours]    = useState("5");
+  const [applianceType,     setApplianceType]     = useState("fan");
+  const [menuOpen,          setMenuOpen]          = useState(false);
+  const [siteReady,         setSiteReady]         = useState(false);
+  const [checkingBill,      setCheckingBill]      = useState(false);
+  const [currentTime,       setCurrentTime]       = useState("");
+  const [recentSearches,    setRecentSearches]    = useState<string[]>([]);
+  const [openFaq,           setOpenFaq]           = useState<number | null>(null);
+  const [guideFilter,       setGuideFilter]       = useState("All");
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
+
+  const inputRef    = useRef<HTMLInputElement>(null);
+  const billCardRef = useRef<HTMLDivElement>(null);
+
+  useTilt(billCardRef);
+  useScrollReveal();
+
+  useEffect(() => {
+    const savedRef = safeGetItem("mepco_reference_number");
+    if (savedRef) setRefNumber(savedRef);
+    setRecentSearches(safeGetJSON<string[]>("mepco_recent_searches", []));
+    setSiteReady(true);
+    setTimeout(() => inputRef.current?.focus(), 600);
+    setCurrentTime(new Date().toLocaleTimeString());
+    const clock  = setInterval(() => setCurrentTime(new Date().toLocaleTimeString()), 1000);
+    const ticker = setInterval(() => setAnnouncementIndex((p) => (p + 1) % ANNOUNCEMENTS.length), 5000);
+    return () => { clearInterval(clock); clearInterval(ticker); };
+  }, []);
+
+  const cleanRef       = refNumber.replace(/\D/g, "");
+  const consumedUnits  = Number(units || 0);
+  const slabStatus     = useMemo(() => getSlabStatus(consumedUnits),    [consumedUnits]);
+  const consumerStatus = useMemo(() => getConsumerStatus(consumedUnits), [consumedUnits]);
+  const estimatedBill  = useMemo(() => calculateBill(consumedUnits),    [consumedUnits]);
+
+  const billShock = useMemo(() => {
+    const futureUnits = consumedUnits + 20;
+    const futureBill  = calculateBill(futureUnits);
+    return { futureUnits, increase: Math.max(0, futureBill.total - estimatedBill.total) };
+  }, [consumedUnits, estimatedBill.total]);
+
+  const acEstimate = useMemo(() => {
+    const hours        = Number(acHours || 0);
+    const uph          = acType === "inverter" ? 1.2 : 2.2;
+    const monthlyUnits = Math.round(hours * uph * 30);
+    return {
+      monthlyUnits,
+      estimatedCost: Math.round(
+        calculateSlabEnergy(consumedUnits + monthlyUnits) - calculateSlabEnergy(consumedUnits)
+      ),
+    };
+  }, [acHours, acType, consumedUnits]);
+
+  const applianceEstimate = useMemo(() => {
+    const hours        = Number(applianceHours || 0);
+    const watts        = APPLIANCE_WATTS[applianceType] || 80;
+    const monthlyUnits = Math.round((watts * hours * 30) / 1000);
+    return {
+      watts, monthlyUnits,
+      estimatedCost: Math.round(
+        calculateSlabEnergy(consumedUnits + monthlyUnits) - calculateSlabEnergy(consumedUnits)
+      ),
+    };
+  }, [applianceHours, applianceType, consumedUnits]);
+
+  const checkBill = useCallback(() => {
+    if (cleanRef.length !== 14) { alert("Please enter a valid 14-digit reference number"); return; }
+    const last = safeGetItem("mepco_last_check", "0");
+    if (Date.now() - Number(last) < 3000) { alert("Please wait a moment"); return; }
+    safeSetItem("mepco_last_check", String(Date.now()));
+    setCheckingBill(true);
+    safeSetItem("mepco_reference_number", cleanRef);
+    const existing = safeGetJSON<string[]>("mepco_recent_searches", []);
+    const updated  = [cleanRef, ...existing.filter((i) => i !== cleanRef)].slice(0, 5);
+    safeSetItem("mepco_recent_searches", JSON.stringify(updated));
+    setRecentSearches(updated);
+    window.open(`https://bill.pitc.com.pk/mepcobill?refno=${cleanRef}`, "_blank");
+    setTimeout(() => setCheckingBill(false), 1500);
+  }, [cleanRef]);
+
+  const faqSchema = useMemo(() => ({
+    "@context": "https://schema.org", "@type": "FAQPage",
+    mainEntity: FAQS.map(([q, a]) => ({
+      "@type": "Question", name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  }), []);
+
+  const websiteSchema = {
+    "@context": "https://schema.org", "@type": "WebSite",
+    name: SITE_NAME, url: SITE_URL,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_URL}/?ref={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const govSchema = {
+    "@context": "https://schema.org", "@type": "GovernmentService",
+    name: "MEPCO Electricity Bill Check", serviceType: "Electricity Bill Check",
+    provider: { "@type": "GovernmentOrganization", name: "Multan Electric Power Company" },
+    areaServed: { "@type": "State", name: "South Punjab, Pakistan" },
+    url: SITE_URL,
+  };
+
+  // Breadcrumb — both items point to root
+  const breadcrumbSchema = {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home",                    item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "MEPCO Online Bill Check", item: SITE_URL },
+    ],
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "MEPCO Online Bill Check",
+    alternateName: "MEPCO Bill Portal",
+    url: SITE_URL,
+    logo: { "@type": "ImageObject", url: `${SITE_URL}/mepco-logo.png`, width: 512, height: 512 },
+    description: "Independent MEPCO electricity bill information portal for South Punjab consumers. Check duplicate bills, calculate electricity charges, and access consumer guides.",
+    areaServed: { "@type": "State", name: "South Punjab, Pakistan" },
+    knowsAbout: ["MEPCO electricity bills","Duplicate bill download","Bill calculator","Consumer guides","Peak hours","Solar net metering"],
+    sameAs: [],
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org", "@type": "WebPage",
+    name: "MEPCO Online Bill Check 2026",
+    description: "Check your MEPCO electricity bill online using your 14-digit reference number. Access duplicate bills, bill calculator, consumer guides and 36+ help resources.",
+    url: SITE_URL,
+    inLanguage: ["en", "ur"],
+    isPartOf: { "@type": "WebSite", url: SITE_URL },
+    about: { "@type": "Thing", name: "MEPCO Electricity Bill" },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home",                    item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "MEPCO Online Bill Check", item: SITE_URL },
+      ],
+    },
+  };
+
+  const filteredGuides  = guideFilter === "All" ? GUIDE_LINKS : GUIDE_LINKS.filter((g) => g.category === guideFilter);
+  const guideCategories = ["All", ...Array.from(new Set(GUIDE_LINKS.map((g) => g.category)))];
+
+  const navLinks = [
+    { label: "Check Bill", href: "#bill"       },
+    { label: "Services",   href: "#services"   },
+    { label: "Calculator", href: "#calculator" },
+    { label: "Cities",     href: "#cities"     },
+    { label: "Guides",     href: "#guides"     },
+    { label: "FAQs",       href: "#faq"        },
   ];
 
- const faqs = [
-  [
-    "How can I check MEPCO bill online?",
-    "Enter your 14-digit reference number in the MEPCO bill checker and click Check Bill. Your bill will open on the official PITC bill portal.",
-  ],
-  [
-    "Can I download a duplicate MEPCO bill?",
-    "Yes, after opening your bill on the official PITC portal, you can print or download your duplicate MEPCO electricity bill.",
-  ],
-  [
-    "Where can I find my 14-digit MEPCO reference number?",
-    "Your 14-digit reference number is printed on your previous MEPCO electricity bill, usually near the top section of the bill.",
-  ],
-  [
-    "Can I check MEPCO bill by customer ID?",
-    "Some bill portals support customer ID, but MEPCO duplicate bill checking commonly uses the 14-digit reference number.",
-  ],
-  [
-    "Why is my MEPCO bill high this month?",
-    "Your MEPCO bill may increase due to higher units, tariff slab changes, FPA, GST, QTA, fixed charges, arrears, or late payment surcharge.",
-  ],
-  [
-    "What is FPA in MEPCO bill?",
-    "FPA means Fuel Price Adjustment. It may change monthly based on fuel cost adjustments and can increase or decrease your electricity bill.",
-  ],
-  [
-    "What is QTA in electricity bill?",
-    "QTA means Quarterly Tariff Adjustment. It is an official tariff adjustment that may appear in electricity bills from time to time.",
-  ],
-  [
-    "What are MEPCO peak hours?",
-    "MEPCO peak hours are high-demand electricity usage hours. Avoiding heavy appliances during peak hours may help reduce electricity costs.",
-  ],
-  [
-    "Is this the official MEPCO website?",
-    "No. This is an independent informational website. Official bill data is provided through the PITC and MEPCO bill systems.",
-  ],
-  [
-    "Is MEPCO bill checking free?",
-    "Yes, checking your MEPCO duplicate bill online is free. You only need your valid reference number or customer information.",
-  ],
-  [
-    "Can I check MEPCO bill on mobile?",
-    "Yes, this website is mobile-friendly and allows users to access MEPCO bill guides, calculators, and bill checking links from mobile devices.",
-  ],
-  [
-    "What should I do if my MEPCO bill is not found?",
-    "Check that your reference number is exactly 14 digits and entered without spaces. If the issue continues, try again later on the official PITC portal.",
-  ],
-];
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map(([q, a]) => ({
-    "@type": "Question",
-    name: q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: a,
-    },
-  })),
-};
-if (siteLoading) {
   return (
+    <main className={`min-h-screen scroll-smooth bg-[#f8faf9] text-[#111] transition-opacity duration-700 ${siteReady ? "opacity-100" : "opacity-0"}`}>
 
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#005b2e] text-white">
+      {/* ── SCHEMAS ── */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(govSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
-      <img
-        src="/mepco-logo.png"
-        alt="MEPCO"
-        className="h-32 w-32 rounded-full border-4 border-white bg-white object-cover shadow-2xl animate-pulse"
-      />
-
-      <h1 className="mt-8 text-5xl font-black">
-        MEPCO
-      </h1>
-
-      <p className="mt-3 text-green-100">
-        Loading Consumer Portal...
-      </p>
-
-      <div className="mt-10 h-2 w-72 overflow-hidden rounded-full bg-white/20">
-
-        <div className="h-full w-full animate-pulse bg-white"></div>
-
+      {/* ══ 1. TOP BAR ══ */}
+      <div className="bg-[#001a0e] text-white border-b border-white/5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-xs">
+          <div className="flex items-center gap-3 font-semibold text-green-200">
+            <span className="hidden sm:inline">🇵🇰</span>
+            <span>Independent Consumer Information Portal</span>
+            <span className="hidden md:inline rounded bg-green-800/50 px-2 py-0.5 text-[10px] uppercase tracking-wider">Independent</span>
+          </div>
+          <div className="flex items-center gap-4 text-green-300/80">
+            <span className="hidden md:inline">📞 {HELPLINE}</span>
+            <span className="hidden lg:inline">🕒 {currentTime}</span>
+            <span className="flex items-center gap-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+              </span>
+              <span className="text-green-400 font-bold">Live</span>
+            </span>
+          </div>
+        </div>
       </div>
 
-    </div>
-  );
-}
-  return (
-    <main className="min-h-screen scroll-smooth pb-24 bg-[#f4f8f5] text-[#111] animate-[fadeIn_0.8s_ease]">
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify(faqSchema),
-  }}
-/>
-<style jsx global>{`
-  @keyframes floatingCalculator {
-    0% {
-      transform: translateY(0px);
-    }
+      {/* ══ 2. ANNOUNCEMENT TICKER ══ */}
+      <div className="bg-gradient-to-r from-[#005b2e] to-[#007a3d] text-white overflow-hidden">
+        <div className="mx-auto max-w-7xl px-5 py-2 flex items-center gap-4">
+          <span className="shrink-0 rounded bg-white/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">Latest</span>
+          <div className="overflow-hidden h-5 flex-1">
+            <p className="text-sm font-semibold transition-all duration-500" key={announcementIndex}>
+              {ANNOUNCEMENTS[announcementIndex]}
+            </p>
+          </div>
+        </div>
+      </div>
 
-    50% {
-      transform: translateY(-10px);
-    }
-
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  .floating-calculator-card {
-    animation: floatingCalculator 4s ease-in-out infinite;
-  }
-`}</style>
-<div className="bg-[#00311a] text-white border-b border-white/10">
-
-  <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-xs md:text-sm">
-
-    <div className="flex items-center gap-2 font-semibold text-green-100">
-      🇵🇰 Government Consumer Information Portal
-    </div>
-
-    <div className="flex items-center gap-5 text-green-100">
-      <p>MEPCO Helpline: 0800-63726</p>
-      <p>🕒 {currentTime}</p>
-    </div>
-
-  </div>
-
-</div>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#005b2e]/80 text-white shadow-2xl backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-          <div className="flex items-center gap-4">
-            <img src="/mepco-logo.png" alt="MEPCO Logo" className="h-16 w-16 rounded-full border-4 border-white bg-white object-cover" />
+      {/* ══ 3. HEADER ══ */}
+      <header className="sticky top-0 z-50 border-b border-[#003d1f] bg-[#00261a]/98 text-white shadow-[0_4px_40px_rgba(0,0,0,0.4)] backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
+          <a href="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <Image src="/mepco-logo.png" alt="MEPCO Bill Check Portal Logo" width={52} height={52}
+                className="rounded-full border-2 border-green-400/50 bg-white object-cover transition-all duration-300 group-hover:border-green-300 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]"
+                priority />
+              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-[#00261a]" />
+            </div>
             <div>
-              <h1 className="text-3xl font-black tracking-wide">MEPCO</h1>
-              <p className="text-xs font-semibold text-green-100">Multan Electric Power Company</p>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-black tracking-wide">MEPCO</span>
+                <span className="hidden sm:inline rounded bg-green-600/30 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-green-300">Portal</span>
+              </div>
+              <p className="text-[11px] font-medium text-green-300/80">Consumer Services Hub</p>
+            </div>
+          </a>
+
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map((l) => (
+              <a key={l.href} href={l.href} className="px-4 py-2 rounded-lg text-sm font-semibold text-green-100 hover:text-white hover:bg-white/10 transition-all duration-200">{l.label}</a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <a href="#bill" className="hidden md:flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-bold text-white transition-all duration-200 hover:bg-green-500 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] btn-3d">
+              <span>⚡</span> Quick Check
+            </a>
+            <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu" aria-expanded={menuOpen}
+              className="lg:hidden h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center text-xl hover:bg-white/20 transition">
+              {menuOpen ? "✕" : "☰"}
+            </button>
+          </div>
+        </div>
+
+        {menuOpen && (
+          <div className="lg:hidden border-t border-white/10 bg-[#001a0e]/98 backdrop-blur-md">
+            <div className="mx-auto max-w-7xl px-5 py-4 space-y-1">
+              {navLinks.map((l) => (
+                <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
+                  className="block px-4 py-3 rounded-lg font-semibold text-green-100 hover:text-white hover:bg-white/10 transition">{l.label}</a>
+              ))}
             </div>
           </div>
+        )}
+      </header>
 
-          <div className="hidden gap-7 text-sm font-bold md:flex">
-  </div>
-<button
-  onClick={() => setMenuOpen(!menuOpen)}
-  aria-label="Open mobile menu"
-  className="md:hidden text-3xl"
->
-  ☰
-</button>            <nav className="hidden gap-7 text-sm font-bold md:flex">
-  <a href="#bill" className="hover:text-green-200">Check Bill</a>
-  <a href="#services" className="hover:text-green-200">Services</a>
-  <a href="#calculator" className="hover:text-green-200">Calculator</a>
-  <a href="#faq" className="hover:text-green-200">FAQs</a>
-</nav>
-         
+      {/* ══ 4. BREADCRUMB ══ */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="mx-auto max-w-7xl px-5 py-3">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500">
+            <a href="/" className="hover:text-[#005b2e] font-medium transition-colors">Home</a>
+            <span aria-hidden="true">/</span>
+            <span className="text-[#005b2e] font-semibold">MEPCO Online Bill Check</span>
+          </nav>
         </div>
-{/* MOBILE MENU */}
+      </div>
 
-{menuOpen && (
-  <div className="md:hidden border-t border-white/10 bg-[#005b2e] px-5 py-5 text-white">
-    <div className="flex flex-col gap-5 font-bold">
+      {/* ══ 5. HERO + BILL CHECKER ══ */}
+      <section className="relative overflow-hidden mesh-bg">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="blob-float-a spotlight w-[500px] h-[500px] bg-green-300/20 -top-32 -left-32" />
+          <div className="blob-float-b spotlight w-[400px] h-[400px] bg-emerald-400/15 top-1/2 -right-24" />
+          <div className="blob-float-c spotlight w-[300px] h-[300px] bg-green-200/20 bottom-0 left-1/3" />
+        </div>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 dot-pattern opacity-40" />
 
-      <a href="#bill" onClick={() => setMenuOpen(false)}>
-        Check Bill
-      </a>
+        <div className="relative mx-auto max-w-7xl px-5 py-14 md:py-20">
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-3 md:gap-4">
+            {[
+              { label: "Consumers",     value: "1.2M+",                  icon: "👥" },
+              { label: "Bills Checked", value: "8M+",                    icon: "📄" },
+              { label: "Regions",       value: `${CITIES.length}+`,      icon: "🏙️" },
+              { label: "Guides",        value: `${GUIDE_LINKS.length}+`, icon: "📚" },
+              { label: "Status",        value: "Online",                  icon: "🟢" },
+            ].map((s, i) => (
+              <div key={s.label}
+                className="stat-pill reveal flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 shadow-md border border-white/60 backdrop-blur-sm cursor-default"
+                style={{ transitionDelay: `${i * 80}ms` }}>
+                <span className="text-lg">{s.icon}</span>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">{s.label}</p>
+                  <p className="text-sm font-black text-[#005b2e]">{s.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      <a href="#services" onClick={() => setMenuOpen(false)}>
-        Services
-      </a>
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            {/* Left */}
+            <div className="section-animate">
+              <div className="neon-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold text-[#005b2e] mb-6">
+                <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                MEPCO Consumer Portal Hub — Pakistan
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] text-gray-900">
+                MEPCO
+                <span className="block gradient-text-animated mt-1">Online Bill Check</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-gray-600">
+                Check your latest MEPCO electricity bill online using your 14-digit reference number.
+                Access duplicate bills, bill calculator, consumer guides, and{" "}
+                <strong className="text-[#005b2e]">{GUIDE_LINKS.length}+ help resources</strong> — all in one portal.
+              </p>
+              <p className="mt-4 max-w-xl text-base leading-7 text-gray-500" dir="rtl" lang="ur">
+                میپکو آن لائن بل چیک کریں۔ 14 ہندسوں کا ریفرنس نمبر درج کریں اور فوری طور پر اپنا بجلی کا بل دیکھیں۔
+              </p>
+              <div className="mt-8 grid grid-cols-3 sm:grid-cols-6 gap-3">
+                {QUICK_ACCESS.map((item, i) => (
+                  <a key={item.label} href={item.href}
+                    className="portal-card reveal group flex flex-col items-center gap-2 rounded-2xl bg-white/90 p-4 border border-white/60 shadow-md text-center backdrop-blur-sm"
+                    style={{ transitionDelay: `${i * 60}ms` }}>
+                    <span className="text-2xl group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
+                    <span className="text-xs font-bold text-gray-800">{item.label}</span>
+                    <span className="text-[10px] text-gray-400 leading-tight hidden sm:block">{item.desc}</span>
+                  </a>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {[
+                  { label: "⚡ Fast",      bg: "bg-green-50   border-green-200   text-green-800"   },
+                  { label: "🔒 Secure",    bg: "bg-blue-50    border-blue-200    text-blue-800"    },
+                  { label: "📱 Mobile",    bg: "bg-purple-50  border-purple-200  text-purple-800"  },
+                  { label: "🇵🇰 Pakistan", bg: "bg-emerald-50 border-emerald-200 text-emerald-800" },
+                ].map((b) => (
+                  <div key={b.label} className={`rounded-xl border px-4 py-2 text-center font-bold text-sm shadow-sm ${b.bg}`}>{b.label}</div>
+                ))}
+              </div>
+            </div>
 
-      <a href="#calculator" onClick={() => setMenuOpen(false)}>
-        Calculator
-      </a>
+            {/* Right — Bill Checker */}
+            <div id="bill" className="section-animate reveal reveal-delay-2">
+              <div ref={billCardRef} className="glass-card animated-border rounded-3xl shadow-2xl overflow-hidden"
+                style={{ transition: "transform 0.2s ease, box-shadow 0.2s ease" }}>
+                <div className="dark-mesh-bg px-6 py-6 text-white relative overflow-hidden">
+                  <div aria-hidden="true" className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/5 blur-xl" />
+                  <div aria-hidden="true" className="absolute -left-10 -bottom-10 h-24 w-24 rounded-full bg-green-400/10 blur-xl" />
+                  <div className="relative flex items-center justify-between">
+                    <div>
+                      <h2 className="text-xl font-black">Check Your MEPCO Bill</h2>
+                      <p className="text-green-300 text-sm mt-0.5">Enter 14-Digit Reference Number</p>
+                    </div>
+                    <div className="h-12 w-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-2xl glow-green">📄</div>
+                  </div>
+                </div>
+                <div className="p-6 bg-white">
+                  <label htmlFor="ref-input" className="mb-2 block text-sm font-bold text-gray-700">Reference Number</label>
+                  <div className="relative">
+                    <input id="ref-input" ref={inputRef} value={refNumber}
+                      onChange={(e) => setRefNumber(e.target.value.replace(/\D/g, "").slice(0, 14))}
+                      placeholder="Enter 14-Digit Reference No" maxLength={14} autoComplete="off"
+                      onKeyDown={(e) => e.key === "Enter" && checkBill()}
+                      className={`input-premium h-14 w-full rounded-xl px-4 pr-20 text-lg font-mono ${cleanRef.length === 14 ? "valid" : ""}`} />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-gray-400 tabular-nums">{cleanRef.length}/14</span>
+                  </div>
+                  {cleanRef.length === 14 && (
+                    <div className="mt-3 flex items-center gap-2 text-sm font-bold text-green-700 bg-green-50 border border-green-200 rounded-xl px-3 py-2">
+                      <span>✅</span> Reference number ready — saved for next visit
+                    </div>
+                  )}
+                  {recentSearches.length > 0 && (
+                    <div className="mt-4">
+                      <p className="mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">Recent</p>
+                      <div className="flex flex-wrap gap-2">
+                        {recentSearches.map((item) => (
+                          <button key={item} onClick={() => setRefNumber(item)}
+                            className="rounded-lg border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-bold font-mono text-[#005b2e] hover:bg-green-100 hover:border-green-400 transition">
+                            {item}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <button onClick={checkBill} disabled={checkingBill}
+                    className="mt-5 h-14 w-full rounded-xl bg-gradient-to-r from-[#005b2e] to-[#007a3d] text-lg font-black text-white btn-3d glow-button disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                    {checkingBill ? (
+                      <>
+                        <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Checking…
+                      </>
+                    ) : (<><span aria-hidden="true">⚡</span> Check Bill Now</>)}
+                  </button>
+                  <div className="mt-3 grid grid-cols-3 gap-2">
+                    <button onClick={() => { safeSetItem("mepco_reference_number", ""); setRefNumber(""); }}
+                      className="h-10 rounded-lg border border-gray-200 bg-white text-xs font-bold text-gray-600 hover:bg-gray-50 transition">🗑️ Clear</button>
+                    <button onClick={() => window.open(`https://wa.me/?text=Check%20MEPCO%20bill%20online%20at%20${SITE_URL}`, "_blank")}
+                      className="h-10 rounded-lg bg-[#25D366] text-xs font-bold text-white hover:bg-[#20BD5A] transition">📲 Share</button>
+                    <button onClick={() => navigator.clipboard.writeText(SITE_URL)}
+                      className="h-10 rounded-lg border border-gray-200 bg-white text-xs font-bold text-gray-600 hover:bg-gray-50 transition">🔗 Copy</button>
+                  </div>
+                  <p className="mt-4 text-center text-xs text-gray-400">
+                    Reference number is printed on your previous electricity bill. This is an independent informational portal.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <a href="#faq" onClick={() => setMenuOpen(false)}>
-        FAQs
-      </a>
+      <div className="section-divider" />
 
-    </div>
-  </div>
-)}
+      {/* ══ 6. PORTAL SERVICES ══ */}
+      <section id="services" className="py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="text-center mb-12 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Portal Services</span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Consumer Services</h2>
+            <p className="mt-3 text-gray-500 max-w-2xl mx-auto">Comprehensive electricity bill tools, guides, and calculators for MEPCO consumers across South Punjab.</p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICES.map((s, i) => (
+              <a key={s.title} href={s.href}
+                className="portal-card card-shine reveal group rounded-2xl bg-white border border-gray-100 p-6 shadow-sm hover:border-[#005b2e]/20"
+                style={{ transitionDelay: `${i * 60}ms` }}>
+                <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center text-2xl text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>{s.icon}</div>
+                <h3 className="text-lg font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{s.title}</h3>
+                <p className="mt-2 text-sm text-gray-500 leading-relaxed">{s.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
 
-</header>
+      <div className="section-divider" />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#eef8f1] to-[#dcefe5]">
-{/* BACKGROUND WATERMARK LOGO */}
-
-<img
-  src="/mepco-logo.png"
-  alt="MEPCO Watermark"
-  className="absolute left-1/2 top-1/2 w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-[0.10] pointer-events-none select-none"
- />
-
-  <div className="absolute top-0 left-0 h-72 w-72 rounded-full bg-green-300/20 blur-3xl"></div>
-
-  <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-green-500/10 blur-3xl"></div>
-
-  <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 md:grid-cols-2">
-          <div>
-
-  <div className="mb-5 inline-flex rounded-full bg-green-100 px-5 py-2 text-sm font-black text-[#005b2e]">
-    Online Duplicate Bill Checker
-  </div>
-
-  <div className="mt-5 flex flex-wrap items-center gap-4">
-
-    <div className="rounded-full bg-white px-5 py-3 shadow-md border border-green-100">
-      <p className="text-sm font-bold text-gray-500">
-        Consumers Served
-      </p>
-
-      <h3 className="text-2xl font-black text-[#005b2e]">
-        1.2M+
-      </h3>
-    </div>
-
-    <div className="rounded-full bg-white px-5 py-3 shadow-md border border-green-100">
-      <p className="text-sm font-bold text-gray-500">
-        Bills Checked
-      </p>
-
-      <h3 className="text-2xl font-black text-[#005b2e]">
-        8M+
-      </h3>
-    </div>
-
-    <div className="rounded-full bg-white px-5 py-3 shadow-md border border-green-100">
-      <p className="text-sm font-bold text-gray-500">
-        Online Status
-      </p>
-
-      <h3 className="text-2xl font-black text-green-600">
-        ● Live
-      </h3>
-    </div>
-
-  </div>
-
-            <h2 className="text-5xl font-black leading-tight text-[#8B0000] drop-shadow-[0_4px_20px_rgba(0,91,46,0.18)] md:text-7xl">
-              MEPCO
-              <span className="block text-4xl text-[#8B0000] md:text-5xl">
-                Online Bill Check
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-xl text-lg leading-8 text-gray-700">
-              Check your latest MEPCO electricity bill online using your 14-digit reference number.
-              Fast, simple, and mobile-friendly.
-            </p>
-
-            <div className="mt-9 grid max-w-xl grid-cols-3 gap-4 text-center">
-              {["⚡ Fast", "🔒 Secure", "📱 Mobile"].map((item) => (
-                <div key={item} className="rounded-2xl border border-green-100 bg-white p-5 font-black text-[#8B0000] shadow-md">
-                  {item}
+      {/* ══ 7. HOW TO FIND REFERENCE NUMBER ══ */}
+      <section id="reference-guide" className="py-16 bg-[#f8faf9]">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="glass-card animated-border rounded-3xl border border-green-100 p-8 md:p-12 shadow-xl">
+            <div className="text-center mb-10 reveal">
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900">How to Find Your Reference Number?</h2>
+              <p className="mt-3 text-gray-500 max-w-2xl mx-auto">Your 14-digit reference number is printed on your previous MEPCO electricity bill.</p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {[
+                { step: "01", icon: "📄", title: "Open Old Bill",  desc: "Take any previous MEPCO electricity bill from your records.", color: "from-blue-500 to-blue-600"   },
+                { step: "02", icon: "🔎", title: "Find Ref No",    desc: "Look for the 14-digit Reference Number on the top section.", color: "from-green-500 to-green-600"  },
+                { step: "03", icon: "✅", title: "Enter Online",   desc: "Enter it in the bill checker above and click Check Bill.",   color: "from-purple-500 to-purple-600" },
+              ].map((item, i) => (
+                <div key={item.step} className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-6 text-center shadow-sm" style={{ transitionDelay: `${i * 100}ms` }}>
+                  <div className={`mx-auto h-14 w-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl text-white mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>{item.icon}</div>
+                  <div className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-2">Step {item.step}</div>
+                  <h3 className="text-xl font-black text-gray-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-gray-500">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          <div id="bill" className="overflow-hidden rounded-3xl border border-green-100 bg-white shadow-2xl">
-            <div className="bg-[#006b35] px-8 py-6 text-center text-white">
-              <h3 className="text-2xl font-black">Check Your MEPCO Bill</h3>
-              <p className="mt-1 text-green-100">Enter 14 Digit Reference Number</p>
+      <div className="section-divider" />
+
+      {/* ══ 8. BILL CALCULATOR ══ */}
+      <section id="calculator" className="py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="text-center mb-12 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Bill Estimator</span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Bill Calculator 2026</h2>
+            <p className="mt-3 text-gray-500 max-w-2xl mx-auto">Estimate your monthly electricity bill using 2026 MEPCO domestic tariff slab rates.</p>
+          </div>
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="space-y-5">
+              <div className="reveal rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
+                <label htmlFor="units-input" className="mb-2 block text-sm font-bold text-gray-700">Enter Units Consumed</label>
+                <input id="units-input" type="number" value={units} onChange={(e) => setUnits(e.target.value)}
+                  placeholder="Example: 250" min="0" className="input-premium h-14 w-full rounded-xl px-4 text-xl" />
+                <div className="mt-5">
+                  <div className="flex justify-between text-xs font-bold text-gray-400 mb-2">
+                    <span>0</span><span className="text-orange-500">200 units</span><span>500+</span>
+                  </div>
+                  <div className="h-3 rounded-full bg-gray-100 overflow-hidden shadow-inner">
+                    <div className="h-full rounded-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 transition-all duration-700"
+                      style={{ width: `${Math.min(consumedUnits / 5, 100)}%` }} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="reveal reveal-delay-1 rounded-2xl border-2 border-orange-200 bg-orange-50 p-5">
+                <h3 className="font-black text-orange-800 flex items-center gap-2"><span>⚡</span> 200 Unit Danger Meter</h3>
+                <div className="mt-3 space-y-2 text-sm">
+                  <p className="font-semibold text-orange-700">
+                    {200 - consumedUnits > 0 ? `${200 - consumedUnits} units left before 200-unit threshold` : "⚠️ 200-unit threshold crossed"}
+                  </p>
+                  <p className="font-semibold text-orange-700">
+                    اردو: {200 - consumedUnits > 0 ? `200 یونٹ کی حد تک ${200 - consumedUnits} یونٹ باقی ہیں` : "آپ 200 یونٹ کی حد عبور کر چکے ہیں"}
+                  </p>
+                  <p className="font-semibold text-orange-600">
+                    {200 - consumedUnits > 0 ? `Sirf ${200 - consumedUnits} units baqi hain` : "Aap 200 units cross kar chukay hain"}
+                  </p>
+                </div>
+              </div>
+
+              <div className={`reveal reveal-delay-2 rounded-2xl border-2 p-5 ${consumerStatus.color}`}>
+                <h3 className="font-black flex items-center gap-2"><span>🛡️</span> {consumerStatus.title}</h3>
+                <p className="mt-2 text-sm font-bold">اردو: {consumerStatus.urdu}</p>
+                <p className="mt-1 text-sm font-semibold">{consumerStatus.roman}</p>
+                <p className="mt-2 text-sm">Status: <strong>{consumerStatus.status}</strong></p>
+              </div>
+
+              <div className="reveal reveal-delay-3 rounded-2xl border-2 border-purple-200 bg-purple-50 p-5">
+                <h3 className="font-black text-purple-900 flex items-center gap-2"><span>📈</span> Bill Shock Predictor</h3>
+                <div className="mt-3 space-y-2 text-sm">
+                  <p className="font-bold text-purple-800">If you use 20 more units, bill may increase by ~Rs.&nbsp;{billShock.increase}</p>
+                  <p className="font-bold text-purple-800">اگر آپ مزید 20 یونٹ استعمال کریں تو بل تقریباً Rs.&nbsp;{billShock.increase} بڑھ سکتا ہے۔</p>
+                  <p className="font-semibold text-purple-700">Future Units: {billShock.futureUnits}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="p-8">
-              <label className="mb-3 block font-bold text-gray-700">Reference Number</label>
+            <div className="space-y-5">
+              <div className={`reveal rounded-2xl border-2 p-5 ${slabStatus.color}`}>
+                <h3 className="text-lg font-black flex items-center gap-2"><span>{slabStatus.icon}</span> {slabStatus.title}</h3>
+                <p className="mt-1 text-sm font-bold">{slabStatus.urdu}</p>
+                <p className="mt-1 text-sm font-semibold">{slabStatus.roman}</p>
+                <p className="mt-2 text-sm leading-6">{slabStatus.message}</p>
+              </div>
 
-              <input
-autoFocus
-                value={refNumber}
-                onChange={(e) =>
-  setRefNumber(
-    e.target.value.replace(/\D/g, "").slice(0, 14)
-  )
-}
-                placeholder="Enter 14 Digit Reference No"
-                maxLength={14}
-onKeyDown={(e) => {
-  if (e.key === "Enter") {
-    checkBill();
-  }
-}}
-                className={`h-16 w-full rounded-xl border-2 px-5 text-lg outline-none transition duration-300 ${
-  refNumber.length === 14
-    ? "border-green-500 bg-green-50 shadow-[0_0_25px_rgba(34,197,94,0.25)]"
-    : "border-gray-200 bg-white focus:border-[#006b35]"
-}`}
-              />
-{refNumber.length === 14 && (
-  <p className="mt-3 text-center text-sm font-bold text-green-700">
-    ✅ Reference number ready and saved for next visit
-  </p>
-)}
-{recentSearches.length > 0 && (
-  <div className="mt-4">
-    <p className="mb-2 text-sm font-bold text-[#005b2e]">
-      Recent Searches
-    </p>
+              {slabStatus.alert && (
+                <div className="reveal rounded-2xl border-2 border-red-200 bg-red-50 p-5 text-red-800">
+                  <h3 className="font-black flex items-center gap-2"><span>⚠️</span> Slab Warning</h3>
+                  <p className="mt-2 text-sm font-bold">200 یونٹ سے اوپر جانے پر بل زیادہ آ سکتا ہے۔</p>
+                  <p className="mt-1 text-sm font-semibold">200 units cross honay par bill zyada aa sakta hai.</p>
+                  <p className="mt-1 text-sm">Reduce AC usage during peak hours (7 PM – 11 PM).</p>
+                </div>
+              )}
 
-    <div className="flex flex-wrap gap-2">
-      {recentSearches.map((item) => (
-        <button
-          key={item}
-          onClick={() => setRefNumber(item)}
-          className="rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-bold text-[#005b2e]"
-        >
-          {item}
-        </button>
-      ))}
-    </div>
-  </div>
-)}
-              <button onClick={checkBill} className="mt-6 h-16 w-full rounded-xl bg-[#007a3d] text-xl font-black text-white shadow-lg transition duration-300 hover:scale-[1.02] hover:bg-[#004d27] hover:shadow-2xl animate-pulse">
-               {checkingBill ? "Checking..." : "Check Bill"}
-              </button>
+              <div className="reveal reveal-delay-1 rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-black text-gray-900 mb-5">Bill Breakdown</h3>
+                <div className="space-y-4">
+                  {[
+                    ["Electricity Charges",        estimatedBill.energy      ],
+                    ["Fuel Price Adjustment (FPA)", estimatedBill.fpa         ],
+                    ["Fixed Charges",              estimatedBill.fixedCharges],
+                    ["Approx GST (18%)",           estimatedBill.tax         ],
+                  ].map(([label, value]) => (
+                    <div key={label as string} className="flex items-center justify-between py-2 border-b border-gray-50">
+                      <span className="text-sm text-gray-600">{label}</span>
+                      <span className="text-lg font-black text-gray-900">Rs.&nbsp;{value}</span>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-between pt-4 border-t-2 border-[#005b2e]">
+                    <span className="text-xl font-black gradient-text">Estimated Total</span>
+                    <span className="text-3xl font-black gradient-text">Rs.&nbsp;{estimatedBill.total}</span>
+                  </div>
+                </div>
+                {/* Stronger disclaimer */}
+                <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3">
+                  <p className="text-xs text-amber-800 font-semibold leading-5">
+                    ⚠️ This calculator is for estimation only. Official MEPCO tariff, FPA, QTA, taxes and
+                    government adjustments may change. Actual bill may include PTV fee, arrears, late payment
+                    surcharge and other official charges. Always verify with your official MEPCO bill.
+                  </p>
+                </div>
+              </div>
 
-<button
-  onClick={() => {
-    localStorage.removeItem("mepco_reference_number");
-    setRefNumber("");
-    alert("Saved reference number removed");
-  }}
-  className="mt-3 h-12 w-full rounded-xl border border-green-200 bg-white text-sm font-bold text-[#005b2e] transition hover:bg-green-50"
->
-  Clear Saved Reference Number
-</button>
-<div className="mt-3 grid grid-cols-2 gap-3">
+              <div className="reveal reveal-delay-2 rounded-2xl border border-blue-200 bg-blue-50/50 p-5">
+                <h3 className="text-lg font-black text-blue-900 flex items-center gap-2"><span>❄️</span> AC Cost Calculator</h3>
+                <p className="mt-1 text-sm text-blue-700">اے سی کا متوقع ماہانہ بجلی خرچ</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <input type="number" value={acHours} onChange={(e) => setAcHours(e.target.value)}
+                    placeholder="Daily Hours" min="0" max="24" aria-label="AC daily usage hours"
+                    className="input-premium rounded-xl p-3 text-sm" />
+                  <select value={acType} onChange={(e) => setAcType(e.target.value)} aria-label="AC type" className="input-premium rounded-xl p-3 text-sm">
+                    <option value="inverter">Inverter AC</option>
+                    <option value="non-inverter">Non-Inverter AC</option>
+                  </select>
+                </div>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-sm font-bold text-blue-900">Monthly: {acEstimate.monthlyUnits} units</span>
+                  <span className="text-xl font-black text-blue-900">Rs.&nbsp;{acEstimate.estimatedCost}</span>
+                </div>
+              </div>
 
-  <button
-    onClick={() => {
-      window.open(
-        "https://wa.me/?text=Check%20your%20MEPCO%20bill%20online%20instantly%20https://mepcoonlinebill.net",
-        "_blank"
-      );
-    }}
-    className="h-12 rounded-xl bg-green-600 text-sm font-bold text-white hover:bg-green-700"
-  >
-    📲 WhatsApp Share
-  </button>
-
-  <button
-    onClick={() => {
-      navigator.clipboard.writeText("https://mepcoonlinebill.net");
-      alert("Website link copied");
-    }}
-    className="h-12 rounded-xl border border-green-200 bg-white text-sm font-bold text-[#005b2e] hover:bg-green-50"
-  >
-    🔗 Copy Link
-  </button>
-
-</div>
-              <p className="mt-4 text-center text-sm text-gray-500">
-  Reference number is available on your previous electricity bill.
-</p>
-
-<div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-
-  <div className="rounded-full border border-green-100 bg-[#f4f8f5] px-4 py-2 text-sm font-bold text-[#005b2e]">
-    🔒 Secure Platform
-  </div>
-
-  <div className="rounded-full border border-green-100 bg-[#f4f8f5] px-4 py-2 text-sm font-bold text-[#005b2e]">
-    ⚡ Fast Access
-  </div>
-
-  <div className="rounded-full border border-green-100 bg-[#f4f8f5] px-4 py-2 text-sm font-bold text-[#005b2e]">
-    📄 Duplicate Bills
-  </div>
-
-  <div className="rounded-full border border-green-100 bg-[#f4f8f5] px-4 py-2 text-sm font-bold text-[#005b2e]">
-    🇵🇰 Pakistan Users
-  </div>
-
-</div>
-            
+              <div className="reveal reveal-delay-3 rounded-2xl border border-green-200 bg-green-50/50 p-5">
+                <h3 className="text-lg font-black text-green-900 flex items-center gap-2"><span>⚡</span> Appliance Cost Calculator</h3>
+                <p className="mt-1 text-sm text-green-700">گھریلو آلات کی ماہانہ بجلی لاگت</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <input type="number" value={applianceHours} onChange={(e) => setApplianceHours(e.target.value)}
+                    placeholder="Daily Hours" min="0" max="24" aria-label="Appliance daily usage hours"
+                    className="input-premium rounded-xl p-3 text-sm" />
+                  <select value={applianceType} onChange={(e) => setApplianceType(e.target.value)} aria-label="Appliance type" className="input-premium rounded-xl p-3 text-sm">
+                    <option value="fan">Ceiling Fan</option>
+                    <option value="fridge">Refrigerator</option>
+                    <option value="iron">Electric Iron</option>
+                    <option value="waterMotor">Water Motor</option>
+                    <option value="airCooler">Air Cooler</option>
+                    <option value="tv">Television</option>
+                    <option value="washingMachine">Washing Machine</option>
+                  </select>
+                </div>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-sm font-bold text-green-900">{applianceEstimate.watts}W — {applianceEstimate.monthlyUnits} units/month</span>
+                  <span className="text-xl font-black text-green-900">Rs.&nbsp;{applianceEstimate.estimatedCost}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-<section className="bg-[#004d27] py-4 text-white">
 
-  <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-6 px-5 text-sm font-bold">
+      <div className="section-divider" />
 
-    <div className="flex items-center gap-2">
-      <span className="h-3 w-3 rounded-full bg-green-400 animate-pulse"></span>
-      System Online
-    </div>
-
-    <div>
-      ⚡ Bill Server Active
-    </div>
-
-    <div>
-      🔒 Secure Connection
-    </div>
-
-    <div>
-      📄 Duplicate Bills Available
-    </div>
-
-  </div>
-
-</section>
-<section className="mx-auto max-w-7xl px-5 py-10">
-
-  <div className="grid gap-6 md:grid-cols-4">
-
-    <div className="rounded-3xl bg-white p-8 shadow-lg border border-green-100 text-center">
-      <h3 className="text-5xl font-black text-[#005b2e]">
-        24/7
-      </h3>
-
-      <p className="mt-3 text-gray-600 font-semibold">
-        Bill Access
-      </p>
-    </div>
-
-   <div className="rounded-3xl border border-green-100 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl">
-      <h3 className="text-5xl font-black text-[#005b2e]">
-        30+
-      </h3>
-
-      <p className="mt-3 text-gray-600 font-semibold">
-        Regions Covered
-      </p>
-    </div>
-
-    <div className="rounded-3xl bg-white p-8 shadow-lg border border-green-100 text-center">
-      <h3 className="text-5xl font-black text-[#005b2e]">
-        Fast
-      </h3>
-
-      <p className="mt-3 text-gray-600 font-semibold">
-        Bill Checking
-      </p>
-    </div>
-
-    <div className="rounded-3xl bg-white p-8 shadow-lg border border-green-100 text-center">
-      <h3 className="text-5xl font-black text-[#005b2e]">
-        Secure
-      </h3>
-
-      <p className="mt-3 text-gray-600 font-semibold">
-        Online Platform
-      </p>
-    </div>
-
-  </div>
-</section>
-<section className="mx-auto max-w-7xl px-5 py-6" aria-label="Advertisement">
-  <div className="overflow-hidden rounded-3xl border border-green-100 bg-white shadow-lg">
-
-    <div className="border-b border-green-100 bg-[#f4f8f5] px-5 py-3">
-      <p className="text-center text-xs font-black uppercase tracking-widest text-gray-400">
-        Advertisement
-      </p>
-    </div>
-
-    <div className="flex min-h-[120px] items-center justify-center p-8">
-      <div className="w-full rounded-2xl border-2 border-dashed border-green-200 bg-[#f8fcf9] p-6 text-center">
-
-        <div className="mb-3 text-4xl">
-          📢
-        </div>
-
-        <h3 className="text-lg font-black text-[#005b2e]">
-          Google AdSense Space
-        </h3>
-
-        <p className="mt-2 text-sm leading-7 text-gray-600">
-          Responsive advertisement will appear here after AdSense approval.
-        </p>
-
-      </div>
-    </div>
-
-  </div>
-</section>  <section id="services" className="mx-auto max-w-7xl px-5 py-16">
-        <h2 className="text-center text-4xl font-black text-[#8B0000]">Online MEPCO Services</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-gray-600">
-          Useful electricity bill tools and information for MEPCO consumers.
-        </p>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {services.map(([title, text]) => (
-            <div key={title} className="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
-              <h3 className="text-2xl font-black text-[#005b2e]">{title}</h3>
-              <p className="mt-3 leading-7 text-gray-600">{text}</p>
+      {/* ══ 9. PEAK HOURS ══ */}
+      <section id="peak-hours" className="py-16 bg-[#f8faf9]">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="reveal relative overflow-hidden rounded-3xl dark-mesh-bg p-8 md:p-10 text-white shadow-2xl">
+              <div aria-hidden="true" className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/5 blur-2xl" />
+              <div aria-hidden="true" className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-green-400/10 blur-2xl" />
+              <div className="relative z-10">
+                <span className="inline-flex rounded-full bg-white/10 border border-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-green-300 mb-6">⚡ Energy Saving Guide</span>
+                <h2 className="text-4xl font-black leading-tight">MEPCO Peak Hours</h2>
+                <p className="mt-4 text-green-200 leading-7">Avoid excessive electricity usage during peak hours to significantly reduce your monthly bill amount.</p>
+                <p className="mt-2 text-green-300/70 leading-7">پیک اوقات میں بجلی کا زیادہ استعمال سے گریز کریں۔</p>
+                <div className="mt-8 space-y-4">
+                  {[
+                    { period: "Summer (Apr–Oct)", time: "6:30 PM — 10:30 PM", icon: "☀️" },
+                    { period: "Winter (Nov–Mar)", time: "6:00 PM — 10:00 PM", icon: "❄️" },
+                  ].map((t) => (
+                    <div key={t.period} className="rounded-2xl bg-white/10 border border-white/10 p-5 hover:bg-white/15 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{t.icon}</span>
+                        <div>
+                          <p className="text-xs uppercase tracking-widest text-green-300">{t.period}</p>
+                          <h3 className="mt-1 text-2xl font-black">{t.time}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
+            <div className="reveal reveal-delay-1 rounded-3xl bg-white border border-gray-200 p-8 shadow-lg">
+              <h2 className="text-2xl font-black text-gray-900 flex items-center gap-2"><span>💡</span> How to Reduce Your Bill</h2>
+              <p className="mt-2 text-sm text-gray-500">بجلی کا بل کم کرنے کے آسان طریقے</p>
+              <ul className="mt-6 space-y-3">
+                {["Use energy efficient appliances","Avoid heavy appliances during peak hours","Turn off unnecessary lights","Use natural light in daytime","Unplug chargers when not in use","Use inverter AC at 26°C","Check meter reading regularly","Stay within 200 units for protected rate"].map((tip) => (
+                  <li key={tip} className="flex items-start gap-3 text-sm text-gray-700">
+                    <span className="shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs font-bold mt-0.5" aria-hidden="true">✓</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 10. CITIES ══ */}
+      <section id="cities" className="py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="text-center mb-12 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Service Regions</span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Coverage Areas</h2>
+            <p className="mt-3 text-gray-500 max-w-2xl mx-auto">Check MEPCO electricity bills across {CITIES.length}+ districts of South Punjab.</p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CITIES.map((city, i) => (
+              <a key={`city-${i}`} href={city.slug} title={city.title} aria-label={city.title}
+                className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[#005b2e]/20"
+                style={{ transitionDelay: `${(i % 4) * 60}ms` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-2xl" aria-hidden="true">🏙️</span>
+                  <span className="rounded-full bg-green-50 px-2 py-0.5 text-[10px] font-bold text-green-700">{city.consumers}</span>
+                </div>
+                <h3 className="text-base font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{city.anchor}</h3>
+                <p className="mt-1 text-xs text-gray-400">{city.name} Division</p>
+              </a>
+            ))}
+          </div>
+
+          {/* City SEO Power Block */}
+          <div className="mt-12 reveal">
+            <div className="rounded-3xl bg-gradient-to-br from-[#f0f9f4] to-white border border-green-100 p-8 shadow-sm">
+              <h2 className="text-2xl md:text-3xl font-black text-gray-900 text-center mb-8">MEPCO Bill Check — All Major Cities</h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {CITIES.map((city, i) => (
+                  <a key={`city-seo-${i}`} href={city.slug} title={city.title}
+                    className="portal-card reveal group flex items-center gap-4 rounded-2xl bg-white border border-gray-100 p-4 shadow-sm hover:border-[#005b2e]/30"
+                    style={{ transitionDelay: `${(i % 3) * 60}ms` }}>
+                    <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[#005b2e] to-[#007a3d] flex items-center justify-center text-white text-sm font-black shadow-md">
+                      {city.name.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-sm font-black text-gray-900 group-hover:text-[#005b2e] transition-colors truncate">{city.anchor}</h3>
+                      <p className="text-xs text-gray-400 mt-0.5">{city.consumers} consumers · {city.name}</p>
+                    </div>
+                    <span className="ml-auto text-[#005b2e] font-bold text-sm shrink-0 group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+                  </a>
+                ))}
+              </div>
+              <p className="mt-6 text-center text-sm text-gray-500">
+                MEPCO provides electricity services across <strong className="text-[#005b2e]">{CITIES.length}+ districts</strong> of South Punjab, Pakistan. Click your city to check your electricity bill online.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center flex flex-wrap gap-3 justify-center reveal">
+            <a href="/all-mepco-regions" className="inline-flex items-center gap-2 rounded-xl bg-[#005b2e] px-6 py-3 font-bold text-white transition hover:bg-[#004221] btn-3d">
+              View All {CITIES.length}+ Regions →
+            </a>
+            <a href="/mepco-bill-calculator" className="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-[#005b2e] px-6 py-3 font-bold text-[#005b2e] transition hover:bg-[#005b2e] hover:text-white">
+              🧮 Advanced Calculator
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 11. SOLAR BANNER ══ */}
+      <section className="py-12 bg-gradient-to-r from-amber-50 to-green-50">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="reveal portal-card rounded-3xl bg-white border border-amber-200 p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-800">☀️ SOLAR TOOL</span>
+              <h2 className="mt-3 text-3xl font-black text-gray-900">Solar Savings Calculator</h2>
+              <p className="mt-2 text-gray-600">Calculate solar savings, yearly return, net metering credits and payback period.</p>
+              <p className="mt-1 text-gray-500" dir="rtl" lang="ur">سولر بچت، سالانہ منافع اور پے بیک پیریڈ معلوم کریں۔</p>
+            </div>
+            <a href="/mepco-solar-savings-calculator" className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-[#005b2e] px-8 py-4 text-lg font-black text-white btn-3d glow-button">
+              Open Calculator →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 12. GUIDES HUB ══ */}
+      <section id="guides" className="py-16 bg-[#f8faf9]">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="text-center mb-8 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Help Center</span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Consumer Guides</h2>
+            <p className="mt-3 text-gray-500 max-w-2xl mx-auto">{GUIDE_LINKS.length}+ comprehensive guides for MEPCO consumers — bill, meter, connection, taxes, and complaints.</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2 mb-8 reveal">
+            {guideCategories.map((cat) => (
+              <button key={cat} onClick={() => setGuideFilter(cat)}
+                className={`rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 ${guideFilter === cat ? "bg-[#005b2e] text-white shadow-lg shadow-green-900/20" : "bg-white border border-gray-200 text-gray-600 hover:border-[#005b2e] hover:text-[#005b2e]"}`}>
+                {cat} {cat === "All" ? `(${GUIDE_LINKS.length})` : `(${GUIDE_LINKS.filter((g) => g.category === cat).length})`}
+              </button>
+            ))}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {filteredGuides.map((g, i) => (
+              <a key={g.href} href={g.href}
+                className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[#005b2e]/20"
+                style={{ transitionDelay: `${(i % 4) * 50}ms` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-3xl group-hover:scale-110 transition-transform duration-200">{g.icon}</span>
+                  <span className="rounded-full bg-gray-50 border border-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-400 uppercase">{g.category}</span>
+                </div>
+                <h3 className="text-base font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{g.title}</h3>
+                <p className="mt-2 text-xs text-gray-500 leading-relaxed">{g.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 13. POPULAR SEARCHES ══ */}
+      <section className="py-14 bg-white">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="text-center mb-8 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-3">Quick Access</span>
+            <h2 className="text-2xl md:text-3xl font-black text-gray-900">Popular MEPCO Searches</h2>
+            <p className="mt-2 text-sm text-gray-500">Most searched MEPCO electricity bill topics — click to access instantly</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2 reveal">
+            {POPULAR_SEARCHES.map((s) => (
+              <a key={s.label} href={s.href}
+                className="rounded-full bg-white border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700 shadow-sm hover:border-[#005b2e] hover:text-[#005b2e] hover:shadow-md transition-all duration-200">
+                {s.label}
+              </a>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-gray-400">{POPULAR_SEARCHES.length}+ popular topics · Updated 2026 · South Punjab Pakistan</p>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 14. SEO CONTENT SECTION ══ */}
+      <section className="py-16 bg-[#f8faf9]">
+        <div className="mx-auto max-w-7xl px-5">
+          <article className="reveal rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-sm">
+            <h2 className="text-3xl font-black text-gray-900">MEPCO Online Bill Check 2026</h2>
+            <div className="mt-8 space-y-6 text-gray-700 leading-8">
+              <p>MEPCO online bill checking service allows consumers to instantly view and download duplicate electricity bills using a 14-digit reference number. This platform helps users across South Punjab including Multan, Khanewal, Bahawalpur, Vehari, Dera Ghazi Khan and nearby regions.</p>
+              <p>Consumers can check due date, payable amount, estimated electricity charges, and important billing information online without visiting physical offices.</p>
+              <p>Consumers can also learn about MEPCO taxes, GST, FPA, QTA, tariff slabs, customer ID, reference number and new electricity connection procedures.</p>
+              <p className="text-right" dir="rtl" lang="ur">
+                میپکو صارفین آن لائن بجلی کا بل چیک کر سکتے ہیں، ڈپلیکیٹ بل ڈاؤن لوڈ کر سکتے ہیں، ریفرنس نمبر اور کسٹمر آئی ڈی کی معلومات حاصل کر سکتے ہیں، اور بجلی کے بل میں شامل ٹیکسز، ایف پی اے، کیو ٹی اے اور دیگر چارجز کو سمجھ سکتے ہیں۔
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                {[
+                  { label: "Check Bill by CNIC →",      href: "/mepco-bill-check-by-cnic"      },
+                  { label: "200 Units Rule →",           href: "/mepco-200-units-rule"           },
+                  { label: "FPA Charges Guide →",        href: "/mepco-fpa-charges-guide"        },
+                  { label: "Protected Consumer Guide →", href: "/mepco-protected-consumer-guide" },
+                  { label: "Solar Savings Calculator →", href: "/mepco-solar-savings-calculator" },
+                ].map((link) => (
+                  <a key={link.href} href={link.href}
+                    className="rounded-full bg-[#005b2e]/10 px-4 py-2 text-sm font-bold text-[#005b2e] hover:bg-[#005b2e] hover:text-white transition-all duration-200">
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {[
+                { title: "Duplicate Bill",  desc: "Download or print duplicate electricity bills online.",      icon: "📄" },
+                { title: "Bill Calculator", desc: "Estimate monthly electricity charges using units consumed.", icon: "🧮" },
+                { title: "Mobile Friendly", desc: "Optimized for mobile users across Pakistan.",                icon: "📱" },
+              ].map((item) => (
+                <div key={item.title} className="portal-card rounded-2xl bg-[#f8faf9] p-5 border border-gray-100 shadow-sm">
+                  <span className="text-2xl" aria-hidden="true">{item.icon}</span>
+                  <h3 className="mt-3 text-lg font-black text-gray-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 15. URDU AUTHORITY SECTION ══ */}
+      <section className="py-16 bg-white" aria-label="میپکو بل گائیڈ اردو">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="reveal rounded-3xl border border-green-100 bg-gradient-to-br from-[#f0f9f4] to-white p-8 md:p-12 shadow-sm">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">اردو گائیڈ</span>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900" dir="rtl" lang="ur">میپکو آن لائن بل چیک — مکمل اردو گائیڈ</h2>
+              <p className="mt-3 text-gray-500 max-w-2xl mx-auto" dir="rtl" lang="ur">پاکستانی صارفین کے لیے میپکو بجلی بل کی مکمل معلومات اردو میں</p>
+            </div>
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div className="space-y-5 text-right" dir="rtl" lang="ur">
+                <p className="text-gray-700 leading-9 text-base">میپکو یعنی ملتان الیکٹرک پاور کمپنی جنوبی پنجاب کے لاکھوں گھروں اور کاروباروں کو بجلی فراہم کرتی ہے۔ اب آپ گھر بیٹھے اپنا میپکو بجلی کا بل آن لائن چیک کر سکتے ہیں۔ اس کے لیے آپ کو صرف اپنے پرانے بل پر درج 14 ہندسوں کا ریفرنس نمبر چاہیے۔</p>
+                <p className="text-gray-700 leading-9 text-base">میپکو بل آن لائن چیک کرنے کا طریقہ بہت آسان ہے۔ اوپر دیے گئے بل چیکر میں اپنا ریفرنس نمبر درج کریں اور چیک بل کے بٹن پر کلک کریں۔ آپ کا بل فوری طور پر کھل جائے گا جہاں آپ واجب الادا رقم، آخری تاریخ اور بل کی تمام تفصیلات دیکھ سکتے ہیں۔</p>
+                <p className="text-gray-700 leading-9 text-base">اگر آپ کے پاس پرانا بل موجود نہیں تو آپ اپنے میپکو کسٹمر آئی ڈی کے ذریعے بھی بل کی معلومات حاصل کر سکتے ہیں۔ ہمارا بل کیلکولیٹر استعمال کر کے آپ ماہانہ بجلی کی لاگت کا اندازہ بھی لگا سکتے ہیں۔</p>
+                <p className="text-gray-700 leading-9 text-base">200 یونٹ سے کم استعمال کرنے والے صارفین محفوظ صارف کہلاتے ہیں اور انہیں کم نرخ پر بجلی ملتی ہے۔ 200 یونٹ سے زیادہ استعمال پر بل میں نمایاں اضافہ ہو سکتا ہے۔ اس لیے ضروری ہے کہ آپ اپنے ماہانہ یونٹ پر نظر رکھیں۔</p>
+                <p className="text-gray-700 leading-9 text-base">میپکو بل میں ایف پی اے یعنی فیول پرائس ایڈجسٹمنٹ، جی ایس ٹی، فکسڈ چارجز اور دیگر ٹیکس شامل ہوتے ہیں۔ ان تمام چارجز کو سمجھنے کے لیے ہماری ٹیکسز گائیڈ پڑھیں۔ یہ ویب سائٹ ایک آزاد معلوماتی پورٹل ہے اور میپکو یا پی آئی ٹی سی سے منسلک نہیں ہے۔</p>
+              </div>
+              <div className="space-y-4">
+                {[
+                  { title: "ریفرنس نمبر کیا ہے؟", sub: "Reference Number",    icon: "🔢", desc: "14 ہندسوں کا ریفرنس نمبر آپ کے پرانے میپکو بجلی بل کے اوپری حصے میں درج ہوتا ہے۔ یہ نمبر آپ کے کنکشن کی پہچان ہے۔" },
+                  { title: "محفوظ صارف کون ہے؟", sub: "Protected Consumer",   icon: "🛡️", desc: "جو صارف ماہانہ 200 یونٹ یا اس سے کم بجلی استعمال کرے وہ محفوظ صارف کہلاتا ہے۔ اسے سستی نرخ پر بجلی ملتی ہے۔" },
+                  { title: "پیک اوقات کیا ہیں؟", sub: "Peak Hours",           icon: "⏰", desc: "گرمیوں میں شام 6:30 سے رات 10:30 بجے تک پیک اوقات ہیں۔ اس دوران بھاری آلات جیسے اے سی اور واشنگ مشین کا استعمال کم کریں۔" },
+                  { title: "ایف پی اے کیا ہے؟",  sub: "Fuel Price Adjustment", icon: "🧾", desc: "ایف پی اے یعنی فیول پرائس ایڈجسٹمنٹ ہر مہینے تبدیل ہو سکتی ہے۔ یہ آپ کے بل میں اضافہ یا کمی دونوں کر سکتی ہے۔" },
+                ].map((card) => (
+                  <div key={card.title} className="portal-card rounded-2xl bg-white border border-gray-100 p-5 shadow-sm text-right" dir="rtl" lang="ur">
+                    <div className="flex items-center justify-end gap-3 mb-3">
+                      <div>
+                        <h3 className="font-black text-gray-900">{card.title}</h3>
+                        <p className="text-xs text-gray-400 mt-0.5">{card.sub}</p>
+                      </div>
+                      <span className="text-2xl shrink-0" aria-hidden="true">{card.icon}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-7">{card.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-10 flex flex-wrap gap-3 justify-end" dir="rtl">
+              {[
+                { label: "اردو بل گائیڈ →",         href: "/mepco-bill-urdu"                },
+                { label: "ریفرنس نمبر گائیڈ →",      href: "/mepco-reference-number-guide"   },
+                { label: "محفوظ صارف گائیڈ →",       href: "/mepco-protected-consumer-guide" },
+                { label: "ایف پی اے چارجز گائیڈ →",  href: "/mepco-fpa-charges-guide"        },
+                { label: "200 یونٹ رول →",           href: "/mepco-200-units-rule"           },
+              ].map((link) => (
+                <a key={link.href} href={link.href} lang="ur"
+                  className="rounded-full bg-[#005b2e]/10 px-4 py-2 text-sm font-bold text-[#005b2e] hover:bg-[#005b2e] hover:text-white transition-all duration-200">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 16. FAQ ══ */}
+      <section id="faq" className="py-16 bg-[#f8faf9]">
+        <div className="mx-auto max-w-4xl px-5">
+          <div className="text-center mb-12 reveal">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Help &amp; Support</span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900">Frequently Asked Questions</h2>
+            <p className="mt-3 text-gray-500">Common questions about MEPCO electricity bills, reference numbers, and online services.</p>
+          </div>
+          <div className="space-y-3">
+            {FAQS.map(([q, a], i) => (
+              <div key={i} className="reveal rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden" style={{ transitionDelay: `${i * 40}ms` }}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors">
+                  <h3 className="text-base font-black text-gray-900 pr-4">{q}</h3>
+                  <span aria-hidden="true" className={`shrink-0 h-8 w-8 rounded-full bg-[#005b2e]/10 flex items-center justify-center text-[#005b2e] font-bold transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`}>▼</span>
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-5 border-t border-gray-50">
+                    <p className="pt-4 text-sm text-gray-600 leading-7">{a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ══ 17. AD PLACEHOLDER ══ */}
+      <section className="py-6 bg-white" aria-label="Advertisement">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden" style={{ minHeight: "250px", contain: "layout" }}>
+            <div className="border-b border-gray-100 bg-gray-100/50 px-4 py-2">
+              <p className="text-center text-[10px] font-bold uppercase tracking-widest text-gray-400">Advertisement</p>
+            </div>
+            <div className="flex items-center justify-center p-8" style={{ minHeight: "200px" }}>
+              <div className="text-center">
+                <p className="text-4xl mb-3" aria-hidden="true">📢</p>
+                <p className="text-sm font-bold text-gray-400">Google AdSense Space</p>
+                <p className="text-xs text-gray-300 mt-1">Responsive ad will appear after approval</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 18. FOOTER ══ */}
+      <footer className="dark-mesh-bg text-white">
+        <div className="mx-auto max-w-7xl px-5 py-14">
+          <div className="grid gap-10 md:grid-cols-5">
+            <div>
+              <div className="flex items-center gap-3">
+                <Image src="/mepco-logo.png" alt="MEPCO Bill Portal" width={48} height={48}
+                  className="rounded-full border-2 border-green-600/50 bg-white object-cover" />
+                <div>
+                  <h3 className="text-xl font-black">MEPCO</h3>
+                  <p className="text-xs text-green-400/70">Consumer Portal Hub</p>
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-7 text-green-300/60">Independent MEPCO electricity bill information portal for South Punjab consumers. Not affiliated with MEPCO or PITC.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-5">Quick Links</h4>
+              <div className="space-y-3">
+                {FOOTER_QUICK.map((l) => (
+                  <a key={l.href} href={l.href} className="block text-sm text-green-300/60 hover:text-white transition-colors">{l.label}</a>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-5">Guides</h4>
+              <div className="space-y-3">
+                {FOOTER_GUIDES.map((l) => (
+                  <a key={l.href} href={l.href} className="block text-sm text-green-300/60 hover:text-white transition-colors">{l.label}</a>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-5">Cities</h4>
+              <div className="space-y-3">
+                {CITIES.slice(0, 8).map((city, index) => (
+                  <a key={`footer-city-${index}`} href={city.slug} className="block text-sm text-green-300/60 hover:text-white transition-colors">{city.anchor}</a>
+                ))}
+                <a href="/all-mepco-regions" className="block text-sm text-green-400 hover:text-white transition-colors font-bold">View All Regions →</a>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-5">Information</h4>
+              <div className="space-y-3 text-sm text-green-300/60">
+                <p>Independent informational website.</p>
+                <p>Not affiliated with MEPCO or PITC.</p>
+                <p>📞 Helpline: {HELPLINE}</p>
+                <p className="text-xs text-green-300/40 mt-4">Bill data is provided by official PITC/MEPCO systems. Always verify charges with your official bill.</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-green-300/40">© 2026 {SITE_NAME}. All Rights Reserved.</p>
+            <div className="flex flex-wrap gap-4 text-xs text-green-300/40">
+              {FOOTER_LEGAL.map((l) => (
+                <a key={l.href} href={l.href} className="hover:text-white transition-colors">{l.label}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* ══ MOBILE BOTTOM NAV ══ */}
+      <nav aria-label="Mobile bottom navigation"
+        className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white/98 md:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur-md">
+        <div className="grid grid-cols-5 text-center">
+          {[
+            { icon: "⚡", label: "Bill",   href: "#bill"       },
+            { icon: "🧮", label: "Calc",   href: "#calculator" },
+            { icon: "🏙️", label: "Cities", href: "#cities"     },
+            { icon: "📚", label: "Guides", href: "#guides"     },
+            { icon: "❓", label: "FAQs",   href: "#faq"        },
+          ].map((item) => (
+            <a key={item.href} href={item.href} className="py-3 text-xs font-bold text-gray-600 hover:text-[#005b2e] transition-colors">
+              <span className="text-lg block" aria-hidden="true">{item.icon}</span>
+              {item.label}
+            </a>
           ))}
         </div>
-      </section>
+      </nav>
 
-      <section className="mx-auto max-w-7xl px-5 py-16">
-        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
-          <h2 className="text-center text-4xl font-black text-[#005b2e]">How to Find Reference Number?</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center leading-7 text-gray-600">
-            Your 14-digit reference number is printed on your previous MEPCO bill.
-          </p>
+      {/* ══ SCROLL TO TOP ══ */}
+      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top"
+        className="fixed bottom-20 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#005b2e] text-xl text-white shadow-xl btn-3d glow-green md:bottom-8">
+        ↑
+      </button>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              ["📄", "Open Old Bill", "Take any previous MEPCO electricity bill."],
-              ["🔎", "Find Ref No", "Look for 14-digit Reference No on the bill."],
-              ["✅", "Enter Online", "Enter it above and click Check Bill."],
-            ].map(([icon, title, text]) => (
-              <div key={title} className="rounded-2xl bg-[#f4f8f5] p-6 text-center">
-                <p className="text-4xl">{icon}</p>
-                <h3 className="mt-4 text-xl font-black text-[#005b2e]">{title}</h3>
-                <p className="mt-2 text-gray-600">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="cities" className="bg-white py-16">
-        <div className="mx-auto max-w-7xl px-5">
-          <h2 className="text-center text-4xl font-black text-[#005b2e]">Cities Covered by MEPCO</h2>
-       <div className="mt-4 text-center">
-  <a
-    href="/all-mepco-regions"
-    className="inline-flex rounded-full bg-[#005b2e] px-6 py-3 font-black text-white transition hover:bg-[#004221]"
-  >
-    View All {cities.length}+ Regions →
-  </a>
-</div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-            {cities.map((city) => (
-  <a
-    key={city.name}
-    href={city.slug}
-    className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 text-center font-black text-gray-800 shadow-sm transition hover:bg-green-50 hover:text-[#005b2e]"
-  >
-    {city.name} Bill Check
-  </a>
-))}
-<a
-  href="/mepco-bill-calculator"
-  className="rounded-2xl border-2 border-[#005b2e] bg-[#005b2e] p-5 text-center font-black text-white shadow-sm transition hover:scale-105 hover:bg-[#004221]"
->
-  🧮 Advanced MEPCO Bill Calculator
-</a>          </div>
-        </div>
-      </section>
-
-      <section id="calculator" className="mx-auto max-w-7xl px-5 py-16">
-        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl md:p-12">
-          <div className="text-center">
-            <h2 className="text-4xl font-black text-[#005b2e]">MEPCO Bill Calculator</h2>
-            <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-              Estimate your monthly electricity bill by entering consumed units.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
-            <div>
-              <label className="mb-3 block font-bold text-gray-700">Enter Units Consumed</label>
-              <input
-                type="number"
-                value={units}
-                onChange={(e) => setUnits(e.target.value)}
-                placeholder="Example: 250"
-                className="h-16 w-full rounded-2xl border-2 border-gray-200 px-5 text-xl outline-none focus:border-[#006b35]"
-              />
-            </div>
-
-          <div className="floating-calculator-card rounded-3xl border border-green-100 bg-white/85 backdrop-blur-xl p-8 shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-[0_25px_70px_rgba(0,91,46,0.25)]">
-
-<div className="mt-6">
-
-  <div className="flex items-center justify-between text-sm font-bold text-gray-500">
-    <span>Low Usage</span>
-    <span>High Usage</span>
-  </div>
-
-  <div className="mt-3 h-5 overflow-hidden rounded-full bg-gray-200">
-
-    <div
-      className="h-full rounded-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 transition-all duration-500"
-      style={{
-        width: `${Math.min(Number(units || 0) / 5, 100)}%`,
-      }}
-    ></div>
-
-    </div>
-
-</div>
-
-<div className="mt-4 rounded-2xl border border-orange-200 bg-orange-50 p-4">
-  <h4 className="font-black text-orange-800">
-    ⚡ 200 Unit Danger Meter
-  </h4>
-
-  <p className="mt-2 text-sm font-semibold text-orange-700">
-    English:{" "}
-    {200 - consumedUnits > 0
-      ? `${200 - consumedUnits} units left before 200-unit threshold`
-      : "200-unit threshold crossed"}
-  </p>
-
-  <p className="mt-1 text-sm font-semibold text-orange-700">
-    اردو:{" "}
-    {200 - consumedUnits > 0
-      ? `200 یونٹ کی حد تک ${200 - consumedUnits} یونٹ باقی ہیں`
-      : "آپ 200 یونٹ کی حد عبور کر چکے ہیں"}
-  </p>
-
-  <p className="mt-1 text-sm font-semibold text-orange-700">
-    Roman Urdu:{" "}
-    {200 - consumedUnits > 0
-      ? `Sirf ${200 - consumedUnits} units baqi hain`
-      : "Aap 200 units cross kar chukay hain"}
-  </p>
-</div>
-<div className={`mt-4 rounded-2xl border p-4 ${consumerStatus.color}`}>
-  <h4 className="font-black">
-    🛡️ {consumerStatus.title}
-  </h4>
-
-  <p className="mt-2 text-sm font-bold">
-    اردو: {consumerStatus.urdu}
-  </p>
-
-  <p className="mt-1 text-sm font-semibold">
-    Roman Urdu: {consumerStatus.roman}
-  </p>
-
-  <p className="mt-2 text-sm leading-6">
-    Status: {consumerStatus.status}
-  </p>
-</div>
-<div className="mt-4 rounded-2xl border border-purple-200 bg-purple-50 p-4">
-  <h4 className="font-black text-purple-900">
-    📈 Bill Shock Predictor
-  </h4>
-
-  <p className="mt-2 text-sm font-bold text-purple-800">
-    English: If you use 20 more units, your bill may increase by approximately Rs. {billShock.increase}
-  </p>
-
-  <p className="mt-1 text-sm font-bold text-purple-800">
-    اردو: اگر آپ مزید 20 یونٹ استعمال کریں تو بل تقریباً Rs. {billShock.increase} بڑھ سکتا ہے۔
-  </p>
-
-  <p className="mt-1 text-sm font-semibold text-purple-700">
-    Roman Urdu: Agar aap 20 units aur use karein to bill taqreeban Rs. {billShock.increase} barh sakta hai.
-  </p>
-
-  <p className="mt-2 text-sm text-purple-700">
-    Future Units: {billShock.futureUnits}
-  </p>
-</div>
-
-<div className="mt-8 space-y-5">  <div className="flex items-center justify-between">
-    <span className="text-gray-600">Electricity Charges</span>
-    <span className="text-xl font-black">Rs. {estimatedBill.energy}</span>
-  </div>
-<div className={`mb-5 rounded-2xl border p-4 ${slabStatus.color}`}>
-  <h4 className="text-lg font-black">{slabStatus.title}</h4>
-
-  <p className="mt-1 text-sm font-bold">
-    {slabStatus.urdu}
-  </p>
-
-  <p className="mt-1 text-sm font-semibold">
-    {slabStatus.roman}
-  </p>
-
-  <p className="mt-2 text-sm leading-6">
-    {slabStatus.message}
-  </p>
-</div>
-
-{slabStatus.alert && (
-  <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800">
-    <h4 className="text-lg font-black">⚠️ Slab Warning</h4>
-
-    <p className="mt-1 text-sm font-bold">
-      اردو: 200 یونٹ سے اوپر جانے پر بل زیادہ آ سکتا ہے۔
-    </p>
-
-    <p className="mt-1 text-sm font-semibold">
-      Roman Urdu: 200 units cross honay par bill zyada aa sakta hai.
-    </p>
-
-    <p className="mt-2 text-sm leading-6">
-      English: Reduce AC usage during peak hours (7 PM - 11 PM).
-    </p>
-  </div>
-)}
-
-<div className="flex items-center justify-between">
-  <span className="text-gray-600">Fuel Price Adjustment (FPA)</span>
-  <span className="text-xl font-black">Rs. {estimatedBill.fpa}</span>
-</div>
-
-  <div className="flex items-center justify-between">
-    <span className="text-gray-600">Fixed Charges</span>
-    <span className="text-xl font-black">Rs. {estimatedBill.fixedCharges}</span>
-  </div>
-
-  <div className="flex items-center justify-between">
-    <span className="text-gray-600">Approx GST</span>
-    <span className="text-xl font-black">Rs. {estimatedBill.tax}</span>
-  </div>
-
-  <div className="flex items-center justify-between border-t pt-5">
-    <span className="text-2xl font-black text-[#005b2e]">Total</span>
-    <span className="text-3xl font-black text-[#005b2e]">
-      Rs. {estimatedBill.total}
-    </span>
-  </div>
-<div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-  <h4 className="text-xl font-black text-blue-900">
-    ❄️ AC Cost Calculator
-  </h4>
-
-  <p className="mt-2 text-sm font-bold text-blue-800">
-    English: Estimated monthly AC electricity usage
-  </p>
-
-  <p className="mt-1 text-sm font-bold text-blue-800">
-    اردو: اے سی کا متوقع ماہانہ بجلی خرچ
-  </p>
-
-  <p className="mt-1 text-sm font-semibold text-blue-700">
-    Roman Urdu: AC ka andaza shuda mahana bill
-  </p>
-
-  <div className="mt-4 grid gap-3 md:grid-cols-2">
-    <input
-      type="number"
-      value={acHours}
-      onChange={(e) => setAcHours(e.target.value)}
-      placeholder="Daily AC Hours"
-      className="rounded-xl border border-blue-200 p-3"
-    />
-
-    <select
-      value={acType}
-      onChange={(e) => setAcType(e.target.value)}
-      className="rounded-xl border border-blue-200 p-3"
-    >
-      <option value="inverter">Inverter AC</option>
-      <option value="non-inverter">Non Inverter AC</option>
-    </select>
-  </div>
-
-  <div className="mt-4 space-y-2">
-    <p className="font-bold text-blue-900">
-      Monthly Units: {acEstimate.monthlyUnits}
-    </p>
-
-    <p className="text-xl font-black text-blue-900">
-      Estimated Cost: Rs. {acEstimate.estimatedCost}
-    </p>
-  </div>
-</div>
-<div className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-5">
-  <h4 className="text-xl font-black text-green-900">
-    ⚡ Appliance Electricity Cost Calculator
-  </h4>
-
-  <p className="mt-2 text-sm font-bold text-green-800">
-    English: Calculate monthly electricity cost of home appliances
-  </p>
-
-  <p className="mt-1 text-sm font-bold text-green-800">
-    اردو: گھریلو آلات کی ماہانہ بجلی لاگت معلوم کریں
-  </p>
-
-  <p className="mt-1 text-sm font-semibold text-green-700">
-    Roman Urdu: Ghar ke appliances ka mahana bijli kharcha check karein
-  </p>
-
-  <div className="mt-4 grid gap-3 md:grid-cols-2">
-    <input
-      type="number"
-      value={applianceHours}
-      onChange={(e) => setApplianceHours(e.target.value)}
-      placeholder="Daily Usage Hours"
-      className="rounded-xl border border-green-200 p-3"
-    />
-
-    <select
-      value={applianceType}
-      onChange={(e) => setApplianceType(e.target.value)}
-      className="rounded-xl border border-green-200 p-3"
-    >
-      <option value="fan">Ceiling Fan</option>
-      <option value="fridge">Refrigerator</option>
-      <option value="iron">Electric Iron</option>
-      <option value="waterMotor">Water Motor</option>
-      <option value="airCooler">Air Cooler</option>
-      <option value="tv">Television</option>
-      <option value="washingMachine">Washing Machine</option>
-    </select>
-  </div>
-
-  <div className="mt-4 space-y-2">
-    <p className="font-bold text-green-900">
-      Appliance Power: {applianceEstimate.watts} Watts
-    </p>
-
-    <p className="font-bold text-green-900">
-      Monthly Units: {applianceEstimate.monthlyUnits}
-    </p>
-
-    <p className="text-xl font-black text-green-900">
-      Estimated Cost: Rs. {applianceEstimate.estimatedCost}
-    </p>
-  </div>
-</div>
-
-  <p className="text-sm text-gray-500">
-    This is only an estimate. Final bill may include QTA, PTV fee,
-    arrears, late payment surcharge and official adjustments.
-  </p>
-</div>
-            </div>
-          </div>
-        </div>
-      </section>      <section className="mx-auto max-w-7xl px-5 py-16">
-        <div className="grid gap-8 md:grid-cols-2">
-          <div className="relative overflow-hidden rounded-[35px] bg-gradient-to-br from-[#005b2e] via-[#007a3d] to-[#00994d] p-10 text-white shadow-2xl">
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
-            <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-black/10" />
-
-            <div className="relative z-10">
-              <div className="inline-flex rounded-full bg-white/10 px-5 py-2 text-sm font-bold">⚡ Energy Saving Guide</div>
-              <h2 className="mt-6 text-5xl font-black leading-tight">MEPCO Peak Hours</h2>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-green-100">
-                Avoid excessive electricity usage during peak hours to reduce your monthly bill amount.
-              </p>
-
-              <div className="mt-10 grid gap-5">
-                <div className="rounded-2xl border border-white/10 bg-white/10 p-5">
-                  <p className="text-sm uppercase tracking-widest text-green-100">April to October</p>
-                  <h3 className="mt-2 text-3xl font-black">6:30 PM — 10:30 PM</h3>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-white/10 p-5">
-                  <p className="text-sm uppercase tracking-widest text-green-100">November to March</p>
-                  <h3 className="mt-2 text-3xl font-black">6:00 PM — 10:00 PM</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
-            <h2 className="text-3xl font-black text-[#005b2e]">How to Reduce Bill?</h2>
-            <ul className="mt-5 space-y-3 text-gray-700">
-              <li>✅ Use energy efficient appliances</li>
-              <li>✅ Avoid heavy appliances during peak hours</li>
-              <li>✅ Turn off unnecessary lights</li>
-              <li>✅ Use natural light in daytime</li>
-              <li>✅ Unplug chargers and devices when not in use</li>
-              <li>✅ Use inverter AC carefully</li>
-              <li>✅ Check meter reading regularly</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="faq" className="bg-[#eef8f1] py-16">
-        <div className="mx-auto max-w-5xl px-5">
-          <h2 className="text-center text-4xl font-black text-[#005b2e]">FAQs About MEPCO Bill</h2>
-
-          <div className="mt-10 space-y-5">
-            {faqs.map(([q, a]) => (
-              <div key={q} className="rounded-2xl bg-white p-6 shadow-sm">
-                <h3 className="text-xl font-black text-[#005b2e]">{q}</h3>
-                <p className="mt-2 leading-7 text-gray-600">{a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
- <section className="mx-auto max-w-7xl px-5 py-16">
-  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl md:p-12">
-    <div className="text-center">
-      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
-        Consumer Help Center
-      </p>
-
-      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
-        MEPCO Bill Guides & Tools
-      </h2>
-
-      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-        Learn how to find your reference number, customer ID, peak hours,
-        taxes, and bill charges with simple MEPCO consumer guides.
-      </p>
-    </div>
-
-       <div className="mt-10 grid gap-5 md:grid-cols-3 lg:grid-cols-4">
-      <a href="/mepco-duplicate-bill-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">📄</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Duplicate Bill Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Download, print and save your MEPCO duplicate bill online.</p>
-      </a>
-
-      <a href="/mepco-bill-due-date-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">📅</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Due Date Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Check bill due date, late fee and amount after due date.</p>
-      </a>
-
-      <a href="/mepco-bill-installment-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">💰</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Installment Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Learn how to request installment relief for a high MEPCO bill.</p>
-      </a>
-
-      <a href="/mepco-meter-reading-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">⚡</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Meter Reading Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Read your electricity meter and calculate monthly units.</p>
-      </a>
-
-      <a href="/mepco-meter-complaint-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">🔧</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Meter Complaint Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Report wrong reading, fast meter, damaged meter or display issue.</p>
-      </a>
-
-      <a href="/mepco-wrong-bill-solution" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">❌</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Wrong Bill Solution</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Fix overbilling, wrong reading, arrears or unexpected charges.</p>
-      </a>
-
-      <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">🔢</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Reference Number Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Find your 14-digit MEPCO reference number on your bill.</p>
-      </a>
-
-      <a href="/mepco-customer-id-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">🆔</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Customer ID Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Understand Customer ID and how it differs from reference number.</p>
-      </a>
-
-      <a href="/mepco-peak-hours-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">⏰</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Peak Hours Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Check MEPCO peak hours and reduce electricity usage cost.</p>
-      </a>
-
-      <a href="/mepco-taxes-explained" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">🧾</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Taxes Explained</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Learn GST, FPA, QTA, fixed charges and other bill items.</p>
-      </a>
-
-      <a href="/mepco-bill-slabs-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">📊</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Slabs Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Understand unit rates and electricity bill slabs.</p>
-      </a>
-
-      <a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-        <div className="text-4xl">🔌</div>
-        <h3 className="mt-4 text-xl font-black text-[#005b2e]">New Connection Guide</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">Apply for a new MEPCO electricity connection and track application status.</p>
-      </a>
-<a href="/mepco-bill-payment-methods-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">💳</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Payment Methods Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Learn online bill payment through banks, apps and wallets.</p>
-</a>
-
-<a href="/mepco-name-change-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📝</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Name Change Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Transfer electricity connection ownership and update bill records.</p>
-</a>
-
-<a href="/mepco-demand-notice-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📨</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Demand Notice Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Understand demand notice fees, validity and payment process.</p>
-</a>
-
-<a href="/mepco-load-extension-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">⚙️</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Load Extension Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Increase sanctioned load for home, shop or commercial use.</p>
-</a>
-
-<a href="/mepco-net-metering-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">☀️</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Net Metering Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Sell solar energy and understand net metering requirements.</p>
-</a>
-
-<a href="/mepco-tariff-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📈</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Tariff Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Understand residential, commercial and industrial tariff categories.</p>
-</a>
-<a href="/mepco-security-deposit" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🏦</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Security Deposit Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Learn security deposit rules, refund process and new connection requirements.</p>
-</a>
-
-<a href="/mepco-bill-correction-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">✏️</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Correction Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Fix incorrect charges, billing errors and consumer billing issues.</p>
-</a>
-
-<a href="/mepco-bill-not-received-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📭</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Not Received Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">What to do when your monthly electricity bill is not delivered.</p>
-</a>
-
-<a href="/mepco-transformer-complaint-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🔌</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Transformer Complaint Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Report transformer faults, outages and electricity supply problems.</p>
-</a>
-
-<a href="/mepco-bill-calculator" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🧮</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Bill Calculator</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Estimate electricity charges using MEPCO bill calculator tools.</p>
-</a>
-
-<a href="/mepco-bill-urdu" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🇵🇰</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Urdu Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Complete MEPCO bill guide in Urdu for Pakistani consumers.</p>
-</a>
-<a href="/mepco-complaint-tracking-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📋</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Complaint Tracking Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Track complaint status and understand MEPCO complaint resolution process.</p>
-</a>
-
-<a href="/mepco-disconnection-reconnection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">🔄</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Disconnection & Reconnection</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Learn disconnection reasons, restoration process and reconnection rules.</p>
-</a>
-
-<a href="/mepco-load-shedding-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">⚡</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Load Shedding Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Understand outages, feeder shutdowns and electricity interruption issues.</p>
-</a>
-
-<a href="/mepco-change-of-tariff-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📈</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">Change of Tariff Guide</h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">Convert domestic, commercial and other tariff categories correctly.</p>
-</a>
-<a
-  href="/mepco-bill-check-by-cnic"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">🆔</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    Bill Check By CNIC Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn whether MEPCO bill can be checked by CNIC, alternative methods,
-    reference number requirements and consumer safety tips.
-  </p>
-</a>
-<a
-  href="/mepco-200-units-rule"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">⚡</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    200 Units Rule Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn protected consumer status, 200 unit limit, slab impact,
-    bill increase reasons and electricity saving tips.
-  </p>
-</a>
-<a href="/mepco-application-forms-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl">
-  <div className="text-4xl">📄</div>
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    Application Forms Guide
-  </h3>
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    New connection, name change, load extension, tariff change and complaint forms.
-  </p>
-</a>
-<a
-  href="/mepco-qta-charges-guide"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">📊</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    QTA Charges Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn what Quarterly Tariff Adjustment means, how it affects electricity
-    bills, and the difference between QTA and FPA charges.
-  </p>
-</a>
-<a
-  href="/mepco-protected-consumer-guide"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">🛡️</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    Protected Consumer Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn protected consumer meaning, 200 units connection, bill impact,
-    and protected vs unprotected consumer categories.
-  </p>
-</a>
-<a
-  href="/mepco-unprotected-consumer-guide"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">⚠️</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    Unprotected Consumer Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn what unprotected consumer means, why bills increase after crossing
-    usage limits, and how consumer status affects electricity charges.
-  </p>
-</a>
-<a
-  href="/mepco-bill-increased-guide"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">📈</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    Why My Bill Increased?
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn why your MEPCO bill suddenly increased, including units, slabs,
-    FPA, QTA, taxes, arrears and 200 units rule impact.
-  </p>
-</a>
-<a
-  href="/mepco-fpa-charges-guide"
-  className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-6 text-center shadow-sm transition hover:-translate-y-2 hover:bg-green-50 hover:shadow-xl"
->
-  <div className="text-4xl">🧾</div>
-
-  <h3 className="mt-4 text-xl font-black text-[#005b2e]">
-    FPA Charges Guide
-  </h3>
-
-  <p className="mt-3 text-sm leading-6 text-gray-600">
-    Learn what Fuel Price Adjustment means, why it appears on bills,
-    and how FPA can affect your monthly electricity charges.
-  </p>
-</a>
-    </div>
-  </div>
-</section>
-
-<section className="bg-white py-16">
-
-  <div className="mx-auto max-w-7xl px-5">
-
-    <div className="rounded-3xl border border-gray-200 bg-[#f9fcfa] p-8 md:p-12 shadow-sm">
-
-      <h2 className="text-4xl font-black text-[#005b2e]">
-        MEPCO Online Bill Check 2026
-      </h2>
-
-      <p className="mt-6 leading-8 text-gray-700">
-        MEPCO online bill checking service allows consumers to instantly view
-        and download duplicate electricity bills using a 14-digit reference
-        number. This platform helps users across South Punjab including
-        Multan, Khanewal, Bahawalpur, Vehari, Dera Ghazi Khan and nearby
-        regions.
-      </p>
-
-      <p className="mt-5 leading-8 text-gray-700">
-        Consumers can check due date, payable amount, estimated electricity
-        charges, and important billing information online without visiting
-        physical offices.
-      </p>
-     <p className="mt-5 leading-8 text-gray-700">
-  Consumers can also learn about MEPCO taxes, GST, FPA, QTA, tariff slabs,
-  customer ID, reference number and new electricity connection procedures.
-</p>
-<p className="mt-5 leading-8 text-gray-700">
-  میپکو صارفین آن لائن بجلی کا بل چیک کر سکتے ہیں، ڈپلیکیٹ بل ڈاؤن لوڈ کر سکتے ہیں،
-  ریفرنس نمبر اور کسٹمر آئی ڈی کی معلومات حاصل کر سکتے ہیں، اور بجلی کے بل میں شامل
-  ٹیکسز، ایف پی اے، کیو ٹی اے اور دیگر چارجز کو سمجھ سکتے ہیں۔
-</p>
-      <div className="mt-10 grid gap-5 md:grid-cols-3">
-
-        <div className="rounded-2xl bg-white p-6 border border-green-100">
-          <h3 className="text-xl font-black text-[#005b2e]">
-            Duplicate Bill
-          </h3>
-
-          <p className="mt-3 text-gray-600 leading-7">
-            Download or print duplicate electricity bills online.
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-white p-6 border border-green-100">
-          <h3 className="text-xl font-black text-[#005b2e]">
-            Bill Calculator
-          </h3>
-
-          <p className="mt-3 text-gray-600 leading-7">
-            Estimate monthly electricity charges using units consumed.
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-white p-6 border border-green-100">
-          <h3 className="text-xl font-black text-[#005b2e]">
-            Mobile Friendly
-          </h3>
-
-          <p className="mt-3 text-gray-600 leading-7">
-            Optimized for mobile users across Pakistan.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<section className="mx-auto max-w-7xl px-5 py-16">
-  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl md:p-12">
-    <div className="text-center">
-      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
-        Popular Searches
-      </p>
-
-      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
-        Popular MEPCO Searches
-      </h2>
-
-      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-        Quick access to commonly searched MEPCO bill topics, electricity bill
-        guides, duplicate bill services, and consumer help pages.
-      </p>
-    </div>
-
-    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <a href="#bill" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Bill Check
-      </a>
-
-      <a href="#bill" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Duplicate Bill
-      </a>
-
-      <a href="/mepco-bill-calculator" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Bill Calculator
-      </a>
-
-      <a href="/mepco-customer-id-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Customer ID
-      </a>
-
-      <a href="/mepco-reference-number-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Reference Number
-      </a>
-
-      <a href="/mepco-peak-hours-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Peak Hours
-      </a>
-
-      <a href="/mepco-taxes-explained" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO Taxes Explained
-      </a>
-
-      <a href="/mepco-new-connection-guide" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e] shadow-sm transition hover:-translate-y-1 hover:bg-green-50 hover:shadow-lg">
-        MEPCO New Connection
-      </a>
-    </div>
-  </div>
-</section>
-<section className="bg-gradient-to-r from-yellow-50 to-green-50 py-16">
-  <div className="mx-auto max-w-7xl px-5">
-
-    <div className="rounded-3xl border border-yellow-200 bg-white p-8 shadow-xl">
-
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-
-        <div>
-          <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-black text-yellow-800">
-            ☀️ NEW SOLAR TOOL
-          </span>
-
-          <h2 className="mt-4 text-4xl font-black text-[#005b2e]">
-            Solar Savings Calculator
-          </h2>
-
-          <p className="mt-4 text-lg font-semibold text-gray-700">
-            English: Calculate solar savings, yearly return, net metering credits and payback period.
-          </p>
-
-          <p className="mt-3 text-lg font-semibold text-gray-700">
-            اردو: سولر بچت، سالانہ منافع، نیٹ میٹرنگ کریڈٹ اور پے بیک پیریڈ معلوم کریں۔
-          </p>
-
-          <p className="mt-3 text-lg font-semibold text-gray-700">
-            Roman Urdu: Solar saving, yearly munafa aur payback period check karein.
-          </p>
-
-        </div>
-
-        <div>
-          <a
-            href="/mepco-solar-savings-calculator"
-            className="inline-flex items-center rounded-2xl bg-[#005b2e] px-8 py-4 text-lg font-black text-white transition hover:bg-green-800"
-          >
-            Open Solar Calculator →
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<section className="mx-auto max-w-7xl px-5 py-16">
-
-  <div className="rounded-3xl border border-green-100 bg-white p-8 shadow-xl">
-
-    <div className="text-center">
-
-      <p className="text-sm font-black uppercase tracking-widest text-[#005b2e]">
-        Regions Coverage
-      </p>
-
-      <h2 className="mt-3 text-4xl font-black text-[#8B0000]">
-        Top MEPCO Regions
-      </h2>
-
-      <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-        Explore electricity bill checking services across major MEPCO regions.
-      </p>
-
-    </div>
-
-    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-
-      <a href="/multan-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Multan Bill Check
-      </a>
-
-      <a href="/khanewal-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Khanewal Bill Check
-      </a>
-
-      <a href="/bahawalpur-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Bahawalpur Bill Check
-      </a>
-
-      <a href="/vehari-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Vehari Bill Check
-      </a>
-
-      <a href="/lodhran-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Lodhran Bill Check
-      </a>
-
-      <a href="/sahiwal-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Sahiwal Bill Check
-      </a>
-
-      <a href="/rahim-yar-khan-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Rahim Yar Khan Bill Check
-      </a>
-
-      <a href="/muzaffargarh-bill-check" className="rounded-2xl border border-green-100 bg-[#f4f8f5] p-5 font-black text-[#005b2e]">
-        Muzaffargarh Bill Check
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-     <footer className="bg-[#00381d] text-white">
-  <div className="mx-auto max-w-7xl px-5 py-14">
-
-    <div className="grid gap-10 md:grid-cols-4">
-
-      {/* BRAND */}
-      <div>
-
-        <div className="flex items-center gap-3">
-
-          <img
-            src="/mepco-logo.png"
-            alt="MEPCO Logo"
-            className="h-14 w-14 rounded-full border-2 border-white bg-white object-cover"
-          />
-
-          <div>
-            <h3 className="text-2xl font-black">
-              MEPCO
-            </h3>
-
-            <p className="text-xs text-green-100">
-              Online Bill Check
-            </p>
-          </div>
-
-        </div>
-
-        <p className="mt-5 text-sm leading-7 text-green-100">
-          Fast and simple online MEPCO electricity bill checking platform for
-          South Punjab consumers.
-        </p>
-
-      </div>
-
-     {/* LINKS */}
-<div>
-
-  <h4 className="text-xl font-black">
-    Quick Links
-  </h4>
-
-  <div className="mt-5 space-y-3 text-green-100">
-
-    <a href="#bill" className="block hover:text-white">
-      Check Bill
-    </a>
-
-    <a href="/mepco-bill-calculator" className="block hover:text-white">
-      MEPCO Bill Calculator
-    </a>
-
-    <a href="/mepco-bill-urdu" className="block hover:text-white">
-      MEPCO Bill Urdu
-    </a>
-
-    <a href="/all-mepco-regions" className="block hover:text-white">
-      All MEPCO Regions
-    </a>
-
-  </div>
-
-</div>
-
-{/* SERVICES */}
-<div>
-
-  <h4 className="text-xl font-black">
-    Guides
-  </h4>
-
-  <div className="mt-5 space-y-3 text-green-100">
-
-    <a href="/mepco-reference-number-guide" className="block hover:text-white">
-      Reference Number Guide
-    </a>
-
-    <a href="/mepco-customer-id-guide" className="block hover:text-white">
-      Customer ID Guide
-    </a>
-
-    <a href="/mepco-peak-hours-guide" className="block hover:text-white">
-      Peak Hours Guide
-    </a>
-
-    <a href="/mepco-taxes-explained" className="block hover:text-white">
-      Taxes Explained
-    </a>
-
-    <a href="/mepco-bill-slabs-guide" className="block hover:text-white">
-      Bill Slabs Guide
-    </a>
-
-    <a href="/mepco-new-connection-guide" className="block hover:text-white">
-      New Connection Guide
-    </a>
-
-  </div>
-
-</div>
-
-      {/* CONTACT */}
-      <div>
-
-        <h4 className="text-xl font-black">
-          Information
-        </h4>
-
-        <div className="mt-5 space-y-3 text-green-100 text-sm leading-7">
-          <p>
-            This is an independent informational website.
-          </p>
-
-          <p>
-            Not officially affiliated with MEPCO or PITC.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
-    {/* BOTTOM */}
-    <div className="mt-12 border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-
-      <p className="text-sm text-green-100">
-        © 2026 MEPCO Bill Check. All Rights Reserved.
-      </p>
-
-      <div className="flex gap-6 text-sm text-green-100">
-        <a href="/privacy-policy">Privacy Policy</a>
-<a href="/disclaimer">Disclaimer</a>
-<a href="/contact-us">Contact Us</a>
-<a href="/about-us">About Us</a>
-<a href="/terms-and-conditions">Terms & Conditions</a>
-      </div>
-
-    </div>
-
-  </div>
-
-</footer>
-{/* MOBILE QUICK BAR */}
-
-<div className="fixed bottom-0 left-0 right-0 z-50 border-t border-green-200 bg-white/95 backdrop-blur-xl md:hidden">
-
-  <div className="grid grid-cols-4 text-center">
-
-    <a href="#bill" className="py-3 text-xs font-black text-[#005b2e]">
-      ⚡
-      <div>Bill</div>
-    </a>
-
-    <a href="#calculator" className="py-3 text-xs font-black text-[#005b2e]">
-      🧮
-      <div>Calc</div>
-    </a>
-
-    <a href="#services" className="py-3 text-xs font-black text-[#005b2e]">
-      📄
-      <div>Services</div>
-    </a>
-
-    <a href="#faq" className="py-3 text-xs font-black text-[#005b2e]">
-      ❓
-      <div>FAQs</div>
-    </a>
-
-  </div>
-
-</div>
-{/* FLOATING BUTTONS */}
-
-<a
-  href="https://wa.me/923000000000"
-  target="_blank"
-  className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-3xl shadow-2xl transition hover:scale-110"
->
-  💬
-</a>
-
-<button
-  onClick={() =>
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-  }
-  className="fixed bottom-28 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#005b2e] text-2xl text-white shadow-2xl transition hover:scale-110"
->
-  ↑
-</button>
     </main>
   );
 }
