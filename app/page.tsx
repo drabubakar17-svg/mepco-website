@@ -68,15 +68,16 @@ const CITIES: CityItem[] = [
   { name: "Rajanpur",       slug: "/rajanpur-bill-check",       anchor: "MEPCO Bill Check Rajanpur",       title: "Check MEPCO Bill Online - Rajanpur",       consumers: "400K+" },
 ];
 
+// SERVICES with Urdu + Roman Urdu
 const SERVICES: { icon: string; title: string; desc: string; descUrdu: string; descRoman: string; href: string; color: string }[] = [
-  { icon: "📄", title: "Duplicate Bill",   desc: "View, print, or download your latest MEPCO electricity bill online.", descUrdu: "اپنا میپکو بجلی بل آن لائن دیکھیں، پرنٹ کریں یا ڈاؤن لوڈ کریں۔", descRoman: "Apna MEPCO bijli bill online dekhein, print ya download karein.", href: "#bill", color: "from-blue-500 to-blue-600" },
-  { icon: "🧮", title: "Bill Calculator",  desc: "Estimate your monthly bill amount using consumed units.", descUrdu: "استعمال شدہ یونٹ کے ذریعے ماہانہ بل کا تخمینہ لگائیں۔", descRoman: "Units ke zariye apne maahana bill ka andaza lagaein.", href: "#calculator", color: "from-green-500 to-green-600" },
-  { icon: "⏰", title: "Peak Hours",       desc: "Know high usage hours and reduce your electricity cost.", descUrdu: "پیک اوقات جانیں اور بجلی کا خرچ کم کریں۔", descRoman: "Peak hours janein aur bijli ka kharcha kam karein.", href: "#peak-hours", color: "from-orange-500 to-orange-600" },
-  { icon: "🔢", title: "Reference Guide",  desc: "Learn where your 14-digit reference number is written.", descUrdu: "جانیں کہ 14 ہندسوں کا ریفرنس نمبر کہاں لکھا ہوتا ہے۔", descRoman: "Janein ke 14 hndson ka reference number kahan likha hota hai.", href: "#reference-guide", color: "from-purple-500 to-purple-600" },
-  { icon: "🏙️", title: "Cities Coverage", desc: "MEPCO service areas across South Punjab regions.", descUrdu: "جنوبی پنجاب میں میپکو کے سروس ایریاز۔", descRoman: "South Punjab mein MEPCO ke service areas.", href: "#cities", color: "from-teal-500 to-teal-600" },
-  { icon: "💡", title: "Saving Tips",      desc: "Simple habits to reduce monthly electricity bill.", descUrdu: "بجلی کا بل کم کرنے کے آسان طریقے۔", descRoman: "Bijli ka bill kam karne ke aasan tareeqe.", href: "#peak-hours", color: "from-yellow-500 to-yellow-600" },
-  { icon: "☀️", title: "Solar Calculator", desc: "Calculate solar savings and net metering credits.", descUrdu: "سولر بچت اور نیٹ میٹرنگ کریڈٹس کا حساب لگائیں۔", descRoman: "Solar bachat aur net metering credits ka hisaab lagaein.", href: "/mepco-solar-savings-calculator", color: "from-amber-500 to-amber-600" },
-  { icon: "🛡️", title: "Consumer Status", desc: "Check protected vs unprotected consumer status.", descUrdu: "محفوظ اور غیر محفوظ صارف کی حیثیت چیک کریں۔", descRoman: "Mahfooz aur ghair mahfooz consumer ki haisiyat check karein.", href: "#calculator", color: "from-red-500 to-red-600" },
+  { icon: "📄", title: "Duplicate Bill",   desc: "View, print, or download your latest MEPCO electricity bill online.", descUrdu: "اپنا میپکو بجلی بل آن لائن دیکھیں، پرنٹ کریں یا ڈاؤن لوڈ کریں۔", descRoman: "Apna MEPCO bijli bill online dekhein, print ya download karein.", href: "#bill",                          color: "from-blue-500 to-blue-600"   },
+  { icon: "🧮", title: "Bill Calculator",  desc: "Estimate your monthly bill amount using consumed units.",             descUrdu: "استعمال شدہ یونٹ کے ذریعے ماہانہ بل کا تخمینہ لگائیں۔",           descRoman: "Units ke zariye apne maahana bill ka andaza lagaein.",           href: "#calculator",                    color: "from-green-500 to-green-600"  },
+  { icon: "⏰", title: "Peak Hours",       desc: "Know high usage hours and reduce your electricity cost.",             descUrdu: "پیک اوقات جانیں اور بجلی کا خرچ کم کریں۔",                       descRoman: "Peak hours janein aur bijli ka kharcha kam karein.",             href: "#peak-hours",                    color: "from-orange-500 to-orange-600"},
+  { icon: "🔢", title: "Reference Guide",  desc: "Learn where your 14-digit reference number is written.",             descUrdu: "جانیں کہ 14 ہندسوں کا ریفرنس نمبر کہاں لکھا ہوتا ہے۔",           descRoman: "Janein ke 14 handson ka reference number kahan likha hota hai.", href: "#reference-guide",               color: "from-purple-500 to-purple-600"},
+  { icon: "🏙️", title: "Cities Coverage", desc: "MEPCO service areas across South Punjab regions.",                   descUrdu: "جنوبی پنجاب میں میپکو کے سروس ایریاز۔",                          descRoman: "South Punjab mein MEPCO ke service areas.",                     href: "#cities",                        color: "from-teal-500 to-teal-600"   },
+  { icon: "💡", title: "Saving Tips",      desc: "Simple habits to reduce monthly electricity bill.",                  descUrdu: "بجلی کا بل کم کرنے کے آسان طریقے۔",                             descRoman: "Bijli ka bill kam karne ke aasan tareeqe.",                     href: "#peak-hours",                    color: "from-yellow-500 to-yellow-600"},
+  { icon: "☀️", title: "Solar Calculator", desc: "Calculate solar savings and net metering credits.",                  descUrdu: "سولر بچت اور نیٹ میٹرنگ کریڈٹس کا حساب لگائیں۔",                descRoman: "Solar bachat aur net metering credits ka hisaab lagaein.",      href: "/mepco-solar-savings-calculator", color: "from-amber-500 to-amber-600" },
+  { icon: "🛡️", title: "Consumer Status", desc: "Check protected vs unprotected consumer status.",                    descUrdu: "محفوظ اور غیر محفوظ صارف کی حیثیت چیک کریں۔",                   descRoman: "Mahfooz aur ghair mahfooz consumer ki haisiyat check karein.",   href: "#calculator",                    color: "from-red-500 to-red-600"     },
 ];
 
 const APPLIANCE_WATTS: Record<string, number> = {
@@ -84,6 +85,7 @@ const APPLIANCE_WATTS: Record<string, number> = {
   airCooler: 250, tv: 120, washingMachine: 500,
 };
 
+// FAQs with English + Urdu + Roman Urdu
 const FAQS: [string, string, string, string][] = [
   [
     "How can I check MEPCO bill online?",
@@ -207,12 +209,12 @@ const ANNOUNCEMENTS = [
 ];
 
 const QUICK_ACCESS = [
-  { icon: "📄", label: "Check Bill",  labelUrdu: "بل چیک",      href: "#bill",                          desc: "Duplicate bill online"            },
-  { icon: "🧮", label: "Calculator",  labelUrdu: "کیلکولیٹر",   href: "#calculator",                    desc: "Estimate your bill"               },
-  { icon: "🏙️", label: "Cities",     labelUrdu: "شہر",         href: "#cities",                        desc: "All MEPCO regions"                },
-  { icon: "📚", label: "Guides",     labelUrdu: "گائیڈز",      href: "#guides",                        desc: `${GUIDE_LINKS.length}+ help guides`},
-  { icon: "❓", label: "FAQs",       labelUrdu: "سوالات",      href: "#faq",                           desc: "Common questions"                 },
-  { icon: "☀️", label: "Solar",      labelUrdu: "سولر",        href: "/mepco-solar-savings-calculator", desc: "Solar savings"                    },
+  { icon: "📄", label: "Check Bill",  labelUrdu: "بل چیک",    href: "#bill",                          desc: "Duplicate bill online"            },
+  { icon: "🧮", label: "Calculator",  labelUrdu: "کیلکولیٹر", href: "#calculator",                    desc: "Estimate your bill"               },
+  { icon: "🏙️", label: "Cities",     labelUrdu: "شہر",       href: "#cities",                        desc: "All MEPCO regions"                },
+  { icon: "📚", label: "Guides",     labelUrdu: "گائیڈز",    href: "#guides",                        desc: `${GUIDE_LINKS.length}+ help guides`},
+  { icon: "❓", label: "FAQs",       labelUrdu: "سوالات",    href: "#faq",                           desc: "Common questions"                 },
+  { icon: "☀️", label: "Solar",      labelUrdu: "سولر",      href: "/mepco-solar-savings-calculator", desc: "Solar savings"                   },
 ];
 
 const POPULAR_SEARCHES = [
@@ -309,16 +311,16 @@ function calculateBill(units: number): BillBreakdown {
 }
 
 function getSlabStatus(units: number): SlabInfo {
-  if (units <= 0)   return { title: "Enter Units", urdu: "یونٹ درج کریں", roman: "Units enter karein", message: "Enter consumed units to check estimated bill and slab status.", alert: false, color: "bg-gray-50 text-gray-700 border-gray-300", icon: "📊" };
-  if (units <= 200) return { title: "Protected Range", urdu: "محفوظ حد میں ہیں", roman: "Aap mahfooz had mein hain", message: `Only ${200 - units} units left before 200 units limit. | 200 یونٹ کی حد تک ${200 - units} یونٹ باقی | Sirf ${200 - units} units baqi hain`, alert: units >= 180, color: "bg-emerald-50 text-emerald-800 border-emerald-300", icon: "✅" };
-  if (units <= 300) return { title: "Unprotected Slab Alert", urdu: "آپ غیر محفوظ سلیب میں آ گئے ہیں", roman: "Aap ghair mahfooz slab mein aa gaye hain", message: "You crossed 200 units. Bill may increase due to slab change. | 200 یونٹ عبور ہو گئے، بل بڑھ سکتا ہے | 200 units cross ho gaye, bill barh sakta hai.", alert: true, color: "bg-amber-50 text-amber-800 border-amber-300", icon: "⚠️" };
-  return { title: "High Usage Alert", urdu: "بجلی کا استعمال بہت زیادہ ہے", roman: "Bijli ka istemal bohat zyada hai", message: "High summer usage detected. AC and peak-hour usage may increase your bill. | اے سی اور پیک اوقات کا استعمال بل بڑھا سکتا ہے | AC aur peak hours ka istemal bill barha sakta hai.", alert: true, color: "bg-red-50 text-red-800 border-red-300", icon: "🔴" };
+  if (units <= 0)   return { title: "Enter Units",            urdu: "یونٹ درج کریں",       roman: "Units enter karein",                 message: "Enter consumed units to check estimated bill and slab status.",              alert: false,        color: "bg-gray-50 text-gray-700 border-gray-300",         icon: "📊" };
+  if (units <= 200) return { title: "Protected Range",        urdu: "محفوظ حد",             roman: "Protected range mein hain",          message: `Only ${200 - units} units left before 200 units limit.`,                    alert: units >= 180, color: "bg-emerald-50 text-emerald-800 border-emerald-300", icon: "✅" };
+  if (units <= 300) return { title: "Unprotected Slab Alert", urdu: "غیر محفوظ سلیب الرٹ", roman: "200 units cross ho gaye hain",       message: "You crossed 200 units. Your bill may increase due to slab change.",          alert: true,         color: "bg-amber-50 text-amber-800 border-amber-300",       icon: "⚠️" };
+  return              { title: "High Usage Alert",            urdu: "زیادہ استعمال الرٹ",   roman: "Bijli ka istemal zyada ho raha hai", message: "High summer usage detected. AC and peak-hour usage may increase your bill.", alert: true,         color: "bg-red-50 text-red-800 border-red-300",             icon: "🔴" };
 }
 
 function getConsumerStatus(units: number): ConsumerInfo {
-  if (units <= 0)   return { title: "Consumer Status", urdu: "صارف کی حیثیت معلوم کریں", roman: "Consumer ki haisiyat maloom karein", status: "Enter Units", color: "bg-gray-50 border-gray-300 text-gray-700" };
-  if (units <= 200) return { title: "Protected Consumer", urdu: "آپ محفوظ صارف ہیں — کم ریٹ لاگو ہے", roman: "Aap mahfooz consumer hain — kam rate lagoo hai", status: "Protected", color: "bg-emerald-50 border-emerald-300 text-emerald-800" };
-  return { title: "Unprotected Consumer", urdu: "آپ غیر محفوظ صارف ہیں — زیادہ ریٹ لاگو ہے", roman: "Aap ghair mahfooz consumer hain — zyada rate lagoo hai", status: "Unprotected", color: "bg-red-50 border-red-300 text-red-800" };
+  if (units <= 0)   return { title: "Consumer Status",      urdu: "صارف کی حیثیت",  roman: "Consumer status",     status: "Enter Units",  color: "bg-gray-50 border-gray-300 text-gray-700"          };
+  if (units <= 200) return { title: "Protected Consumer",   urdu: "محفوظ صارف",     roman: "Mahfooz Sarif",       status: "Protected",    color: "bg-emerald-50 border-emerald-300 text-emerald-800"  };
+  return              { title: "Unprotected Consumer", urdu: "غیر محفوظ صارف", roman: "Ghair Mahfooz Sarif", status: "Unprotected",  color: "bg-red-50 border-red-300 text-red-800"              };
 }
 
 // ==================== HOOKS ====================
@@ -419,10 +421,7 @@ export default function Home() {
   }, [cleanRef]);
 
   // Schemas
-  const faqSchema = useMemo(() => ({
-    "@context": "https://schema.org", "@type": "FAQPage",
-    mainEntity: FAQS.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
-  }), []);
+  const faqSchema = useMemo(() => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQS.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }), []);
   const websiteSchema = { "@context": "https://schema.org", "@type": "WebSite", name: SITE_NAME, url: SITE_URL, potentialAction: { "@type": "SearchAction", target: `${SITE_URL}/?ref={search_term_string}`, "query-input": "required name=search_term_string" } };
   const govSchema = { "@context": "https://schema.org", "@type": "GovernmentService", name: "MEPCO Electricity Bill Check", serviceType: "Electricity Bill Check", provider: { "@type": "GovernmentOrganization", name: "Multan Electric Power Company" }, areaServed: { "@type": "State", name: "South Punjab, Pakistan" }, url: SITE_URL };
   const breadcrumbSchema = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL }, { "@type": "ListItem", position: 2, name: "MEPCO Online Bill Check", item: SITE_URL }] };
@@ -445,7 +444,7 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
       {/* 1. TOP BAR */}
-      <div className="bg-[#001a0e] text-white border-b border-white/5">
+      <div className="bg-[var(--brand-950)] text-white border-b border-white/5">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-xs">
           <div className="flex items-center gap-3 font-semibold text-green-200">
             <span className="hidden sm:inline">🇵🇰</span>
@@ -464,7 +463,7 @@ export default function Home() {
       </div>
 
       {/* 2. TICKER */}
-      <div className="bg-gradient-to-r from-[#005b2e] to-[#007a3d] text-white overflow-hidden">
+      <div className="bg-gradient-to-r from-[var(--brand-600)] to-[var(--brand-700)] text-white overflow-hidden">
         <div className="mx-auto max-w-7xl px-5 py-2 flex items-center gap-4">
           <span className="shrink-0 rounded bg-white/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">Latest</span>
           <div className="overflow-hidden h-5 flex-1">
@@ -474,12 +473,12 @@ export default function Home() {
       </div>
 
       {/* 3. HEADER */}
-      <header className="sticky top-0 z-50 border-b border-[#003d1f] bg-[#00261a]/98 text-white shadow-[0_4px_40px_rgba(0,0,0,0.4)] backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-[var(--brand-900)] bg-[var(--brand-950)]/98 text-white shadow-[0_4px_40px_rgba(0,0,0,0.4)] backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
           <a href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <Image src="/mepco-logo.png" alt="MEPCO Bill Check Portal Logo" width={52} height={52} className="rounded-full border-2 border-green-400/50 bg-white object-cover transition-all duration-300 group-hover:border-green-300 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]" priority />
-              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-[#00261a]" />
+              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-[var(--brand-950)]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -498,7 +497,7 @@ export default function Home() {
           </div>
         </div>
         {menuOpen && (
-          <div className="lg:hidden border-t border-white/10 bg-[#001a0e]/98 backdrop-blur-md">
+          <div className="lg:hidden border-t border-white/10 bg-[var(--brand-950)]/98 backdrop-blur-md">
             <div className="mx-auto max-w-7xl px-5 py-4 space-y-1">
               {navLinks.map((l) => (<a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="block px-4 py-3 rounded-lg font-semibold text-green-100 hover:text-white hover:bg-white/10 transition">{l.label}</a>))}
             </div>
@@ -510,9 +509,9 @@ export default function Home() {
       <div className="bg-white border-b border-gray-100">
         <div className="mx-auto max-w-7xl px-5 py-3">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-500">
-            <a href="/" className="hover:text-[#005b2e] font-medium transition-colors">Home</a>
+            <a href="/" className="hover:text-[var(--brand-600)] font-medium transition-colors">Home</a>
             <span aria-hidden="true">/</span>
-            <span className="text-[#005b2e] font-semibold">MEPCO Online Bill Check</span>
+            <span className="text-[var(--brand-600)] font-semibold">MEPCO Online Bill Check</span>
           </nav>
         </div>
       </div>
@@ -525,7 +524,6 @@ export default function Home() {
           <div className="blob-float-c spotlight w-[300px] h-[300px] bg-green-200/20 bottom-0 left-1/3" />
         </div>
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 dot-pattern opacity-40" />
-
         <div className="relative mx-auto max-w-7xl px-5 py-14 md:py-20">
           <div className="mb-12 flex flex-wrap items-center justify-center gap-3 md:gap-4">
             {[
@@ -533,13 +531,13 @@ export default function Home() {
               { label: "Bills Checked | بل چیک", value: "8M+", icon: "📄" },
               { label: "Regions | علاقے", value: `${CITIES.length}+`, icon: "🏙️" },
               { label: "Guides | گائیڈز", value: `${GUIDE_LINKS.length}+`, icon: "📚" },
-              { label: "Status | حالت", value: "Online | آن لائن", icon: "🟢" },
+              { label: "Status | حالت", value: "Online", icon: "🟢" },
             ].map((s, i) => (
               <div key={s.label} className="stat-pill reveal flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 shadow-md border border-white/60 backdrop-blur-sm cursor-default" style={{ transitionDelay: `${i * 80}ms` }}>
                 <span className="text-lg">{s.icon}</span>
                 <div>
                   <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">{s.label}</p>
-                  <p className="text-sm font-black text-[#005b2e]">{s.value}</p>
+                  <p className="text-sm font-black text-[var(--brand-600)]">{s.value}</p>
                 </div>
               </div>
             ))}
@@ -548,7 +546,7 @@ export default function Home() {
           <div className="grid items-start gap-12 lg:grid-cols-2">
             {/* Left */}
             <div className="section-animate">
-              <div className="neon-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold text-[#005b2e] mb-6">
+              <div className="neon-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] mb-6">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
                 MEPCO Consumer Portal Hub — Pakistan
               </div>
@@ -556,31 +554,22 @@ export default function Home() {
                 MEPCO
                 <span className="block gradient-text-animated mt-1">Online Bill Check</span>
               </h1>
-
-              {/* English */}
               <p className="mt-6 max-w-xl text-lg leading-8 text-gray-600">
                 Check your latest MEPCO electricity bill online using your 14-digit reference number.
                 Access duplicate bills, bill calculator, consumer guides, and{" "}
-                <strong className="text-[#005b2e]">{GUIDE_LINKS.length}+ help resources</strong> — all in one portal.
+                <strong className="text-[var(--brand-600)]">{GUIDE_LINKS.length}+ help resources</strong> — all in one portal.
               </p>
-
-              {/* Urdu */}
               <p className="mt-4 max-w-xl text-base leading-8 text-gray-600" dir="rtl" lang="ur">
                 میپکو آن لائن بل چیک کریں۔ 14 ہندسوں کا ریفرنس نمبر درج کریں اور فوری طور پر اپنا بجلی کا بل دیکھیں۔
                 ڈپلیکیٹ بل، بل کیلکولیٹر، صارف گائیڈز اور {GUIDE_LINKS.length}+ معلوماتی وسائل — سب ایک جگہ۔
               </p>
-
-              {/* Roman Urdu */}
               <p className="mt-3 max-w-xl text-sm leading-7 text-gray-500 italic">
                 MEPCO bill online check karein. 14 handson ka reference number darj karein aur fori tor par apna bijli ka bill dekhein.
                 Duplicate bill, bill calculator, consumer guides aur {GUIDE_LINKS.length}+ madad ke wasail — sab ek jagah.
               </p>
-
               <div className="mt-8 grid grid-cols-3 sm:grid-cols-6 gap-3">
                 {QUICK_ACCESS.map((item, i) => (
-                  <a key={item.label} href={item.href}
-                    className="portal-card reveal group flex flex-col items-center gap-2 rounded-2xl bg-white/90 p-4 border border-white/60 shadow-md text-center backdrop-blur-sm"
-                    style={{ transitionDelay: `${i * 60}ms` }}>
+                  <a key={item.label} href={item.href} className="portal-card reveal group flex flex-col items-center gap-2 rounded-2xl bg-white/90 p-4 border border-white/60 shadow-md text-center backdrop-blur-sm" style={{ transitionDelay: `${i * 60}ms` }}>
                     <span className="text-2xl group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
                     <span className="text-xs font-bold text-gray-800">{item.label}</span>
                     <span className="text-[10px] text-gray-500 leading-tight">{item.labelUrdu}</span>
@@ -588,7 +577,6 @@ export default function Home() {
                   </a>
                 ))}
               </div>
-
               <div className="mt-8 flex flex-wrap gap-3">
                 {[
                   { label: "⚡ Fast | تیز", bg: "bg-green-50 border-green-200 text-green-800" },
@@ -611,15 +599,13 @@ export default function Home() {
                     <div>
                       <h2 className="text-xl font-black">Check Your MEPCO Bill</h2>
                       <p className="text-green-200 text-sm mt-0.5">اپنا میپکو بل چیک کریں | Apna MEPCO bill check karein</p>
-                      <p className="text-green-300 text-xs mt-0.5">Enter 14-Digit Reference Number | 14 ہندسوں کا ریفرنس نمبر درج کریں</p>
+                      <p className="text-green-300 text-xs mt-0.5">Enter 14-Digit Reference Number | 14 ہندسوں کا ریفرنس نمبر</p>
                     </div>
                     <div className="h-12 w-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-2xl glow-green">📄</div>
                   </div>
                 </div>
                 <div className="p-6 bg-white">
-                  <label htmlFor="ref-input" className="mb-2 block text-sm font-bold text-gray-700">
-                    Reference Number | ریفرنس نمبر
-                  </label>
+                  <label htmlFor="ref-input" className="mb-2 block text-sm font-bold text-gray-700">Reference Number | ریفرنس نمبر</label>
                   <div className="relative">
                     <input id="ref-input" ref={inputRef} value={refNumber}
                       onChange={(e) => setRefNumber(e.target.value.replace(/\D/g, "").slice(0, 14))}
@@ -643,14 +629,13 @@ export default function Home() {
                       <p className="mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">Recent | حالیہ</p>
                       <div className="flex flex-wrap gap-2">
                         {recentSearches.map((item) => (
-                          <button key={item} onClick={() => setRefNumber(item)}
-                            className="rounded-lg border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-bold font-mono text-[#005b2e] hover:bg-green-100 hover:border-green-400 transition">{item}</button>
+                          <button key={item} onClick={() => setRefNumber(item)} className="rounded-lg border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-bold font-mono text-[var(--brand-600)] hover:bg-green-100 hover:border-green-400 transition">{item}</button>
                         ))}
                       </div>
                     </div>
                   )}
                   <button onClick={checkBill} disabled={checkingBill}
-                    className="mt-5 h-14 w-full rounded-xl bg-gradient-to-r from-[#005b2e] to-[#007a3d] text-lg font-black text-white btn-3d glow-button disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                    className="mt-5 h-14 w-full rounded-xl bg-gradient-to-r from-[var(--brand-600)] to-[var(--brand-700)] text-lg font-black text-white btn-3d glow-button disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                     {checkingBill ? (
                       <><svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> Checking… | چیک ہو رہا ہے</>
                     ) : (<><span aria-hidden="true">⚡</span> Check Bill Now | ابھی بل چیک کریں</>)}
@@ -661,9 +646,8 @@ export default function Home() {
                     <button onClick={() => navigator.clipboard.writeText(SITE_URL)} className="h-10 rounded-lg border border-gray-200 bg-white text-xs font-bold text-gray-600 hover:bg-gray-50 transition">🔗 Copy</button>
                   </div>
                   <p className="mt-4 text-center text-xs text-gray-400">
-                    Reference number is on your previous bill. This is an independent portal.<br />
-                    <span dir="rtl" lang="ur">ریفرنس نمبر آپ کے پرانے بل پر ہے۔ یہ ایک آزاد معلوماتی پورٹل ہے۔</span><br />
-                    <span className="italic">Reference number aapke purane bill par hai. Ye ek azad malomaati portal hai.</span>
+                    Reference number is on your previous bill. Independent informational portal.<br />
+                    <span dir="rtl" lang="ur">ریفرنس نمبر آپ کے پرانے بل پر ہے۔ یہ ایک آزاد معلوماتی پورٹل ہے۔</span>
                   </p>
                 </div>
               </div>
@@ -678,7 +662,7 @@ export default function Home() {
       <section id="services" className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-5">
           <div className="text-center mb-12 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Portal Services | پورٹل خدمات</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">Portal Services | پورٹل خدمات</span>
             <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Consumer Services</h2>
             <p className="mt-2 text-gray-500 max-w-2xl mx-auto">Comprehensive electricity bill tools, guides, and calculators for MEPCO consumers across South Punjab.</p>
             <p className="mt-1 text-gray-500 max-w-2xl mx-auto" dir="rtl" lang="ur">جنوبی پنجاب کے میپکو صارفین کے لیے بجلی بل ٹولز، گائیڈز اور کیلکولیٹرز۔</p>
@@ -687,10 +671,10 @@ export default function Home() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICES.map((s, i) => (
               <a key={s.title} href={s.href}
-                className="portal-card card-shine reveal group rounded-2xl bg-white border border-gray-100 p-6 shadow-sm hover:border-[#005b2e]/20"
+                className="portal-card card-shine reveal group rounded-2xl bg-white border border-gray-100 p-6 shadow-sm hover:border-[var(--brand-600)]/20"
                 style={{ transitionDelay: `${i * 60}ms` }}>
                 <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center text-2xl text-white mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>{s.icon}</div>
-                <h3 className="text-lg font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{s.title}</h3>
+                <h3 className="text-lg font-black text-gray-900 group-hover:text-[var(--brand-600)] transition-colors">{s.title}</h3>
                 <p className="mt-2 text-sm text-gray-500 leading-relaxed">{s.desc}</p>
                 <p className="mt-1 text-xs text-gray-500 leading-relaxed" dir="rtl" lang="ur">{s.descUrdu}</p>
                 <p className="mt-1 text-xs text-gray-400 italic leading-relaxed">{s.descRoman}</p>
@@ -740,7 +724,7 @@ export default function Home() {
       <section id="calculator" className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-5">
           <div className="text-center mb-12 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Bill Estimator | بل تخمینہ</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">Bill Estimator | بل تخمینہ</span>
             <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Bill Calculator 2026</h2>
             <p className="mt-2 text-gray-500">Estimate your monthly electricity bill using 2026 MEPCO domestic tariff slab rates.</p>
             <p className="mt-1 text-gray-500" dir="rtl" lang="ur">2026 کے میپکو ٹیرف سلیب ریٹس کے مطابق ماہانہ بجلی بل کا تخمینہ لگائیں۔</p>
@@ -756,23 +740,20 @@ export default function Home() {
                   <div className="h-3 rounded-full bg-gray-100 overflow-hidden shadow-inner"><div className="h-full rounded-full bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 transition-all duration-700" style={{ width: `${Math.min(consumedUnits / 5, 100)}%` }} /></div>
                 </div>
               </div>
-
               <div className="reveal reveal-delay-1 rounded-2xl border-2 border-orange-200 bg-orange-50 p-5">
                 <h3 className="font-black text-orange-800 flex items-center gap-2"><span>⚡</span> 200 Unit Danger Meter | 200 یونٹ خطرے کا میٹر</h3>
                 <div className="mt-3 space-y-2 text-sm">
                   <p className="font-semibold text-orange-700">{200 - consumedUnits > 0 ? `${200 - consumedUnits} units left before 200-unit threshold` : "⚠️ 200-unit threshold crossed"}</p>
                   <p className="font-semibold text-orange-700" dir="rtl" lang="ur">{200 - consumedUnits > 0 ? `200 یونٹ کی حد تک ${200 - consumedUnits} یونٹ باقی ہیں` : "آپ 200 یونٹ کی حد عبور کر چکے ہیں"}</p>
-                  <p className="font-semibold text-orange-600 italic">{200 - consumedUnits > 0 ? `Sirf ${200 - consumedUnits} units baqi hain 200 ki had tak` : "Aap 200 units ki had cross kar chukay hain"}</p>
+                  <p className="font-semibold text-orange-600 italic">{200 - consumedUnits > 0 ? `Sirf ${200 - consumedUnits} units baqi hain` : "Aap 200 units cross kar chukay hain"}</p>
                 </div>
               </div>
-
               <div className={`reveal reveal-delay-2 rounded-2xl border-2 p-5 ${consumerStatus.color}`}>
                 <h3 className="font-black flex items-center gap-2"><span>🛡️</span> {consumerStatus.title}</h3>
                 <p className="mt-2 text-sm font-bold" dir="rtl" lang="ur">اردو: {consumerStatus.urdu}</p>
                 <p className="mt-1 text-sm font-semibold italic">{consumerStatus.roman}</p>
                 <p className="mt-2 text-sm">Status: <strong>{consumerStatus.status}</strong></p>
               </div>
-
               <div className="reveal reveal-delay-3 rounded-2xl border-2 border-purple-200 bg-purple-50 p-5">
                 <h3 className="font-black text-purple-900 flex items-center gap-2"><span>📈</span> Bill Shock Predictor | بل شاک پریڈکٹر</h3>
                 <div className="mt-3 space-y-2 text-sm">
@@ -783,7 +764,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
             <div className="space-y-5">
               <div className={`reveal rounded-2xl border-2 p-5 ${slabStatus.color}`}>
                 <h3 className="text-lg font-black flex items-center gap-2"><span>{slabStatus.icon}</span> {slabStatus.title}</h3>
@@ -791,7 +771,6 @@ export default function Home() {
                 <p className="mt-1 text-sm font-semibold italic">{slabStatus.roman}</p>
                 <p className="mt-2 text-sm leading-6">{slabStatus.message}</p>
               </div>
-
               {slabStatus.alert && (
                 <div className="reveal rounded-2xl border-2 border-red-200 bg-red-50 p-5 text-red-800">
                   <h3 className="font-black flex items-center gap-2"><span>⚠️</span> Slab Warning | سلیب وارننگ</h3>
@@ -800,7 +779,6 @@ export default function Home() {
                   <p className="mt-1 text-sm">Reduce AC usage during peak hours (7 PM – 11 PM).</p>
                 </div>
               )}
-
               <div className="reveal reveal-delay-1 rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-lg font-black text-gray-900 mb-5">Bill Breakdown | بل کی تفصیل</h3>
                 <div className="space-y-4">
@@ -815,26 +793,17 @@ export default function Home() {
                       <span className="text-lg font-black text-gray-900">Rs.&nbsp;{value}</span>
                     </div>
                   ))}
-                  <div className="flex items-center justify-between pt-4 border-t-2 border-[#005b2e]">
+                  <div className="flex items-center justify-between pt-4 border-t-2 border-[var(--brand-600)]">
                     <span className="text-xl font-black gradient-text">Estimated Total | تخمینی کل رقم</span>
                     <span className="text-3xl font-black gradient-text">Rs.&nbsp;{estimatedBill.total}</span>
                   </div>
                 </div>
                 <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3">
-                  <p className="text-xs text-amber-800 font-semibold leading-5">
-                    ⚠️ This calculator is for estimation only. Official MEPCO tariff, FPA, QTA, taxes and government adjustments may change.
-                    Actual bill may include PTV fee, arrears, late payment surcharge and other official charges.
-                    Always verify with your official MEPCO bill.
-                  </p>
-                  <p className="text-xs text-amber-700 font-semibold leading-5 mt-2" dir="rtl" lang="ur">
-                    ⚠️ یہ کیلکولیٹر صرف تخمینے کے لیے ہے۔ آفیشل میپکو ٹیرف، ایف پی اے، کیو ٹی اے، ٹیکسز اور سرکاری ایڈجسٹمنٹس تبدیل ہو سکتی ہیں۔ ہمیشہ اپنے آفیشل میپکو بل سے تصدیق کریں۔
-                  </p>
-                  <p className="text-xs text-amber-600 leading-5 mt-1 italic">
-                    Ye calculator sirf estimate ke liye hai. Official MEPCO tariff, FPA, QTA aur taxes change ho sakte hain. Hamesha apne official bill se tasdeeq karein.
-                  </p>
+                  <p className="text-xs text-amber-800 font-semibold leading-5">⚠️ This calculator is for estimation only. Official MEPCO tariff, FPA, QTA, taxes and government adjustments may change. Always verify with your official MEPCO bill.</p>
+                  <p className="text-xs text-amber-700 font-semibold leading-5 mt-2" dir="rtl" lang="ur">⚠️ یہ کیلکولیٹر صرف تخمینے کے لیے ہے۔ آفیشل میپکو ٹیرف، ایف پی اے، کیو ٹی اے اور ٹیکسز تبدیل ہو سکتے ہیں۔ ہمیشہ اپنے آفیشل بل سے تصدیق کریں۔</p>
+                  <p className="text-xs text-amber-600 leading-5 mt-1 italic">Ye calculator sirf estimate ke liye hai. Official tariff, FPA, QTA aur taxes change ho sakte hain. Hamesha apne official bill se tasdeeq karein.</p>
                 </div>
               </div>
-
               <div className="reveal reveal-delay-2 rounded-2xl border border-blue-200 bg-blue-50/50 p-5">
                 <h3 className="text-lg font-black text-blue-900 flex items-center gap-2"><span>❄️</span> AC Cost Calculator | اے سی لاگت کیلکولیٹر</h3>
                 <p className="mt-1 text-sm text-blue-700" dir="rtl" lang="ur">اے سی کا متوقع ماہانہ بجلی خرچ</p>
@@ -847,11 +816,10 @@ export default function Home() {
                   </select>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
-                  <span className="text-sm font-bold text-blue-900">Monthly: {acEstimate.monthlyUnits} units | ماہانہ یونٹ</span>
+                  <span className="text-sm font-bold text-blue-900">Monthly: {acEstimate.monthlyUnits} units | ماہانہ</span>
                   <span className="text-xl font-black text-blue-900">Rs.&nbsp;{acEstimate.estimatedCost}</span>
                 </div>
               </div>
-
               <div className="reveal reveal-delay-3 rounded-2xl border border-green-200 bg-green-50/50 p-5">
                 <h3 className="text-lg font-black text-green-900 flex items-center gap-2"><span>⚡</span> Appliance Cost | آلات کی لاگت</h3>
                 <p className="mt-1 text-sm text-green-700" dir="rtl" lang="ur">گھریلو آلات کی ماہانہ بجلی لاگت</p>
@@ -921,7 +889,7 @@ export default function Home() {
                   { en: "Check meter reading regularly", ur: "میٹر ریڈنگ باقاعدگی سے چیک کریں", ro: "Meter reading baaqaidgi se check karein" },
                   { en: "Stay within 200 units for protected rate", ur: "کم ریٹ کے لیے 200 یونٹ کے اندر رہیں", ro: "Kam rate ke liye 200 units ke andar rahein" },
                 ].map((tip) => (
-                  <li key={tip.en} className="text-sm text-gray-700 space-y-1">
+                  <li key={tip.en} className="text-sm text-gray-700">
                     <div className="flex items-start gap-3">
                       <span className="shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs font-bold mt-0.5" aria-hidden="true">✓</span>
                       <div>
@@ -944,7 +912,7 @@ export default function Home() {
       <section id="cities" className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-5">
           <div className="text-center mb-12 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Service Regions | خدمات کے علاقے</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">Service Regions | خدمات کے علاقے</span>
             <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Coverage Areas</h2>
             <p className="mt-2 text-gray-500">Check MEPCO electricity bills across {CITIES.length}+ districts of South Punjab.</p>
             <p className="mt-1 text-gray-500" dir="rtl" lang="ur">جنوبی پنجاب کے {CITIES.length}+ اضلاع میں میپکو بجلی بل چیک کریں۔</p>
@@ -953,50 +921,43 @@ export default function Home() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {CITIES.map((city, i) => (
               <a key={`city-${i}`} href={city.slug} title={city.title} aria-label={city.title}
-                className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[#005b2e]/20"
+                className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[var(--brand-600)]/20"
                 style={{ transitionDelay: `${(i % 4) * 60}ms` }}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-2xl" aria-hidden="true">🏙️</span>
                   <span className="rounded-full bg-green-50 px-2 py-0.5 text-[10px] font-bold text-green-700">{city.consumers}</span>
                 </div>
-                <h3 className="text-base font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{city.anchor}</h3>
+                <h3 className="text-base font-black text-gray-900 group-hover:text-[var(--brand-600)] transition-colors">{city.anchor}</h3>
                 <p className="mt-1 text-xs text-gray-400">{city.name} Division | ڈویژن</p>
               </a>
             ))}
           </div>
-
-          {/* City SEO Block */}
           <div className="mt-12 reveal">
-            <div className="rounded-3xl bg-gradient-to-br from-[#f0f9f4] to-white border border-green-100 p-8 shadow-sm">
+            <div className="rounded-3xl bg-gradient-to-br from-[#f0fdf4] to-white border border-green-100 p-8 shadow-sm">
               <h2 className="text-2xl md:text-3xl font-black text-gray-900 text-center mb-2">MEPCO Bill Check — All Major Cities</h2>
               <p className="text-center text-sm text-gray-500 mb-2" dir="rtl" lang="ur">میپکو بل چیک — تمام بڑے شہر</p>
               <p className="text-center text-xs text-gray-400 italic mb-8">MEPCO Bill Check — Tamam Bare Sheher</p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {CITIES.map((city, i) => (
                   <a key={`city-seo-${i}`} href={city.slug} title={city.title}
-                    className="portal-card reveal group flex items-center gap-4 rounded-2xl bg-white border border-gray-100 p-4 shadow-sm hover:border-[#005b2e]/30"
+                    className="portal-card reveal group flex items-center gap-4 rounded-2xl bg-white border border-gray-100 p-4 shadow-sm hover:border-[var(--brand-600)]/30"
                     style={{ transitionDelay: `${(i % 3) * 60}ms` }}>
-                    <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[#005b2e] to-[#007a3d] flex items-center justify-center text-white text-sm font-black shadow-md">{city.name.charAt(0)}</div>
+                    <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[var(--brand-600)] to-[var(--brand-700)] flex items-center justify-center text-white text-sm font-black shadow-md">{city.name.charAt(0)}</div>
                     <div className="min-w-0">
-                      <h3 className="text-sm font-black text-gray-900 group-hover:text-[#005b2e] transition-colors truncate">{city.anchor}</h3>
+                      <h3 className="text-sm font-black text-gray-900 group-hover:text-[var(--brand-600)] transition-colors truncate">{city.anchor}</h3>
                       <p className="text-xs text-gray-400 mt-0.5">{city.consumers} consumers · {city.name}</p>
                     </div>
-                    <span className="ml-auto text-[#005b2e] font-bold text-sm shrink-0 group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+                    <span className="ml-auto text-[var(--brand-600)] font-bold text-sm shrink-0 group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
                   </a>
                 ))}
               </div>
-              <p className="mt-6 text-center text-sm text-gray-500">
-                MEPCO provides electricity services across <strong className="text-[#005b2e]">{CITIES.length}+ districts</strong> of South Punjab, Pakistan.
-              </p>
-              <p className="mt-1 text-center text-sm text-gray-500" dir="rtl" lang="ur">
-                میپکو جنوبی پنجاب کے <strong className="text-[#005b2e]">{CITIES.length}+ اضلاع</strong> میں بجلی کی خدمات فراہم کرتی ہے۔
-              </p>
+              <p className="mt-6 text-center text-sm text-gray-500">MEPCO provides electricity services across <strong className="text-[var(--brand-600)]">{CITIES.length}+ districts</strong> of South Punjab, Pakistan.</p>
+              <p className="mt-1 text-center text-sm text-gray-500" dir="rtl" lang="ur">میپکو جنوبی پنجاب کے <strong className="text-[var(--brand-600)]">{CITIES.length}+ اضلاع</strong> میں بجلی کی خدمات فراہم کرتی ہے۔</p>
             </div>
           </div>
-
           <div className="mt-10 text-center flex flex-wrap gap-3 justify-center reveal">
-            <a href="/all-mepco-regions" className="inline-flex items-center gap-2 rounded-xl bg-[#005b2e] px-6 py-3 font-bold text-white transition hover:bg-[#004221] btn-3d">View All {CITIES.length}+ Regions | تمام علاقے →</a>
-            <a href="/mepco-bill-calculator" className="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-[#005b2e] px-6 py-3 font-bold text-[#005b2e] transition hover:bg-[#005b2e] hover:text-white">🧮 Advanced Calculator | ایڈوانسڈ کیلکولیٹر</a>
+            <a href="/all-mepco-regions" className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-600)] px-6 py-3 font-bold text-white transition hover:bg-[var(--brand-800)] btn-3d">View All {CITIES.length}+ Regions | تمام علاقے →</a>
+            <a href="/mepco-bill-calculator" className="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-[var(--brand-600)] px-6 py-3 font-bold text-[var(--brand-600)] transition hover:bg-[var(--brand-600)] hover:text-white">🧮 Advanced Calculator | ایڈوانسڈ کیلکولیٹر</a>
           </div>
         </div>
       </section>
@@ -1014,7 +975,7 @@ export default function Home() {
               <p className="mt-1 text-gray-500" dir="rtl" lang="ur">سولر بچت، سالانہ منافع، نیٹ میٹرنگ کریڈٹس اور پے بیک پیریڈ معلوم کریں۔</p>
               <p className="mt-1 text-gray-400 text-sm italic">Solar bachat, saalana munafa, net metering credits aur payback period maloom karein.</p>
             </div>
-            <a href="/mepco-solar-savings-calculator" className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-[#005b2e] px-8 py-4 text-lg font-black text-white btn-3d glow-button">Open Calculator | کیلکولیٹر کھولیں →</a>
+            <a href="/mepco-solar-savings-calculator" className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-[var(--brand-600)] px-8 py-4 text-lg font-black text-white btn-3d glow-button">Open Calculator | کیلکولیٹر کھولیں →</a>
           </div>
         </div>
       </section>
@@ -1025,28 +986,28 @@ export default function Home() {
       <section id="guides" className="py-16 bg-[#f8faf9]">
         <div className="mx-auto max-w-7xl px-5">
           <div className="text-center mb-8 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Help Center | مدد مرکز</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">Help Center | مدد مرکز</span>
             <h2 className="text-3xl md:text-4xl font-black text-gray-900">MEPCO Consumer Guides</h2>
             <p className="mt-2 text-gray-500">{GUIDE_LINKS.length}+ comprehensive guides for MEPCO consumers — bill, meter, connection, taxes, and complaints.</p>
             <p className="mt-1 text-gray-500" dir="rtl" lang="ur">میپکو صارفین کے لیے {GUIDE_LINKS.length}+ مکمل گائیڈز — بل، میٹر، کنکشن، ٹیکسز اور شکایات۔</p>
-            <p className="mt-1 text-gray-400 text-sm italic">MEPCO consumers ke liye {GUIDE_LINKS.length}+ mukammal guides — bill, meter, connection, taxes aur complaints.</p>
+            <p className="mt-1 text-gray-400 text-sm italic">MEPCO consumers ke liye {GUIDE_LINKS.length}+ mukammal guides.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-2 mb-8 reveal">
             {guideCategories.map((cat) => (
               <button key={cat} onClick={() => setGuideFilter(cat)}
-                className={`rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 ${guideFilter === cat ? "bg-[#005b2e] text-white shadow-lg shadow-green-900/20" : "bg-white border border-gray-200 text-gray-600 hover:border-[#005b2e] hover:text-[#005b2e]"}`}>
+                className={`rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 ${guideFilter === cat ? "bg-[var(--brand-600)] text-white shadow-lg shadow-green-900/20" : "bg-white border border-gray-200 text-gray-600 hover:border-[var(--brand-600)] hover:text-[var(--brand-600)]"}`}>
                 {cat} {cat === "All" ? `(${GUIDE_LINKS.length})` : `(${GUIDE_LINKS.filter((g) => g.category === cat).length})`}
               </button>
             ))}
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {filteredGuides.map((g, i) => (
-              <a key={g.href} href={g.href} className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[#005b2e]/20" style={{ transitionDelay: `${(i % 4) * 50}ms` }}>
+              <a key={g.href} href={g.href} className="portal-card reveal group rounded-2xl bg-white border border-gray-100 p-5 shadow-sm hover:border-[var(--brand-600)]/20" style={{ transitionDelay: `${(i % 4) * 50}ms` }}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-3xl group-hover:scale-110 transition-transform duration-200">{g.icon}</span>
                   <span className="rounded-full bg-gray-50 border border-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-400 uppercase">{g.category}</span>
                 </div>
-                <h3 className="text-base font-black text-gray-900 group-hover:text-[#005b2e] transition-colors">{g.title}</h3>
+                <h3 className="text-base font-black text-gray-900 group-hover:text-[var(--brand-600)] transition-colors">{g.title}</h3>
                 <p className="mt-2 text-xs text-gray-500 leading-relaxed">{g.desc}</p>
               </a>
             ))}
@@ -1060,14 +1021,14 @@ export default function Home() {
       <section className="py-14 bg-white">
         <div className="mx-auto max-w-7xl px-5">
           <div className="text-center mb-8 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-3">Quick Access | فوری رسائی</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-3">Quick Access | فوری رسائی</span>
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Popular MEPCO Searches</h2>
             <p className="mt-1 text-sm text-gray-500">Most searched MEPCO electricity bill topics — click to access instantly</p>
-            <p className="mt-1 text-sm text-gray-500" dir="rtl" lang="ur">سب سے زیادہ تلاش کیے جانے والے میپکو بل موضوعات — فوری رسائی کے لیے کلک کریں</p>
+            <p className="mt-1 text-sm text-gray-500" dir="rtl" lang="ur">سب سے زیادہ تلاش کیے جانے والے میپکو بل موضوعات</p>
           </div>
           <div className="flex flex-wrap justify-center gap-2 reveal">
             {POPULAR_SEARCHES.map((s) => (
-              <a key={s.label} href={s.href} className="rounded-full bg-white border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700 shadow-sm hover:border-[#005b2e] hover:text-[#005b2e] hover:shadow-md transition-all duration-200">{s.label}</a>
+              <a key={s.label} href={s.href} className="rounded-full bg-white border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700 shadow-sm hover:border-[var(--brand-600)] hover:text-[var(--brand-600)] hover:shadow-md transition-all duration-200">{s.label}</a>
             ))}
           </div>
           <p className="mt-6 text-center text-xs text-gray-400">{POPULAR_SEARCHES.length}+ popular topics · Updated 2026 · South Punjab Pakistan</p>
@@ -1076,7 +1037,7 @@ export default function Home() {
 
       <div className="section-divider" />
 
-      {/* 14. SEO CONTENT SECTION */}
+      {/* 14. SEO CONTENT */}
       <section className="py-16 bg-[#f8faf9]">
         <div className="mx-auto max-w-7xl px-5">
           <article className="reveal rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-sm">
@@ -1085,12 +1046,8 @@ export default function Home() {
               <p>MEPCO online bill checking service allows consumers to instantly view and download duplicate electricity bills using a 14-digit reference number. This platform helps users across South Punjab including Multan, Khanewal, Bahawalpur, Vehari, Dera Ghazi Khan and nearby regions.</p>
               <p>Consumers can check due date, payable amount, estimated electricity charges, and important billing information online without visiting physical offices.</p>
               <p>Consumers can also learn about MEPCO taxes, GST, FPA, QTA, tariff slabs, customer ID, reference number and new electricity connection procedures.</p>
-              <p className="text-right" dir="rtl" lang="ur">
-                میپکو صارفین آن لائن بجلی کا بل چیک کر سکتے ہیں، ڈپلیکیٹ بل ڈاؤن لوڈ کر سکتے ہیں، ریفرنس نمبر اور کسٹمر آئی ڈی کی معلومات حاصل کر سکتے ہیں، اور بجلی کے بل میں شامل ٹیکسز، ایف پی اے، کیو ٹی اے اور دیگر چارجز کو سمجھ سکتے ہیں۔ یہ ویب سائٹ ایک آزاد معلوماتی پورٹل ہے اور میپکو یا پی آئی ٹی سی سے منسلک نہیں ہے۔
-              </p>
-              <p className="italic text-gray-600">
-                MEPCO consumers online bijli ka bill check kar sakte hain, duplicate bill download kar sakte hain, reference number aur customer ID ki maloomaat haasil kar sakte hain, aur bill mein shamil taxes, FPA, QTA aur deegar charges ko samajh sakte hain. Ye website ek azad malomaati portal hai aur MEPCO ya PITC se munsalik nahi hai.
-              </p>
+              <p className="text-right" dir="rtl" lang="ur">میپکو صارفین آن لائن بجلی کا بل چیک کر سکتے ہیں، ڈپلیکیٹ بل ڈاؤن لوڈ کر سکتے ہیں، ریفرنس نمبر اور کسٹمر آئی ڈی کی معلومات حاصل کر سکتے ہیں، اور بجلی کے بل میں شامل ٹیکسز، ایف پی اے، کیو ٹی اے اور دیگر چارجز کو سمجھ سکتے ہیں۔</p>
+              <p className="italic text-gray-600">MEPCO consumers online bijli ka bill check kar sakte hain, duplicate bill download kar sakte hain, reference number aur customer ID ki maloomaat haasil kar sakte hain, aur bill mein shamil taxes, FPA, QTA aur deegar charges ko samajh sakte hain.</p>
               <div className="flex flex-wrap gap-3 pt-2">
                 {[
                   { label: "Check Bill by CNIC | سی این آئی سی سے بل چیک →", href: "/mepco-bill-check-by-cnic" },
@@ -1099,7 +1056,7 @@ export default function Home() {
                   { label: "Protected Consumer | محفوظ صارف →", href: "/mepco-protected-consumer-guide" },
                   { label: "Solar Calculator | سولر کیلکولیٹر →", href: "/mepco-solar-savings-calculator" },
                 ].map((link) => (
-                  <a key={link.href} href={link.href} className="rounded-full bg-[#005b2e]/10 px-4 py-2 text-sm font-bold text-[#005b2e] hover:bg-[#005b2e] hover:text-white transition-all duration-200">{link.label}</a>
+                  <a key={link.href} href={link.href} className="rounded-full bg-[var(--brand-600)]/10 px-4 py-2 text-sm font-bold text-[var(--brand-600)] hover:bg-[var(--brand-600)] hover:text-white transition-all duration-200">{link.label}</a>
                 ))}
               </div>
             </div>
@@ -1127,9 +1084,9 @@ export default function Home() {
       {/* 15. URDU AUTHORITY SECTION */}
       <section className="py-16 bg-white" aria-label="میپکو بل گائیڈ اردو">
         <div className="mx-auto max-w-7xl px-5">
-          <div className="reveal rounded-3xl border border-green-100 bg-gradient-to-br from-[#f0f9f4] to-white p-8 md:p-12 shadow-sm">
+          <div className="reveal rounded-3xl border border-green-100 bg-gradient-to-br from-[#f0fdf4] to-white p-8 md:p-12 shadow-sm">
             <div className="text-center mb-10">
-              <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">اردو گائیڈ | Urdu Guide</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">اردو گائیڈ | Urdu Guide</span>
               <h2 className="text-3xl md:text-4xl font-black text-gray-900" dir="rtl" lang="ur">میپکو آن لائن بل چیک — مکمل اردو گائیڈ</h2>
               <p className="mt-2 text-gray-500" dir="rtl" lang="ur">پاکستانی صارفین کے لیے میپکو بجلی بل کی مکمل معلومات اردو میں</p>
               <p className="mt-1 text-gray-400 text-sm italic">Pakistani consumers ke liye MEPCO bijli bill ki mukammal maloomaat Urdu mein</p>
@@ -1141,21 +1098,17 @@ export default function Home() {
                 <p className="text-gray-700 leading-9 text-base">اگر آپ کے پاس پرانا بل موجود نہیں تو آپ اپنے میپکو کسٹمر آئی ڈی کے ذریعے بھی بل کی معلومات حاصل کر سکتے ہیں۔ ہمارا بل کیلکولیٹر استعمال کر کے آپ ماہانہ بجلی کی لاگت کا اندازہ بھی لگا سکتے ہیں۔</p>
                 <p className="text-gray-700 leading-9 text-base">200 یونٹ سے کم استعمال کرنے والے صارفین محفوظ صارف کہلاتے ہیں اور انہیں کم نرخ پر بجلی ملتی ہے۔ 200 یونٹ سے زیادہ استعمال پر بل میں نمایاں اضافہ ہو سکتا ہے۔ اس لیے ضروری ہے کہ آپ اپنے ماہانہ یونٹ پر نظر رکھیں۔</p>
                 <p className="text-gray-700 leading-9 text-base">میپکو بل میں ایف پی اے یعنی فیول پرائس ایڈجسٹمنٹ، جی ایس ٹی، فکسڈ چارجز اور دیگر ٹیکس شامل ہوتے ہیں۔ ان تمام چارجز کو سمجھنے کے لیے ہماری ٹیکسز گائیڈ پڑھیں۔ یہ ویب سائٹ ایک آزاد معلوماتی پورٹل ہے اور میپکو یا پی آئی ٹی سی سے منسلک نہیں ہے۔</p>
-
-                {/* Roman Urdu paragraphs */}
                 <div className="mt-6 space-y-4 text-left" dir="ltr">
-                  <p className="text-gray-600 leading-8 text-sm italic">MEPCO yani Multan Electric Power Company South Punjab ke laakhon gharon aur karobaron ko bijli faraham karti hai. Ab aap ghar baithe apna MEPCO bijli ka bill online check kar sakte hain. Iske liye aapko sirf apne purane bill par darj 14 handson ka reference number chahiye.</p>
-                  <p className="text-gray-600 leading-8 text-sm italic">MEPCO bill online check karne ka tareeqa bohat aasan hai. Bill checker mein apna reference number darj karein aur Check Bill par click karein. Aapka bill fori tor par khul jayega jahan aap wajib ul ada raqam, aakhri tareekh aur bill ki tamam tafseelaat dekh sakte hain.</p>
-                  <p className="text-gray-600 leading-8 text-sm italic">200 units se kam istemal karne wale consumers mahfooz consumer kehlate hain aur unhe kam rate par bijli milti hai. 200 units se zyada istemal par bill mein numayan izafa ho sakta hai. Is liye zaroori hai ke aap apne maahana units par nazar rakhein.</p>
+                  <p className="text-gray-600 leading-8 text-sm italic">MEPCO yani Multan Electric Power Company South Punjab ke laakhon gharon aur karobaron ko bijli faraham karti hai. Ab aap ghar baithe apna MEPCO bijli ka bill online check kar sakte hain.</p>
+                  <p className="text-gray-600 leading-8 text-sm italic">200 units se kam istemal karne wale consumers mahfooz consumer kehlate hain aur unhe kam rate par bijli milti hai. 200 units se zyada istemal par bill mein numayan izafa ho sakta hai.</p>
                 </div>
               </div>
-
               <div className="space-y-4">
                 {[
-                  { title: "ریفرنس نمبر کیا ہے؟", sub: "Reference Number", subRoman: "Reference number kya hai?", icon: "🔢", desc: "14 ہندسوں کا ریفرنس نمبر آپ کے پرانے میپکو بجلی بل کے اوپری حصے میں درج ہوتا ہے۔ یہ نمبر آپ کے کنکشن کی پہچان ہے۔", descRoman: "14 handson ka reference number aapke purane MEPCO bill ke oopri hisse mein darj hota hai. Ye number aapke connection ki pehchaan hai." },
-                  { title: "محفوظ صارف کون ہے؟", sub: "Protected Consumer", subRoman: "Mahfooz consumer kaun hai?", icon: "🛡️", desc: "جو صارف ماہانہ 200 یونٹ یا اس سے کم بجلی استعمال کرے وہ محفوظ صارف کہلاتا ہے۔ اسے سستی نرخ پر بجلی ملتی ہے۔", descRoman: "Jo consumer maahana 200 units ya us se kam bijli use kare wo mahfooz consumer kehlata hai. Use sasti rate par bijli milti hai." },
-                  { title: "پیک اوقات کیا ہیں؟", sub: "Peak Hours", subRoman: "Peak hours kya hain?", icon: "⏰", desc: "گرمیوں میں شام 6:30 سے رات 10:30 بجے تک پیک اوقات ہیں۔ اس دوران بھاری آلات جیسے اے سی اور واشنگ مشین کا استعمال کم کریں۔", descRoman: "Garmiyon mein shaam 6:30 se raat 10:30 tak peak hours hain. Is dauran bhari appliances jaise AC aur washing machine ka istemal kam karein." },
-                  { title: "ایف پی اے کیا ہے؟", sub: "Fuel Price Adjustment", subRoman: "FPA kya hai?", icon: "🧾", desc: "ایف پی اے یعنی فیول پرائس ایڈجسٹمنٹ ہر مہینے تبدیل ہو سکتی ہے۔ یہ آپ کے بل میں اضافہ یا کمی دونوں کر سکتی ہے۔", descRoman: "FPA yani Fuel Price Adjustment har maheene tabdeel ho sakti hai. Ye aapke bill mein izafa ya kami dono kar sakti hai." },
+                  { title: "ریفرنس نمبر کیا ہے؟", sub: "Reference Number", subRoman: "Reference number kya hai?", icon: "🔢", desc: "14 ہندسوں کا ریفرنس نمبر آپ کے پرانے میپکو بجلی بل کے اوپری حصے میں درج ہوتا ہے۔ یہ نمبر آپ کے کنکشن کی پہچان ہے۔", descRoman: "14 handson ka reference number aapke purane MEPCO bill ke oopri hisse mein darj hota hai." },
+                  { title: "محفوظ صارف کون ہے؟", sub: "Protected Consumer", subRoman: "Mahfooz consumer kaun hai?", icon: "🛡️", desc: "جو صارف ماہانہ 200 یونٹ یا اس سے کم بجلی استعمال کرے وہ محفوظ صارف کہلاتا ہے۔ اسے سستی نرخ پر بجلی ملتی ہے۔", descRoman: "Jo consumer maahana 200 units ya us se kam bijli use kare wo mahfooz consumer kehlata hai." },
+                  { title: "پیک اوقات کیا ہیں؟", sub: "Peak Hours", subRoman: "Peak hours kya hain?", icon: "⏰", desc: "گرمیوں میں شام 6:30 سے رات 10:30 بجے تک پیک اوقات ہیں۔ اس دوران بھاری آلات جیسے اے سی اور واشنگ مشین کا استعمال کم کریں۔", descRoman: "Garmiyon mein shaam 6:30 se raat 10:30 tak peak hours hain." },
+                  { title: "ایف پی اے کیا ہے؟", sub: "Fuel Price Adjustment", subRoman: "FPA kya hai?", icon: "🧾", desc: "ایف پی اے یعنی فیول پرائس ایڈجسٹمنٹ ہر مہینے تبدیل ہو سکتی ہے۔ یہ آپ کے بل میں اضافہ یا کمی دونوں کر سکتی ہے۔", descRoman: "FPA yani Fuel Price Adjustment har maheene tabdeel ho sakti hai." },
                 ].map((card) => (
                   <div key={card.title} className="portal-card rounded-2xl bg-white border border-gray-100 p-5 shadow-sm text-right" dir="rtl" lang="ur">
                     <div className="flex items-center justify-end gap-3 mb-3">
@@ -1172,7 +1125,6 @@ export default function Home() {
                 ))}
               </div>
             </div>
-
             <div className="mt-10 flex flex-wrap gap-3 justify-end" dir="rtl">
               {[
                 { label: "اردو بل گائیڈ →", href: "/mepco-bill-urdu" },
@@ -1181,7 +1133,7 @@ export default function Home() {
                 { label: "ایف پی اے چارجز گائیڈ →", href: "/mepco-fpa-charges-guide" },
                 { label: "200 یونٹ رول →", href: "/mepco-200-units-rule" },
               ].map((link) => (
-                <a key={link.href} href={link.href} lang="ur" className="rounded-full bg-[#005b2e]/10 px-4 py-2 text-sm font-bold text-[#005b2e] hover:bg-[#005b2e] hover:text-white transition-all duration-200">{link.label}</a>
+                <a key={link.href} href={link.href} lang="ur" className="rounded-full bg-[var(--brand-600)]/10 px-4 py-2 text-sm font-bold text-[var(--brand-600)] hover:bg-[var(--brand-600)] hover:text-white transition-all duration-200">{link.label}</a>
               ))}
             </div>
           </div>
@@ -1190,11 +1142,11 @@ export default function Home() {
 
       <div className="section-divider" />
 
-      {/* 16. FAQ */}
+      {/* 16. FAQ — English + Urdu + Roman Urdu */}
       <section id="faq" className="py-16 bg-[#f8faf9]">
         <div className="mx-auto max-w-4xl px-5">
           <div className="text-center mb-12 reveal">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#005b2e]/10 px-4 py-1.5 text-xs font-bold text-[#005b2e] uppercase tracking-widest mb-4">Help &amp; Support | مدد اور سہارا</span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-600)]/10 px-4 py-1.5 text-xs font-bold text-[var(--brand-600)] uppercase tracking-widest mb-4">Help &amp; Support | مدد اور سہارا</span>
             <h2 className="text-3xl md:text-4xl font-black text-gray-900">Frequently Asked Questions</h2>
             <p className="mt-2 text-lg font-bold text-gray-600" dir="rtl" lang="ur">اکثر پوچھے جانے والے سوالات</p>
             <p className="mt-1 text-sm text-gray-400 italic">Aksar poochhe jane wale sawalaat</p>
@@ -1206,7 +1158,7 @@ export default function Home() {
                 <button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}
                   className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors">
                   <h3 className="text-base font-black text-gray-900 pr-4">{q}</h3>
-                  <span aria-hidden="true" className={`shrink-0 h-8 w-8 rounded-full bg-[#005b2e]/10 flex items-center justify-center text-[#005b2e] font-bold transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`}>▼</span>
+                  <span aria-hidden="true" className={`shrink-0 h-8 w-8 rounded-full bg-[var(--brand-600)]/10 flex items-center justify-center text-[var(--brand-600)] font-bold transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`}>▼</span>
                 </button>
                 {openFaq === i && (
                   <div className="px-5 pb-5 border-t border-gray-50 space-y-3">
@@ -1272,7 +1224,7 @@ export default function Home() {
                 <p>Independent informational website. | آزاد معلوماتی ویب سائٹ۔</p>
                 <p>Not affiliated with MEPCO or PITC. | میپکو سے منسلک نہیں۔</p>
                 <p>📞 Helpline: {HELPLINE}</p>
-                <p className="text-xs text-green-300/40 mt-4">Bill data is provided by official PITC/MEPCO systems. Always verify with your official bill.<br /><span dir="rtl" lang="ur">بل کا ڈیٹا آفیشل سسٹم سے آتا ہے۔ ہمیشہ اپنے آفیشل بل سے تصدیق کریں۔</span></p>
+                <p className="text-xs text-green-300/40 mt-4">Bill data is provided by official PITC/MEPCO systems. Always verify charges with your official bill.<br /><span dir="rtl" lang="ur">بل کا ڈیٹا آفیشل سسٹم سے آتا ہے۔ ہمیشہ اپنے آفیشل بل سے تصدیق کریں۔</span></p>
               </div>
             </div>
           </div>
@@ -1293,7 +1245,7 @@ export default function Home() {
             { icon: "📚", label: "Guides", href: "#guides" },
             { icon: "❓", label: "FAQs", href: "#faq" },
           ].map((item) => (
-            <a key={item.href} href={item.href} className="py-3 text-xs font-bold text-gray-600 hover:text-[#005b2e] transition-colors">
+            <a key={item.href} href={item.href} className="py-3 text-xs font-bold text-gray-600 hover:text-[var(--brand-600)] transition-colors">
               <span className="text-lg block" aria-hidden="true">{item.icon}</span>{item.label}
             </a>
           ))}
@@ -1302,7 +1254,7 @@ export default function Home() {
 
       {/* SCROLL TO TOP */}
       <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top"
-        className="fixed bottom-20 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#005b2e] text-xl text-white shadow-xl btn-3d glow-green md:bottom-8">↑</button>
+        className="fixed bottom-20 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-600)] text-xl text-white shadow-xl btn-3d glow-green md:bottom-8">↑</button>
 
     </main>
   );
