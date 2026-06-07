@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import Image from "next/image";
-
+import SolarRoiClient from "./mepco-solar-roi-calculator/SolarRoiClient";
 // ==================== TYPES ====================
 interface SlabInfo {
   title: string;
@@ -841,6 +841,85 @@ export default function Home() {
                   <span className="text-xl font-black text-green-900">Rs.&nbsp;{applianceEstimate.estimatedCost}</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+       <div className="section-divider" />
+
+      {/* 8.5 — SOLAR ROI CALCULATOR — Bill Calculator ke NEECHE */}
+      <section className="py-16 bg-gradient-to-br from-emerald-50 to-white">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="rounded-[2rem] border border-emerald-200 bg-white p-6 shadow-xl md:p-10">
+            {/* Section Header */}
+            <div className="mb-8 text-center reveal">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-bold text-emerald-700 uppercase tracking-widest mb-4">
+                <span aria-hidden="true">☀️</span> Solar ROI Tool | سولر ROI ٹول
+              </span>
+              <h2 className="mt-2 text-3xl font-black text-gray-900 md:text-4xl">
+                Solar Payback Calculator Pakistan PKR
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl leading-7 text-gray-600">
+                Apna solar installation cost, system size (kW) aur monthly MEPCO
+                bill enter karein — foran payback period, monthly savings aur
+                25-year ROI dekhein.
+              </p>
+              <p className="mt-2 text-sm text-gray-500" dir="rtl" lang="ur">
+                سولر لاگت، سسٹم سائز اور ماہانہ بل درج کریں — فوری نتائج
+                دیکھیں۔ 3kW سے 15kW تک سسٹم سپورٹ۔
+              </p>
+              <p className="mt-1 text-xs text-gray-400 italic">
+                Solar lagat, system size aur maahana bill darj karein — fori
+                nataij dekhein. 3kW se 15kW tak system support.
+              </p>
+            </div>
+
+            {/* Calculator Component */}
+            <SolarRoiClient />
+
+            {/* Full Guide CTA */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="/mepco-solar-roi-calculator"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-600)] px-6 py-3 font-bold text-white transition hover:bg-[var(--brand-800)] btn-3d"
+              >
+                <span aria-hidden="true">📊</span> Full Solar ROI Guide Dekhein →
+              </a>
+              <a
+                href="/mepco-net-metering-guide"
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-emerald-200 bg-white px-6 py-3 font-bold text-emerald-700 transition hover:bg-emerald-50"
+              >
+                <span aria-hidden="true">🔋</span> Net Metering Guide →
+              </a>
+              <a
+                href="/mepco-solar-savings-calculator"
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-gray-200 bg-white px-6 py-3 font-bold text-gray-700 transition hover:bg-gray-50"
+              >
+                <span aria-hidden="true">☀️</span> Solar Savings Calculator →
+              </a>
+            </div>
+
+            {/* Solar Disclaimer */}
+            <div className="mt-6 rounded-xl bg-amber-50 border border-amber-200 p-4">
+              <p className="text-xs text-amber-800 font-semibold leading-5">
+                <span aria-hidden="true">⚠️</span> Estimates based on 125
+                units/kW/month, 80% self-use @ Rs. 50/unit, 20% export @ Rs.
+                22/unit. On-grid system assumed. Actual results vary by location,
+                panel quality, roof direction and NEPRA tariff. Verify with
+                trusted solar installer.
+              </p>
+              <p className="text-xs text-amber-700 leading-5 mt-2" dir="rtl" lang="ur">
+                <span aria-hidden="true">⚠️</span> تخمینے 125 یونٹ/کلو واٹ/ماہ
+                پر مبنی ہیں۔ اصل نتائج مقام، پینل معیار، چھت کی سمت اور NEPRA
+                ٹیرف کے مطابق مختلف ہو سکتے ہیں۔ مستند سولر انسٹالر سے تصدیق
+                کریں۔
+              </p>
+              <p className="text-xs text-amber-600 leading-5 mt-1 italic">
+                Estimates 125 units/kW/month par mabni hain. Asal results
+                location, panel quality aur NEPRA tariff ke mutabiq mukhtalif ho
+                sakte hain. Solar installer se tasdeeq karein.
+              </p>
             </div>
           </div>
         </div>
