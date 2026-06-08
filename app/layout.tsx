@@ -7,69 +7,63 @@ import { Analytics } from "@vercel/analytics/next";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
+const SITE_URL = "https://mepcoonlinebill.net";
+const SITE_NAME = "MEPCO Online Bill Check";
+const GA_ID = "G-JHHCERN5SG";
+const CURRENT_YEAR = new Date().getFullYear();
+
+const META_TITLE = `MEPCO Online Bill Check ${CURRENT_YEAR} | Duplicate Bill & Calculator`;
+
+const META_DESCRIPTION =
+  "Check MEPCO electricity bill online by 14-digit reference number. Get duplicate bill, bill calculator, tariff guides and South Punjab MEPCO help.";
+
+const keywords = [
+  "MEPCO online bill check",
+  "MEPCO duplicate bill",
+  "MEPCO bill calculator",
+  "MEPCO reference number",
+  "MEPCO customer ID",
+  "MEPCO bill check by CNIC",
+  "MEPCO 200 units rule",
+  "MEPCO solar calculator",
+  "MEPCO bill Multan",
+  "MEPCO bill Bahawalpur",
+  "MEPCO bill Sahiwal",
+  "میپکو بل چیک",
+  "میپکو آن لائن بل",
+];
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mepcoonlinebill.net"),
+  metadataBase: new URL(SITE_URL),
 
   verification: {
     google: "CXhIteopDn1CSGzW_MW-HaVhhFoPV-gxq2fLoVxZjws",
   },
 
   title: {
-    default:
-      "MEPCO Online Bill Check 2026 — Duplicate Bill, Calculator & Consumer Guides",
-    template: "%s | MEPCO Online Bill Check",
+    default: META_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
 
-  description:
-    "Check your MEPCO electricity bill online using 14-digit reference number. Access duplicate bills, bill calculator, consumer guides, peak hours, tariff slabs, protected consumer status and 36+ resources for South Punjab Pakistan. میپکو بل آن لائن چیک کریں۔",
+  description: META_DESCRIPTION,
+  keywords,
 
-  keywords: [
-    "MEPCO bill",
-    "MEPCO online bill check",
-    "MEPCO duplicate bill",
-    "MEPCO electricity bill",
-    "MEPCO bill check online",
-    "MEPCO bill calculator",
-    "MEPCO reference number",
-    "MEPCO customer ID",
-    "MEPCO peak hours",
-    "MEPCO tariff slabs",
-    "MEPCO protected consumer",
-    "MEPCO bill 2026",
-    "MEPCO bill check by CNIC",
-    "MEPCO FPA charges",
-    "MEPCO QTA charges",
-    "MEPCO new connection",
-    "MEPCO solar calculator",
-    "MEPCO 200 units rule",
-    "Multan electric power company",
-    "Pakistan electricity bill",
-    "duplicate electricity bill Pakistan",
-    "South Punjab electricity bill",
-    "mapko bill",
-    "mipco bill check",
-    "mepco web bill",
-    "mepco bill check Multan",
-    "mepco bill check Bahawalpur",
-    "mepco bill check Sahiwal",
-    "میپکو بل چیک",
-    "میپکو آن لائن بل",
-    "بجلی کا بل چیک",
-  ],
-
-  authors: [{ name: "MEPCO Online Bill Check" }],
-  creator: "MEPCO Online Bill Check",
-  publisher: "MEPCO Online Bill Check",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
 
   icons: {
     icon: "/favicon-new.ico",
+    apple: "/mepco-logo.png",
   },
 
   robots: {
@@ -88,34 +82,29 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_PK",
     alternateLocale: "ur_PK",
-    url: "https://mepcoonlinebill.net",
-    siteName: "MEPCO Online Bill Check 2026",
-    title:
-      "MEPCO Online Bill Check 2026 — Duplicate Bill, Calculator & Consumer Guides",
-    description:
-      "Check MEPCO electricity bill online using 14-digit reference number. Access duplicate bills, bill calculator, consumer guides and 36+ resources for South Punjab Pakistan.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: META_TITLE,
+    description: META_DESCRIPTION,
     images: [
       {
-        // OG image — agar /og-image.jpg exist kare to use karo
-        // agar 404 aaye to logo use karo:
-        url: "https://mepcoonlinebill.net/mepco-logo.png",
+        url: `${SITE_URL}/mepco-logo.png`,
         width: 512,
         height: 512,
-        alt: "MEPCO Online Bill Check Portal — South Punjab Pakistan",
+        alt: "MEPCO Online Bill Check Portal",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "MEPCO Online Bill Check 2026 — Duplicate Bill & Calculator",
-    description:
-      "Check MEPCO electricity bill online using 14-digit reference number. Duplicate bills, calculator, consumer guides and 36+ resources.",
-    images: ["https://mepcoonlinebill.net/mepco-logo.png"],
+    title: META_TITLE,
+    description: META_DESCRIPTION,
+    images: [`${SITE_URL}/mepco-logo.png`],
   },
 
   alternates: {
-    canonical: "https://mepcoonlinebill.net",
+    canonical: SITE_URL,
   },
 };
 
@@ -124,16 +113,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  const webApplicationSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "MEPCO Online Bill Checker",
-    url: "https://mepcoonlinebill.net",
+    url: SITE_URL,
     applicationCategory: "UtilityApplication",
     operatingSystem: "All",
     browserRequirements: "Requires HTML5",
-    description:
-      "An online tool to check MEPCO duplicate electricity bills using a 14-digit reference number. Access bill calculator, consumer guides, peak hours, tariff slabs and 36+ resources for South Punjab Pakistan consumers.",
+    description: META_DESCRIPTION,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -141,17 +129,38 @@ export default function RootLayout({
     },
     inLanguage: ["en", "ur"],
     areaServed: {
-      "@type": "State",
+      "@type": "Place",
       name: "South Punjab, Pakistan",
     },
   };
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/mepco-logo.png`,
+    description:
+      "Independent MEPCO bill checking and consumer guide portal for South Punjab Pakistan. Not affiliated with MEPCO, PITC or any government department.",
+    areaServed: "South Punjab, Pakistan",
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: META_DESCRIPTION,
+    inLanguage: ["en", "ur"],
+  };
+
   return (
     <html lang="en" dir="ltr">
-      <head>
-        {/* Google Analytics — next/script for better performance */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-JHHCERN5SG"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -159,18 +168,31 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-JHHCERN5SG');
+            gtag('config', '${GA_ID}');
           `}
         </Script>
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* WebApplication JSON-LD Schema */}
+
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(webApplicationSchema),
+          }}
         />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
+
         {children}
         <Analytics />
       </body>
