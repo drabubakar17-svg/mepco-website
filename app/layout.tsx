@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://mepcoonlinebill.net";
+const SITE_URL = "https://www.mepcoonlinebill.net";
 const SITE_NAME = "MEPCO Online Bill Check";
 const GA_ID = "G-JHHCERN5SG";
 const CURRENT_YEAR = new Date().getFullYear();
