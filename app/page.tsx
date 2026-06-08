@@ -242,6 +242,7 @@ const POPULAR_SEARCHES = [
   { label: "MEPCO Bill Sahiwal",         href: "/sahiwal-bill-check"             },
   { label: "MEPCO Bill DG Khan",         href: "/dera-ghazi-khan-bill-check"     },
   { label: "MEPCO Why Bill Increased",   href: "/mepco-bill-increased-guide"     },
+  { label: "Solar ROI Calculator Pakistan", href: "/mepco-solar-roi-calculator" },
 ];
 
 const FOOTER_QUICK = [
@@ -250,6 +251,7 @@ const FOOTER_QUICK = [
   { label: "MEPCO Bill Urdu",       href: "/mepco-bill-urdu"                },
   { label: "All MEPCO Regions",     href: "/all-mepco-regions"              },
   { label: "Solar Calculator",      href: "/mepco-solar-savings-calculator" },
+ { label: "Solar ROI Calculator",  href: "/mepco-solar-roi-calculator"      },
 ];
 
 const FOOTER_GUIDES = [
@@ -263,6 +265,7 @@ const FOOTER_GUIDES = [
   { label: "200 Units Rule",           href: "/mepco-200-units-rule"           },
   { label: "FPA Charges Guide",        href: "/mepco-fpa-charges-guide"        },
   { label: "Protected Consumer Guide", href: "/mepco-protected-consumer-guide" },
+  { label: "Solar ROI Calculator",     href: "/mepco-solar-roi-calculator"     },
 ];
 
 const FOOTER_LEGAL = [
