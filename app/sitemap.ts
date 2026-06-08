@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const baseUrl = "https://mepcoonlinebill.net";
+const baseUrl = "https://www.mepcoonlinebill.net";
 
 const pages = [
   "",
@@ -8,6 +8,7 @@ const pages = [
   // Core Tools
   "/mepco-bill-calculator",
   "/mepco-solar-savings-calculator",
+ "/mepco-solar-roi-calculator",
 
   // Authority Pages
   "/mepco-bill-check-by-cnic",
