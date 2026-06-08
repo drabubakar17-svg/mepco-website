@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     "Check MEPCO peak hours timing, TOU meter charges, seasonal peak timing, Urdu guide, and bill saving tips for MEPCO consumers.",
   alternates: {
     canonical:
-      "https://mepcoonlinebill.net/mepco-peak-hours-guide",
+      "https://www.mepcoonlinebill.net/mepco-peak-hours-guide",
   },
   openGraph: {
     title: `MEPCO Peak Hours Guide ${currentYear}`,
     description:
       "Learn MEPCO peak and off-peak timing, TOU meter billing, and how to reduce electricity usage during expensive peak hours.",
-    url: "https://mepcoonlinebill.net/mepco-peak-hours-guide",
+    url: "https://www.mepcoonlinebill.net/mepco-peak-hours-guide",
     type: "article",
   },
 };

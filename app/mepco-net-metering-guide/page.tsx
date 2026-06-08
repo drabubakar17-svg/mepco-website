@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "بجلی کا بل کم کرنے کا طریقہ",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-net-metering-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-net-metering-guide",
   },
 };
 

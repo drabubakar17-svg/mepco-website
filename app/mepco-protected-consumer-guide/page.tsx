@@ -40,13 +40,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical:
-      "https://mepcoonlinebill.net/mepco-protected-consumer-guide",
+      "https://www.mepcoonlinebill.net/mepco-protected-consumer-guide",
   },
   openGraph: {
     title: "MEPCO Protected Consumer 2026 — Complete Guide",
     description:
       "What is MEPCO protected consumer? 200 units rule, 201 unit trap, protected vs unprotected, bill impact. Complete guide in English, Urdu & Roman Urdu.",
-    url: "https://mepcoonlinebill.net/mepco-protected-consumer-guide",
+    url: "https://www.mepcoonlinebill.net/mepco-protected-consumer-guide",
     siteName: "MEPCO Online Bill",
     type: "article",
     locale: "en_PK",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 // ═══════════════════════════════════════════════════
 // CONSTANTS
 // ═══════════════════════════════════════════════════
-const SITE_URL = "https://mepcoonlinebill.net";
+const SITE_URL = "https://www.mepcoonlinebill.net";
 const PAGE_URL = `${SITE_URL}/mepco-protected-consumer-guide`;
 const LAST_UPDATED = "2026-06-07";
 const PUBLISHED_DATE = "2026-06-07";

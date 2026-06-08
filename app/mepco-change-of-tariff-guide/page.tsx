@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "میپکو کمرشل سے گھریلو",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-change-of-tariff-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-change-of-tariff-guide",
   },
 };
 

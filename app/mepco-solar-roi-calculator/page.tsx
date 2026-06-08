@@ -46,23 +46,23 @@ export const metadata: Metadata = {
   },
   // ✅ Fix 2: alternates.languages added
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-solar-roi-calculator",
+    canonical: "https://www.mepcoonlinebill.net/mepco-solar-roi-calculator",
     languages: {
-      "en-PK": "https://mepcoonlinebill.net/mepco-solar-roi-calculator",
-      "ur-PK": "https://mepcoonlinebill.net/mepco-solar-roi-calculator",
+      "en-PK": "https://www.mepcoonlinebill.net/mepco-solar-roi-calculator",
+      "ur-PK": "https://www.mepcoonlinebill.net/mepco-solar-roi-calculator",
     },
   },
   openGraph: {
     title: "Solar Payback Calculator Pakistan PKR 2026",
     description:
       "Calculate solar ROI, payback period and savings in PKR. Instant results for 3kW, 5kW, 10kW, 15kW systems across Pakistan.",
-    url: "https://mepcoonlinebill.net/mepco-solar-roi-calculator",
+    url: "https://www.mepcoonlinebill.net/mepco-solar-roi-calculator",
     siteName: "MEPCO Online Bill",
     type: "article",
     locale: "en_PK",
     images: [
       {
-        url: "https://mepcoonlinebill.net/mepco-logo.png",
+        url: "https://www.mepcoonlinebill.net/mepco-logo.png",
         width: 512,
         height: 512,
         alt: "Solar ROI Calculator Pakistan",
@@ -74,14 +74,14 @@ export const metadata: Metadata = {
     title: "Solar Payback Calculator Pakistan PKR 2026",
     description:
       "Solar ROI, payback period aur savings calculate karein PKR mein. 3kW se 15kW tak — free online calculator.",
-    images: ["https://mepcoonlinebill.net/mepco-logo.png"],
+    images: ["https://www.mepcoonlinebill.net/mepco-logo.png"],
   },
 };
 
 // ═══════════════════════════════════════════════════
 // CONSTANTS
 // ═══════════════════════════════════════════════════
-const SITE_URL = "https://mepcoonlinebill.net";
+const SITE_URL = "https://www.mepcoonlinebill.net";
 const PAGE_URL = `${SITE_URL}/mepco-solar-roi-calculator`;
 const LAST_UPDATED = "2026-06-07";
 const PUBLISHED_DATE = "2026-06-07";

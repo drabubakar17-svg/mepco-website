@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "میپکو بل لیٹ ہو جائے تو کیا کریں",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-bill-due-date-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-bill-due-date-guide",
   },
 };
 

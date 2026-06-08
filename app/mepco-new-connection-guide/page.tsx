@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Aasan tareeqa MEPCO naya meter lagwane ka. Check required documents, online application steps via ENC portal, tracking status, and demand notice details.",
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-new-connection-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-new-connection-guide",
   },
   robots: {
     index: true,

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "میپکو بل ایزی پیسہ",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-bill-payment-methods-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-bill-payment-methods-guide",
   },
 };
 

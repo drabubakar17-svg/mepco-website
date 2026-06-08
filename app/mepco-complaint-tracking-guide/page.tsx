@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical:
-      "https://mepcoonlinebill.net/mepco-complaint-tracking-guide",
+      "https://www.mepcoonlinebill.net/mepco-complaint-tracking-guide",
   },
 };
 

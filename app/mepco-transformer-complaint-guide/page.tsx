@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "کم وولٹیج شکایت",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-transformer-complaint-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-transformer-complaint-guide",
   },
 };
 

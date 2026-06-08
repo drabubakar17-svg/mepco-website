@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "میپکو بل سلیب",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-tariff-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-tariff-guide",
   },
 };
 

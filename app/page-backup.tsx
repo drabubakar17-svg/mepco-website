@@ -48,7 +48,7 @@ interface GuideLink {
 
 // ==================== CONSTANTS ====================
 const SITE_NAME = "MEPCO Online Bill Check 2026";
-const SITE_URL  = "https://mepcoonlinebill.net";
+const SITE_URL  = "https://www.mepcoonlinebill.net";
 const HELPLINE  = "0800-63726";
 const FPA_RATE  = 3.5;
 

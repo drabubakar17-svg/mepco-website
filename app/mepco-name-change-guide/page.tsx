@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "بجلی میٹر نام ٹرانسفر",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-name-change-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-name-change-guide",
   },
 };
 

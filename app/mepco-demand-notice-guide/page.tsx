@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "electricity demand notice Pakistan",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-demand-notice-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-demand-notice-guide",
   },
 };
 

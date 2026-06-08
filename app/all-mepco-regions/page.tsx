@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "View all MEPCO regions and city bill check pages including Multan, Khanewal, Bahawalpur, Vehari, Lodhran, Sahiwal, Rahim Yar Khan, DG Khan and more. Instant duplicate bill lookup.",
   alternates: {
-    canonical: "https://mepcoonlinebill.net/all-mepco-regions",
+    canonical: "https://www.mepcoonlinebill.net/all-mepco-regions",
   },
   robots: {
     index: true,

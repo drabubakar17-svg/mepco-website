@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "میپکو نیا کنکشن ڈپازٹ",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-security-deposit",
+    canonical: "https://www.mepcoonlinebill.net/mepco-security-deposit",
   },
 };
 

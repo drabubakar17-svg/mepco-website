@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "بجلی بل ریلیف",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-bill-installment-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-bill-installment-guide",
   },
 };
 

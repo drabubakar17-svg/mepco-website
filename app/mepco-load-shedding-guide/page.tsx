@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "میپکو فیڈر بند",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-load-shedding-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-load-shedding-guide",
   },
 };
 

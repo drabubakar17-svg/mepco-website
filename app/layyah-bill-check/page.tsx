@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     `Check your MEPCO Layyah electricity bill online for ${currentYear}. Download duplicate bills, print latest invoices, and view billing details using your 14-digit reference number.`,
   alternates: {
-    canonical: "https://mepcoonlinebill.net/layyah-bill-check",
+    canonical: "https://www.mepcoonlinebill.net/layyah-bill-check",
   },
   keywords: [
     "MEPCO Layyah bill",
@@ -27,7 +27,7 @@ export default function LayyahBillCheckPage() {
     "@graph": [
       {
         "@type": "GovernmentService",
-        "@id": "https://mepcoonlinebill.net/layyah-bill-check#service",
+        "@id": "https://www.mepcoonlinebill.net/layyah-bill-check#service",
         "name": "MEPCO Layyah Online Bill Checking",
         "serviceType": "Electricity Bill Utilities",
         "provider": {
@@ -43,7 +43,7 @@ export default function LayyahBillCheckPage() {
       },
       {
         "@type": "FAQPage",
-        "@id": "https://mepcoonlinebill.net/layyah-bill-check#faq",
+        "@id": "https://www.mepcoonlinebill.net/layyah-bill-check#faq",
         "mainEntity": [
           {
             "@type": "Question",

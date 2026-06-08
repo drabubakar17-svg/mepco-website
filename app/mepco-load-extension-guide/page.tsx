@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "how to increase sanctioned load online"
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-load-extension-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-load-extension-guide",
   },
 };
 

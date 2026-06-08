@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "میپکو لوڈ ایکسٹینشن فارم",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-application-forms-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-application-forms-guide",
   },
 };
 

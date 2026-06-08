@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "میپکو بل ریڈنگ غلط",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-meter-reading-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-meter-reading-guide",
   },
 };
 

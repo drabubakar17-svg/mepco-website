@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     "mepco ka reference number kahan hota hai",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-bill-check-by-cnic",
+    canonical: "https://www.mepcoonlinebill.net/mepco-bill-check-by-cnic",
   },
   openGraph: {
     title: "MEPCO Bill Check by CNIC Online 2026 Guide",
     description:
       "Can you check MEPCO bill by CNIC? Learn the safe 2026 method using Reference Number or Customer ID instead.",
-    url: "https://mepcoonlinebill.net/mepco-bill-check-by-cnic",
+    url: "https://www.mepcoonlinebill.net/mepco-bill-check-by-cnic",
     siteName: "MEPCO Online Bill",
     type: "article",
     locale: "en_PK",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 // ═══════════════════════════════════════════════════════════════
 // SITE CONSTANTS — Fixed: Dates corrected for 2026
 // ═══════════════════════════════════════════════════════════════
-const SITE_URL = "https://mepcoonlinebill.net";
+const SITE_URL = "https://www.mepcoonlinebill.net";
 const PAGE_URL = `${SITE_URL}/mepco-bill-check-by-cnic`;
 const LAST_UPDATED = "2026-06-07";
 const PUBLISHED_DATE = "2026-06-07";

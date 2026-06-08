@@ -11,13 +11,13 @@ export const metadata: Metadata = {
     "Learn where to find your MEPCO Customer ID on your electricity bill and how it differs from the 14-digit reference number.",
   alternates: {
     canonical:
-      "https://mepcoonlinebill.net/mepco-customer-id-guide",
+      "https://www.mepcoonlinebill.net/mepco-customer-id-guide",
   },
   openGraph: {
     title: `MEPCO Customer ID Guide ${currentYear}`,
     description:
       "Find your MEPCO Customer ID and understand the difference between Customer ID and Reference Number.",
-    url: "https://mepcoonlinebill.net/mepco-customer-id-guide",
+    url: "https://www.mepcoonlinebill.net/mepco-customer-id-guide",
     type: "article",
   },
 };

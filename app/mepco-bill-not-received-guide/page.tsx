@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "ڈپلیکیٹ بل کیسے نکالیں",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-bill-not-received-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-bill-not-received-guide",
   },
 };
 

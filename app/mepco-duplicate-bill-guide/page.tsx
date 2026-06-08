@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "میپکو بل پرنٹ",
   ],
   alternates: {
-    canonical: "https://mepcoonlinebill.net/mepco-duplicate-bill-guide",
+    canonical: "https://www.mepcoonlinebill.net/mepco-duplicate-bill-guide",
   },
 };
 

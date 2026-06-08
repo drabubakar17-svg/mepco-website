@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: `Check your MEPCO Rajanpur electricity bill online for ${currentYear}. Download duplicate bills, print latest invoices, and view billing details using your 14-digit reference number.`,
   alternates: {
     canonical:
-      "https://mepcoonlinebill.net/rajanpur-bill-check",
+      "https://www.mepcoonlinebill.net/rajanpur-bill-check",
   },
   keywords: [
     "MEPCO Rajanpur bill",
@@ -28,7 +28,7 @@ export default function RajanpurBillCheckPage() {
       {
         "@type": "GovernmentService",
         "@id":
-          "https://mepcoonlinebill.net/rajanpur-bill-check#service",
+          "https://www.mepcoonlinebill.net/rajanpur-bill-check#service",
         name: "MEPCO Rajanpur Online Bill Checking",
         serviceType: "Electricity Bill Utilities",
         provider: {
@@ -57,7 +57,7 @@ export default function RajanpurBillCheckPage() {
       {
         "@type": "FAQPage",
         "@id":
-          "https://mepcoonlinebill.net/rajanpur-bill-check#faq",
+          "https://www.mepcoonlinebill.net/rajanpur-bill-check#faq",
         mainEntity: [
           {
             "@type": "Question",
