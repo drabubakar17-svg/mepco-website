@@ -530,12 +530,12 @@ export default function Home() {
         <div className="relative mx-auto max-w-7xl px-5 py-14 md:py-20">
           <div className="mb-12 flex flex-wrap items-center justify-center gap-3 md:gap-4">
             {[
-              { label: "Consumers | صارفین", value: "1.2M+", icon: "👥" },
-              { label: "Bills Checked | بل چیک", value: "8M+", icon: "📄" },
-              { label: "Regions | علاقے", value: `${CITIES.length}+`, icon: "🏙️" },
-              { label: "Guides | گائیڈز", value: `${GUIDE_LINKS.length}+`, icon: "📚" },
-              { label: "Status | حالت", value: "Online", icon: "🟢" },
-            ].map((s, i) => (
+  { label: "Access | رسائی", value: "24/7", icon: "🕒" },
+{ label: "Service | سروس", value: "Free", icon: "📄" },
+  { label: "Regions | علاقے", value: `${CITIES.length}+`, icon: "🏙️" },
+  { label: "Guides | گائیڈز", value: `${GUIDE_LINKS.length}+`, icon: "📚" },
+  { label: "Status | حالت", value: "Online", icon: "🟢" },
+].map((s, i) => (
               <div key={s.label} className="stat-pill reveal flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 shadow-md border border-white/60 backdrop-blur-sm cursor-default" style={{ transitionDelay: `${i * 80}ms` }}>
                 <span className="text-lg">{s.icon}</span>
                 <div>
