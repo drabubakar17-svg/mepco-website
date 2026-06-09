@@ -76,12 +76,13 @@ const pages = [
   "/taunsa-bill-check",
   "/bahawalnagar-bill-check",
 
-  // Legal Pages
-  "/about-us",
-  "/contact-us",
-  "/privacy-policy",
-  "/disclaimer",
-  "/terms-and-conditions",
+ // Legal Pages
+"/about-author",
+"/about-us",
+"/contact-us",
+"/privacy-policy",
+"/disclaimer",
+"/terms-and-conditions",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
