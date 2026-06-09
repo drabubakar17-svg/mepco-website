@@ -269,13 +269,13 @@ const FOOTER_GUIDES = [
 ];
 
 const FOOTER_LEGAL = [
+  { label: "About Author",       href: "/about-author"        },
   { label: "Privacy Policy",     href: "/privacy-policy"      },
   { label: "Disclaimer",         href: "/disclaimer"          },
   { label: "Contact Us",         href: "/contact-us"          },
   { label: "About Us",           href: "/about-us"            },
   { label: "Terms & Conditions", href: "/terms-and-conditions"},
 ];
-
 // ==================== UTILITY FUNCTIONS ====================
 function safeGetItem(key: string, fallback = ""): string {
   if (typeof window === "undefined") return fallback;
