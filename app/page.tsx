@@ -270,6 +270,7 @@ const FOOTER_GUIDES = [
 
 const FOOTER_LEGAL = [
   { label: "About Author",       href: "/about-author"        },
+  { label: "Editorial Policy",   href: "/editorial-policy"    },
   { label: "Privacy Policy",     href: "/privacy-policy"      },
   { label: "Disclaimer",         href: "/disclaimer"          },
   { label: "Contact Us",         href: "/contact-us"          },
