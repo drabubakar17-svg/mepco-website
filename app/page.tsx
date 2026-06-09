@@ -1258,21 +1258,40 @@ export default function Home() {
 
       <div className="section-divider" />
 
-      {/* 17. AD PLACEHOLDER */}
-      <section className="py-6 bg-white" aria-label="Advertisement">
-        <div className="mx-auto max-w-7xl px-5">
-          <div className="rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden" style={{ minHeight: "250px", contain: "layout" }}>
-            <div className="border-b border-gray-100 bg-gray-100/50 px-4 py-2"><p className="text-center text-[10px] font-bold uppercase tracking-widest text-gray-400">Advertisement</p></div>
-            <div className="flex items-center justify-center p-8" style={{ minHeight: "200px" }}>
-              <div className="text-center">
-                <p className="text-4xl mb-3" aria-hidden="true">📢</p>
-                <p className="text-sm font-bold text-gray-400">Google AdSense Space</p>
-                <p className="text-xs text-gray-300 mt-1">Responsive ad will appear after approval</p>
-              </div>
-            </div>
-          </div>
+     {/* 17. AD PLACEHOLDER */}
+<section className="py-6 bg-white" aria-label="Advertisement">
+  <div className="mx-auto max-w-7xl px-5">
+    <div
+      className="rounded-2xl border border-gray-100 bg-gray-50 overflow-hidden"
+      style={{ minHeight: "250px", contain: "layout" }}
+    >
+      <div className="border-b border-gray-100 bg-gray-100/50 px-4 py-2">
+        <p className="text-center text-[10px] font-bold uppercase tracking-widest text-gray-400">
+          Advertisement
+        </p>
+      </div>
+
+      <div
+        className="flex items-center justify-center p-8"
+        style={{ minHeight: "200px" }}
+      >
+        <div className="text-center">
+          <p className="text-4xl mb-3" aria-hidden="true">
+            📢
+          </p>
+
+          <p className="text-sm font-bold text-gray-400">
+            Advertisement
+          </p>
+
+          <p className="text-xs text-gray-300 mt-1">
+            Advertisement space reserved
+          </p>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* 18. FOOTER */}
       <footer className="dark-mesh-bg text-white">
