@@ -57,9 +57,11 @@ export const metadata: Metadata = {
   description: META_DESCRIPTION,
   keywords,
 
-  authors: [{ name: SITE_NAME }],
-  creator: SITE_NAME,
-  publisher: SITE_NAME,
+ authors: [
+  { name: "Muhammad Abu Bakar", url: `${SITE_URL}/about-author` },
+],
+creator: "Muhammad Abu Bakar",
+publisher: SITE_NAME,
 
   icons: {
     icon: "/favicon-new.ico",
@@ -135,15 +137,24 @@ export default function RootLayout({
   };
 
   const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-    logo: `${SITE_URL}/mepco-logo.png`,
-    description:
-      "Independent MEPCO bill checking and consumer guide portal for South Punjab Pakistan. Not affiliated with MEPCO, PITC or any government department.",
-    areaServed: "South Punjab, Pakistan",
-  };
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/mepco-logo.png`,
+  description:
+    "Independent MEPCO bill checking and consumer guide portal for South Punjab Pakistan. Not affiliated with MEPCO, PITC or any government department.",
+  areaServed: "South Punjab, Pakistan",
+
+  founder: {
+    "@type": "Person",
+    name: "Muhammad Abu Bakar",
+    jobTitle: "Founder & Editor",
+    url: `${SITE_URL}/about-author`,
+  },
+
+  sameAs: [`${SITE_URL}/about-author`],
+};
 
   const websiteSchema = {
     "@context": "https://schema.org",
