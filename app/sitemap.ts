@@ -76,15 +76,15 @@ const pages = [
   "/taunsa-bill-check",
   "/bahawalnagar-bill-check",
 
- // Legal Pages
+// Legal Pages
 "/about-author",
+"/editorial-policy",
 "/about-us",
 "/contact-us",
 "/privacy-policy",
 "/disclaimer",
 "/terms-and-conditions",
 ];
-
 export default function sitemap(): MetadataRoute.Sitemap {
   return pages.map((page) => ({
     url: `${baseUrl}${page}`,
