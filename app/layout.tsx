@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,28 +19,18 @@ const geistMono = Geist_Mono({
 const SITE_URL = "https://www.mepcoonlinebill.net";
 const SITE_NAME = "MEPCO Online Bill Check";
 const GA_ID = "G-JHHCERN5SG";
-const CURRENT_YEAR = new Date().getFullYear();
 
-const META_TITLE = `MEPCO Online Bill Check ${CURRENT_YEAR} | Duplicate Bill & Calculator`;
+const META_TITLE =
+  "MEPCO Online Bill Check 2026 | Duplicate Bill & Calculator";
 
 const META_DESCRIPTION =
-  "Check MEPCO electricity bill online by 14-digit reference number. Get duplicate bill, bill calculator, tariff guides and South Punjab MEPCO help.";
+  "Check MEPCO electricity bill online by 14-digit reference number. Get duplicate bill help, bill calculator, tariff guides, and South Punjab MEPCO consumer information.";
 
-const keywords = [
-  "MEPCO online bill check",
-  "MEPCO duplicate bill",
-  "MEPCO bill calculator",
-  "MEPCO reference number",
-  "MEPCO customer ID",
-  "MEPCO bill check by CNIC",
-  "MEPCO 200 units rule",
-  "MEPCO solar calculator",
-  "MEPCO bill Multan",
-  "MEPCO bill Bahawalpur",
-  "MEPCO bill Sahiwal",
-  "میپکو بل چیک",
-  "میپکو آن لائن بل",
-];
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#064e3b",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -55,13 +45,15 @@ export const metadata: Metadata = {
   },
 
   description: META_DESCRIPTION,
-  keywords,
 
- authors: [
-  { name: "Muhammad Abu Bakar", url: `${SITE_URL}/about-author` },
-],
-creator: "Muhammad Abu Bakar",
-publisher: SITE_NAME,
+  authors: [
+    {
+      name: "Muhammad Abu Bakar",
+      url: `${SITE_URL}/about-author`,
+    },
+  ],
+  creator: "Muhammad Abu Bakar",
+  publisher: SITE_NAME,
 
   icons: {
     icon: "/favicon-new.ico",
@@ -93,7 +85,7 @@ publisher: SITE_NAME,
         url: `${SITE_URL}/mepco-logo.png`,
         width: 512,
         height: 512,
-        alt: "MEPCO Online Bill Check Portal",
+        alt: "MEPCO Online Bill Check independent information portal logo",
       },
     ],
   },
@@ -107,7 +99,13 @@ publisher: SITE_NAME,
 
   alternates: {
     canonical: SITE_URL,
+    languages: {
+      "en-PK": SITE_URL,
+      "ur-PK": SITE_URL,
+    },
   },
+
+  category: "utility",
 };
 
 export default function RootLayout({
@@ -115,65 +113,60 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const webApplicationSchema = {
+  const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "MEPCO Online Bill Checker",
+    "@type": "Organization",
+    name: SITE_NAME,
     url: SITE_URL,
-    applicationCategory: "UtilityApplication",
-    operatingSystem: "All",
-    browserRequirements: "Requires HTML5",
-    description: META_DESCRIPTION,
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "PKR",
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/mepco-logo.png`,
+      width: 512,
+      height: 512,
     },
-    inLanguage: ["en", "ur"],
+    description:
+      "Independent MEPCO electricity bill information website for South Punjab consumers. This website is not affiliated with MEPCO, PITC, WAPDA, or any government department.",
+    founder: {
+      "@type": "Person",
+      name: "Muhammad Abu Bakar",
+      jobTitle: "Founder and Editor",
+      url: `${SITE_URL}/about-author`,
+    },
     areaServed: {
       "@type": "Place",
       name: "South Punjab, Pakistan",
     },
   };
 
-  const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
-  url: SITE_URL,
-  logo: `${SITE_URL}/mepco-logo.png`,
-  description:
-    "Independent MEPCO bill checking and consumer guide portal for South Punjab Pakistan. Not affiliated with MEPCO, PITC or any government department.",
-  areaServed: "South Punjab, Pakistan",
-
-  founder: {
-    "@type": "Person",
-    name: "Muhammad Abu Bakar",
-    jobTitle: "Founder & Editor",
-    url: `${SITE_URL}/about-author`,
-  },
-
-  sameAs: [`${SITE_URL}/about-author`],
-};
-
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
+    alternateName: [
+      "MEPCO Bill Check",
+      "MEPCO Duplicate Bill",
+      "MEPCO Online Bill",
+      "میپکو بل چیک",
+      "میپکو آن لائن بل",
+    ],
     url: SITE_URL,
     description: META_DESCRIPTION,
-    inLanguage: ["en", "ur"],
+    inLanguage: ["en-PK", "ur-PK"],
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   };
 
   return (
     <html lang="en" dir="ltr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
+
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -182,13 +175,6 @@ export default function RootLayout({
             gtag('config', '${GA_ID}');
           `}
         </Script>
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webApplicationSchema),
-          }}
-        />
 
         <script
           type="application/ld+json"
