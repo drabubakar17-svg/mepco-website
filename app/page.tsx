@@ -7,16 +7,16 @@ const SITE_NAME = "MEPCO Online Bill Check";
 const CURRENT_YEAR = 2026;
 
 export const metadata: Metadata = {
-  title: `MEPCO Online Bill Check ${CURRENT_YEAR} | Duplicate Bill by Reference Number`,
+  title: `MEPCO Bill Check Online ${CURRENT_YEAR} | Duplicate Bill by Reference Number`,
   description:
-    "Check your MEPCO electricity bill online using your 14-digit reference number. Open the official PITC bill page to view, print, or download your duplicate MEPCO bill.",
+    "Check MEPCO bill online using your 14-digit reference number. Open the official PITC MEPCO bill page to view, print, or download your duplicate electricity bill.",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: `MEPCO Online Bill Check ${CURRENT_YEAR}`,
+    title: `MEPCO Bill Check Online ${CURRENT_YEAR}`,
     description:
-      "Use your 14-digit reference number to check your MEPCO electricity bill online and open the official PITC bill page.",
+      "Check MEPCO online bill by 14-digit reference number. View, print, or download your duplicate MEPCO electricity bill through the official PITC bill system.",
     url: SITE_URL,
     type: "website",
     siteName: SITE_NAME,
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `MEPCO Online Bill Check ${CURRENT_YEAR}`,
+    title: `MEPCO Bill Check Online ${CURRENT_YEAR}`,
     description:
-      "Check your MEPCO bill online using your 14-digit reference number.",
+      "Check MEPCO bill online using your 14-digit reference number.",
     images: [`${SITE_URL}/mepco-logo.png`],
   },
 };
@@ -47,6 +47,7 @@ type GuideLink = {
   title: string;
   href: string;
   desc: string;
+  icon: string;
 };
 
 type SimpleLink = {
@@ -72,45 +73,64 @@ const cityLinks: CityLink[] = [
 
 const mainGuides: GuideLink[] = [
   {
+    icon: "🔢",
     title: "Reference Number Guide",
     href: "/mepco-reference-number-guide",
     desc: "Find where the 14-digit reference number is written on your bill.",
   },
   {
+    icon: "📄",
     title: "Duplicate Bill Guide",
     href: "/mepco-duplicate-bill-guide",
     desc: "Learn how to print or download a duplicate MEPCO electricity bill.",
   },
   {
+    icon: "🧾",
     title: "Bill Calculator",
     href: "/mepco-bill-calculator",
     desc: "Estimate monthly electricity charges using consumed units.",
   },
   {
+    icon: "🆔",
     title: "Bill Check by CNIC",
     href: "/mepco-bill-check-by-cnic",
     desc: "Understand whether MEPCO bill can be checked by CNIC.",
   },
   {
+    icon: "⚡",
     title: "200 Units Rule",
     href: "/mepco-200-units-rule",
     desc: "Learn how the 200-unit limit affects protected consumers.",
   },
   {
+    icon: "🛡️",
     title: "Protected Consumer Guide",
     href: "/mepco-protected-consumer-guide",
     desc: "Learn what protected consumer means and why it matters.",
   },
   {
+    icon: "⛽",
     title: "FPA Charges Guide",
     href: "/mepco-fpa-charges-guide",
     desc: "Understand Fuel Price Adjustment charges in your bill.",
   },
   {
+    icon: "💰",
     title: "Taxes Explained",
     href: "/mepco-taxes-explained",
     desc: "Understand GST, QTA, fixed charges, and other bill items.",
   },
+];
+
+const popularSearches: SimpleLink[] = [
+  { label: "MEPCO bill check", href: "#bill-check" },
+  { label: "MEPCO online bill check", href: "#bill-check" },
+  { label: "MEPCO duplicate bill", href: "/mepco-duplicate-bill-guide" },
+  { label: "MEPCO bill check by reference number", href: "#reference-number" },
+  { label: "MEPCO bill print", href: "/mepco-duplicate-bill-guide" },
+  { label: "MEPCO bill download", href: "/mepco-duplicate-bill-guide" },
+  { label: "MEPCO customer ID", href: "/mepco-customer-id-guide" },
+  { label: "MEPCO bill by CNIC", href: "/mepco-bill-check-by-cnic" },
 ];
 
 const billHelpLinks: SimpleLink[] = [
@@ -170,11 +190,11 @@ const footerLinks: SimpleLink[] = [
 const faqs = [
   {
     q: "How can I check my MEPCO bill online?",
-    a: "Enter your 14-digit reference number in the bill check form and press the check button. Your bill will open on the official PITC bill page.",
+    a: "Enter your 14-digit reference number in the MEPCO bill check form and press the check button. Your bill will open on the official PITC MEPCO bill page.",
   },
   {
     q: "Where can I find my 14-digit reference number?",
-    a: "The reference number is printed on your previous MEPCO electricity bill, usually near the top area of the bill.",
+    a: "The reference number is printed on your previous MEPCO electricity bill, usually near the top section of the bill.",
   },
   {
     q: "Can I download a duplicate MEPCO bill?",
@@ -182,7 +202,7 @@ const faqs = [
   },
   {
     q: "Can I check MEPCO bill by customer ID or CNIC?",
-    a: "MEPCO duplicate bill checking commonly uses the 14-digit reference number. Some guides explain customer ID or CNIC alternatives, but the reference number is the main method.",
+    a: "MEPCO duplicate bill checking commonly uses the 14-digit reference number. Some official systems may also support customer ID. Avoid entering CNIC on unknown websites.",
   },
   {
     q: "Is this the official MEPCO website?",
@@ -206,6 +226,7 @@ const websiteSchema = {
     "MEPCO Bill Check",
     "MEPCO Online Bill",
     "MEPCO Duplicate Bill",
+    "MEPCO Bill Online Check",
     "میپکو بل چیک",
     "میپکو آن لائن بل",
   ],
@@ -218,7 +239,7 @@ const websiteSchema = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: `MEPCO Online Bill Check ${CURRENT_YEAR}`,
+  name: `MEPCO Bill Check Online ${CURRENT_YEAR}`,
   url: SITE_URL,
   description:
     "Check MEPCO electricity bill online by entering a 14-digit reference number and opening the official PITC bill page.",
@@ -229,7 +250,7 @@ const webPageSchema = {
   },
   about: {
     "@type": "Thing",
-    name: "MEPCO electricity bill check",
+    name: "MEPCO online bill check and duplicate bill",
   },
   inLanguage: ["en-PK", "ur-PK"],
 };
@@ -260,7 +281,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       position: 2,
-      name: "MEPCO Online Bill Check",
+      name: "MEPCO Bill Check Online",
       item: SITE_URL,
     },
   ],
@@ -331,7 +352,7 @@ export default function Home() {
             <div>
               <p className="text-xl font-black leading-tight">MEPCO Bill Check</p>
               <p className="text-xs text-emerald-200">
-                Independent consumer information website
+                Independent electricity bill information
               </p>
             </div>
           </Link>
@@ -354,15 +375,15 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-16">
           <div className="flex flex-col justify-center">
             <p className="mb-4 inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.18em] text-emerald-100">
-              Duplicate bill by reference number
+              ⚡ MEPCO duplicate bill by reference number
             </p>
             <h1 className="max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              MEPCO Online Bill Check {CURRENT_YEAR}
+              MEPCO Bill Check Online {CURRENT_YEAR}
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-emerald-50">
-              Enter your 14-digit MEPCO reference number to open the official
-              bill page. You can view, print, or download your duplicate
-              electricity bill from the PITC bill system.
+              Check your MEPCO online bill using a 14-digit reference number.
+              Open the official PITC MEPCO bill page to view, print, or download
+              your duplicate electricity bill.
             </p>
             <p
               className="mt-4 max-w-2xl text-base leading-8 text-emerald-100"
@@ -373,7 +394,7 @@ export default function Home() {
               کھولیں۔ وہاں سے آپ اپنا بل دیکھ، پرنٹ یا ڈاؤن لوڈ کر سکتے ہیں۔
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-8 grid gap-3 sm:grid-cols-4">
               <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
                 <p className="text-2xl">📄</p>
                 <p className="mt-2 font-bold">Duplicate Bill</p>
@@ -383,6 +404,11 @@ export default function Home() {
                 <p className="text-2xl">🔢</p>
                 <p className="mt-2 font-bold">14-Digit Ref No</p>
                 <p className="text-sm text-emerald-100">Use previous bill</p>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                <p className="text-2xl">🧾</p>
+                <p className="mt-2 font-bold">Print Bill</p>
+                <p className="text-sm text-emerald-100">Save as PDF</p>
               </div>
               <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
                 <p className="text-2xl">📱</p>
@@ -395,7 +421,7 @@ export default function Home() {
           <div className="rounded-[2rem] border border-white/15 bg-white p-5 text-slate-900 shadow-2xl sm:p-7">
             <div className="mb-5 rounded-2xl bg-emerald-50 p-4">
               <h2 className="text-2xl font-black text-emerald-950">
-                Check Your MEPCO Bill
+                🔍 Check Your MEPCO Bill
               </h2>
               <p className="mt-1 text-sm text-emerald-800">
                 Enter reference number without spaces or dashes.
@@ -456,41 +482,23 @@ export default function Home() {
             aria-label="Quick links"
             className="flex flex-wrap gap-3 text-sm font-semibold"
           >
-            <a
-              className="rounded-full bg-emerald-50 px-4 py-2 text-emerald-800 hover:bg-emerald-100"
-              href="#reference-number"
-            >
-              Find Reference Number
+            <a className="rounded-full bg-emerald-50 px-4 py-2 text-emerald-800 hover:bg-emerald-100" href="#reference-number">
+              🔢 Find Reference Number
             </a>
-            <Link
-              className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200"
-              href="/mepco-bill-calculator"
-            >
-              Bill Calculator
+            <Link className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200" href="/mepco-duplicate-bill-guide">
+              📄 Duplicate Bill
             </Link>
-            <Link
-              className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200"
-              href="/mepco-bill-check-by-cnic"
-            >
-              Bill by CNIC
+            <Link className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200" href="/mepco-bill-calculator">
+              🧾 Bill Calculator
             </Link>
-            <Link
-              className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200"
-              href="/mepco-bill-urdu"
-            >
-              Urdu Guide
+            <Link className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200" href="/mepco-bill-check-by-cnic">
+              🆔 Bill by CNIC
             </Link>
-            <Link
-              className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200"
-              href="/all-mepco-regions"
-            >
-              All Regions
+            <Link className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200" href="/mepco-bill-urdu">
+              🇵🇰 Urdu Guide
             </Link>
-            <Link
-              className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200"
-              href="/all-electricity-companies"
-            >
-              Other Electricity Companies
+            <Link className="rounded-full bg-slate-100 px-4 py-2 text-slate-700 hover:bg-slate-200" href="/all-mepco-regions">
+              📍 All Regions
             </Link>
           </nav>
         </div>
@@ -500,15 +508,14 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-              Reference Number Guide
+              🔢 Reference Number Guide
             </p>
             <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
               How to Find Your MEPCO Reference Number
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
               Your 14-digit reference number is printed on your old electricity
-              bill. Use the same number to open your latest duplicate bill
-              online.
+              bill. Use the same number to open your latest duplicate bill online.
             </p>
           </div>
 
@@ -537,9 +544,7 @@ export default function Home() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-2xl">
                   {step.icon}
                 </div>
-                <h3 className="text-xl font-black text-slate-950">
-                  {step.title}
-                </h3>
+                <h3 className="text-xl font-black text-slate-950">{step.title}</h3>
                 <p className="mt-2 leading-7 text-slate-600">{step.text}</p>
               </div>
             ))}
@@ -567,7 +572,7 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-                Duplicate Bill
+                📄 Duplicate Bill
               </p>
               <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
                 View, Print, or Download Your MEPCO Bill
@@ -581,31 +586,14 @@ export default function Home() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                {
-                  title: "Check payable amount",
-                  text: "Open your latest bill and review the current payable amount.",
-                },
-                {
-                  title: "View due date",
-                  text: "Check the due date before paying your electricity bill.",
-                },
-                {
-                  title: "Print duplicate bill",
-                  text: "Use the print option from the official bill page.",
-                },
-                {
-                  title: "Save as PDF",
-                  text: "Save your bill as PDF from your browser print menu.",
-                },
+                { title: "Check payable amount", text: "Open your latest bill and review the current payable amount." },
+                { title: "View due date", text: "Check the due date before paying your electricity bill." },
+                { title: "Print duplicate bill", text: "Use the print option from the official bill page." },
+                { title: "Save as PDF", text: "Save your bill as PDF from your browser print menu." },
               ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-3xl border border-slate-200 bg-slate-50 p-6"
-                >
+                <div key={item.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
                   <h3 className="font-black text-slate-950">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {item.text}
-                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -613,11 +601,49 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="cities" className="bg-slate-50 py-14">
+      <section className="bg-slate-50 py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-6">
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
+              🔎 Popular Searches
+            </p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
+              Common MEPCO Bill Search Terms
+            </h2>
+            <p className="mt-3 max-w-3xl leading-8 text-slate-600">
+              These quick links cover common MEPCO online bill check searches while keeping the homepage focused on duplicate bill checking.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {popularSearches.map((item) => (
+              item.href.startsWith("#") ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                >
+                  {item.label}
+                </Link>
+              )
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="cities" className="bg-white py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-              City Pages
+              📍 City Pages
             </p>
             <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
               MEPCO Bill Check by City
@@ -633,13 +659,11 @@ export default function Home() {
               <Link
                 key={city.href}
                 href={city.href}
-                className="group rounded-2xl border border-slate-200 bg-white px-4 py-4 font-bold text-slate-800 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                className="group rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 font-bold text-slate-800 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
               >
                 <span className="flex items-center justify-between">
                   <span>MEPCO Bill Check {city.name}</span>
-                  <span className="text-emerald-700 transition group-hover:translate-x-1">
-                    →
-                  </span>
+                  <span className="text-emerald-700 transition group-hover:translate-x-1">→</span>
                 </span>
               </Link>
             ))}
@@ -647,12 +671,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="guides" className="bg-white py-14">
+      <section id="guides" className="bg-slate-50 py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-                Helpful Guides
+                📚 Helpful Guides
               </p>
               <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
                 Important MEPCO Bill Guides
@@ -675,25 +699,22 @@ export default function Home() {
               <Link
                 key={guide.href}
                 href={guide.href}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:border-emerald-300 hover:bg-emerald-50"
+                className="rounded-3xl border border-slate-200 bg-white p-5 transition hover:border-emerald-300 hover:bg-emerald-50"
               >
-                <h3 className="text-lg font-black text-slate-950">
-                  {guide.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  {guide.desc}
-                </p>
+                <div className="text-2xl">{guide.icon}</div>
+                <h3 className="mt-3 text-lg font-black text-slate-950">{guide.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{guide.desc}</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-14">
+      <section className="bg-white py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-              Complete Help Center
+              🧭 Complete Help Center
             </p>
             <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
               More MEPCO Consumer Resources
@@ -717,11 +738,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="faq" className="bg-white py-14">
+      <section id="faq" className="bg-slate-50 py-14">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="mb-8 text-center">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
-              FAQ
+              ❓ FAQ
             </p>
             <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
               MEPCO Online Bill Check Questions
@@ -730,16 +751,11 @@ export default function Home() {
 
           <div className="space-y-3">
             {faqs.map((item) => (
-              <details
-                key={item.q}
-                className="group rounded-2xl border border-slate-200 bg-slate-50 p-5"
-              >
+              <details key={item.q} className="group rounded-2xl border border-slate-200 bg-white p-5">
                 <summary className="cursor-pointer list-none font-black text-slate-950">
                   <span className="flex items-center justify-between gap-4">
                     {item.q}
-                    <span className="text-emerald-700 group-open:rotate-180">
-                      ⌄
-                    </span>
+                    <span className="text-emerald-700 group-open:rotate-180">⌄</span>
                   </span>
                 </summary>
                 <p className="mt-3 leading-7 text-slate-600">{item.a}</p>
@@ -749,9 +765,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-slate-50 py-12">
+      <section className="bg-white py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6">
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
             <h2 className="text-2xl font-black text-slate-950">
               Independent Information Notice
             </h2>
@@ -771,7 +787,7 @@ export default function Home() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-full bg-slate-50 px-4 py-2 text-slate-700 hover:bg-slate-100"
+                  className="rounded-full bg-white px-4 py-2 text-slate-700 hover:bg-slate-100"
                 >
                   {link.label}
                 </Link>
