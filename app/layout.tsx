@@ -21,10 +21,10 @@ const SITE_NAME = "MEPCO Online Bill Check";
 const GA_ID = "G-JHHCERN5SG";
 
 const META_TITLE =
-  "MEPCO Online Bill Check 2026 | Duplicate Bill & Calculator";
+  "MEPCO Bill Check Online 2026 | Duplicate Bill by Reference Number";
 
 const META_DESCRIPTION =
-  "Check MEPCO electricity bill online by 14-digit reference number. Get duplicate bill help, bill calculator, tariff guides, and South Punjab MEPCO consumer information.";
+  "Check MEPCO electricity bill online by reference number or customer ID. Get duplicate bill help, bill calculator, print/download guidance, and South Punjab MEPCO consumer information.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -146,6 +146,7 @@ export default function RootLayout({
       "MEPCO Bill Check",
       "MEPCO Duplicate Bill",
       "MEPCO Online Bill",
+      "MEPCO Online Bill Check",
       "میپکو بل چیک",
       "میپکو آن لائن بل",
     ],
