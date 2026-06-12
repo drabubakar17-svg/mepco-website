@@ -654,20 +654,25 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {cityLinks.map((city) => (
-              <Link
-                key={city.href}
-                href={city.href}
-                className="group rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 font-bold text-slate-800 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                <span className="flex items-center justify-between">
-                  <span>MEPCO Bill Check {city.name}</span>
-                  <span className="text-emerald-700 transition group-hover:translate-x-1">→</span>
-                </span>
-              </Link>
-            ))}
-          </div>
+         <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6 md:p-8">
+  <h3 className="text-2xl font-black text-slate-950">
+    MEPCO Regions Directory
+  </h3>
+
+  <p className="mt-3 max-w-3xl leading-8 text-slate-700">
+    Looking for city-specific MEPCO bill information? Browse all MEPCO
+    regions including Multan, Khanewal, Bahawalpur, Vehari, Lodhran,
+    Sahiwal, Rahim Yar Khan, Muzaffargarh, Dera Ghazi Khan, Taunsa,
+    Rajanpur, and other MEPCO service areas.
+  </p>
+
+  <Link
+    href="/all-mepco-regions"
+    className="mt-5 inline-flex items-center rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white transition hover:bg-emerald-800"
+  >
+    View All MEPCO Regions →
+  </Link>
+</div>
         </div>
       </section>
 
