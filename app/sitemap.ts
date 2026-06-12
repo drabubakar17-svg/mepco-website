@@ -13,10 +13,10 @@ const corePages = [
 ];
 
 const hubPages = [
+  "/all-mepco-guides",
   "/all-mepco-regions",
   "/all-electricity-companies",
 ];
-
 const cityPages = [
   "/multan-bill-check",
   "/khanewal-bill-check",
